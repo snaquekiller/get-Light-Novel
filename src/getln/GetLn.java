@@ -1,19 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package getln;
+package com.snaquekiller.getln;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+//import java.io.BufferedWriter;
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//import java.io.OutputStreamWriter;
+//import java.io.Writer;
+//import org.jsoup.Jsoup;
+//import org.jsoup.nodes.Document;
+//import org.jsoup.nodes.Element;
+//import org.jsoup.select.Elements;
 
 /**
  *
@@ -30,7 +25,6 @@ public class GetLn {
      */
     public static void main(String[] args) throws IOException {
 
-        //launch(args);
         String Title = "";
         for (int i = 761; i < 906; i++) {
             try {
@@ -50,8 +44,7 @@ public class GetLn {
 
     }
 
-    public static void createTableMatiere(String titleBook, String list) {
-
+    private static void createTableMatiere(String titleBook, String list) {
         String title = titleBook.replace(" ", "_");
 
         String head = "<?xml version='1.0' encoding='utf-8'?>\n"
@@ -83,10 +76,9 @@ public class GetLn {
             } catch (Exception ex) {/*ignore*/
             }
         }
-
     }
 
-    public static String createBook(String titleBook, Elements elements, String ChapterTitle, String num) {
+    private static String createBook(String titleBook, Elements elements, String ChapterTitle, String num) {
         Writer writer = null;
         String head = "<?xml version='1.0' encoding='utf-8'?>\n"
                 + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
@@ -111,7 +103,7 @@ public class GetLn {
             writer.write(end);
         } catch (IOException ex) {
             // report
-            System.err.println("c'ant write" + ex);
+            System.err.println("can't write" + ex);
         } finally {
             try {
                 writer.close();

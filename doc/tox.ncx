@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN"
+ "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd"><ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+  <head>
+    <meta content="urn:uuid:39100132-78e1-4817-a9d5-7185c795bfba" name="dtb:uid"/>
+    <meta content="1" name="dtb:depth"/>
+    <meta content="0" name="dtb:totalPageCount"/>
+    <meta content="0" name="dtb:maxPageNumber"/>
+  </head>
+  <docTitle>
+    <text>Kumo Desu ga, Nani ka? - Chapters 201 - 250</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="navPoint-1" playOrder="1">
+      <navLabel>
+        <text>Kumo Desu ga, Nani ka?</text>
+      </navLabel>
+      <content src="Text/Section0003.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-2" playOrder="2">
+      <navLabel>
+        <text>201 The Demon King And The Queen</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-3" playOrder="3">
+      <navLabel>
+        <text>202 God</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_11"/>
+    </navPoint>
+    <navPoint id="navPoint-4" playOrder="4">
+      <navLabel>
+        <text>203 Uninhabited Area</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_12"/>
+    </navPoint>
+    <navPoint id="navPoint-5" playOrder="5">
+      <navLabel>
+        <text>204 Easy</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_13"/>
+    </navPoint>
+    <navPoint id="navPoint-6" playOrder="6">
+      <navLabel>
+        <text>205 The Demon King Who's Accompanied By God</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_14"/>
+    </navPoint>
+    <navPoint id="navPoint-7" playOrder="7">
+      <navLabel>
+        <text>Oni 1 Sasajima Kyouya</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_15"/>
+    </navPoint>
+    <navPoint id="navPoint-8" playOrder="8">
+      <navLabel>
+        <text>Character Introduction</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_16"/>
+    </navPoint>
+    <navPoint id="navPoint-9" playOrder="9">
+      <navLabel>
+        <text>206 Black And White</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_17"/>
+    </navPoint>
+    <navPoint id="navPoint-10" playOrder="10">
+      <navLabel>
+        <text>207 Start</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_18"/>
+    </navPoint>
+    <navPoint id="navPoint-11" playOrder="11">
+      <navLabel>
+        <text>Blood 1 Negishi Akiko</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_19"/>
+    </navPoint>
+    <navPoint id="navPoint-12" playOrder="12">
+      <navLabel>
+        <text>Blood 2 Redo</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_20"/>
+    </navPoint>
+    <navPoint id="navPoint-13" playOrder="13">
+      <navLabel>
+        <text>Blood 3 Encounter With The Spider</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_21"/>
+    </navPoint>
+    <navPoint id="navPoint-14" playOrder="14">
+      <navLabel>
+        <text>Oni 2 Goblin</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_22"/>
+    </navPoint>
+    <navPoint id="navPoint-15" playOrder="15">
+      <navLabel>
+        <text>Blood 4 Countdown To Despair</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_23"/>
+    </navPoint>
+    <navPoint id="navPoint-16" playOrder="16">
+      <navLabel>
+        <text>Blood 5 Survival Strategy</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_25"/>
+    </navPoint>
+    <navPoint id="navPoint-17" playOrder="17">
+      <navLabel>
+        <text>Blood 6 Sudden Change</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_26"/>
+    </navPoint>
+    <navPoint id="navPoint-18" playOrder="18">
+      <navLabel>
+        <text>Blood 7 War</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_27"/>
+    </navPoint>
+    <navPoint id="navPoint-19" playOrder="19">
+      <navLabel>
+        <text>Blood 8 Decision</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_34"/>
+    </navPoint>
+    <navPoint id="navPoint-20" playOrder="20">
+      <navLabel>
+        <text>Oni 3 Weapon Creation</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_35"/>
+    </navPoint>
+    <navPoint id="navPoint-21" playOrder="21">
+      <navLabel>
+        <text>Blood 9 Attendant</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_36"/>
+    </navPoint>
+    <navPoint id="navPoint-22" playOrder="22">
+      <navLabel>
+        <text>Blood 10 Strange Woman And Dangerous Woman</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_45"/>
+    </navPoint>
+    <navPoint id="navPoint-23" playOrder="23">
+      <navLabel>
+        <text>208 The Standard Of The Fantasy World And The First Encounter</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_46"/>
+    </navPoint>
+    <navPoint id="navPoint-24" playOrder="24">
+      <navLabel>
+        <text>209 Vampire Attendant Conciliatory Operation</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_47"/>
+    </navPoint>
+    <navPoint id="navPoint-25" playOrder="25">
+      <navLabel>
+        <text>210 Vampire Master Conciliatory Operation</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_48"/>
+    </navPoint>
+    <navPoint id="navPoint-26" playOrder="26">
+      <navLabel>
+        <text>Oni 4 Naming</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_49"/>
+    </navPoint>
+    <navPoint id="navPoint-27" playOrder="27">
+      <navLabel>
+        <text>Blood 11 What Should I Do If My Classmate Becomes A Monster When Reincarnated?</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_179"/>
+    </navPoint>
+    <navPoint id="navPoint-28" playOrder="28">
+      <navLabel>
+        <text>Blood 12 The Divine Word Religion And The Elves</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_180"/>
+    </navPoint>
+    <navPoint id="navPoint-29" playOrder="29">
+      <navLabel>
+        <text>Blood 13 Envy</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_181"/>
+    </navPoint>
+    <navPoint id="navPoint-30" playOrder="30">
+      <navLabel>
+        <text>Blood 14 The Lie And The Truth</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_182"/>
+    </navPoint>
+    <navPoint id="navPoint-31" playOrder="31">
+      <navLabel>
+        <text>Blood 15 Announcing The Little Girl Abuse Warning Officially</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_183"/>
+    </navPoint>
+    <navPoint id="navPoint-32" playOrder="32">
+      <navLabel>
+        <text>Oni 5 The Trampled One</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_184"/>
+    </navPoint>
+    <navPoint id="navPoint-33" playOrder="33">
+      <navLabel>
+        <text>Blood 16 Along The Way</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_185"/>
+    </navPoint>
+    <navPoint id="navPoint-34" playOrder="34">
+      <navLabel>
+        <text>Blood 17 The Demon King Of Money</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_186"/>
+    </navPoint>
+    <navPoint id="navPoint-35" playOrder="35">
+      <navLabel>
+        <text>Blood 18 Abnormal Condition 「Drunkard」</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_187"/>
+    </navPoint>
+    <navPoint id="navPoint-36" playOrder="36">
+      <navLabel>
+        <text>211 Vampire Training Plan</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_188"/>
+    </navPoint>
+    <navPoint id="navPoint-37" playOrder="37">
+      <navLabel>
+        <text>212 Maou-Sama's 3 Hours Cooking</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_189"/>
+    </navPoint>
+    <navPoint id="navPoint-38" playOrder="38">
+      <navLabel>
+        <text>Oni 6 Slave</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_190"/>
+    </navPoint>
+    <navPoint id="navPoint-39" playOrder="39">
+      <navLabel>
+        <text>Blood 19 Both The Inside And The Outside Are Dangerous</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_191"/>
+    </navPoint>
+    <navPoint id="navPoint-40" playOrder="40">
+      <navLabel>
+        <text>Blood 20 Master Is A Brute</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_192"/>
+    </navPoint>
+    <navPoint id="navPoint-41" playOrder="41">
+      <navLabel>
+        <text>Blood 21 Three Years</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_193"/>
+    </navPoint>
+    <navPoint id="navPoint-42" playOrder="42">
+      <navLabel>
+        <text>The Regular Reports Of The Demon King And The Administrator</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_194"/>
+    </navPoint>
+    <navPoint id="navPoint-43" playOrder="43">
+      <navLabel>
+        <text>The Pope And The Administrator</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_195"/>
+    </navPoint>
+    <navPoint id="navPoint-44" playOrder="44">
+      <navLabel>
+        <text>Oni 7 Illusion Weapon Creation</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_196"/>
+    </navPoint>
+    <navPoint id="navPoint-45" playOrder="45">
+      <navLabel>
+        <text>Blood 22 Demons.......</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_197"/>
+    </navPoint>
+    <navPoint id="navPoint-46" playOrder="46">
+      <navLabel>
+        <text>Blood 23 It Seems That I Have To Go To The Magic Academy If I'm Reincarnated</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_198"/>
+    </navPoint>
+    <navPoint id="navPoint-47" playOrder="47">
+      <navLabel>
+        <text>Blood 24 Enrollment</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_199"/>
+    </navPoint>
+    <navPoint id="navPoint-48" playOrder="48">
+      <navLabel>
+        <text>Blood 25 Although I Who Have Encountered An Engagement Annulment Event Is Like A Heroine, Because I Don't Have The Memory Of Being Bullied, What Should I Do?</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_200"/>
+    </navPoint>
+    <navPoint id="navPoint-49" playOrder="49">
+      <navLabel>
+        <text>Blood 26 Blood Of Oni</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_201"/>
+    </navPoint>
+    <navPoint id="navPoint-50" playOrder="50">
+      <navLabel>
+        <text>Oni 8 Wrath</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_202"/>
+    </navPoint>
+    <navPoint id="navPoint-51" playOrder="51">
+      <navLabel>
+        <text>The Revolving Lantern Of The Summoner</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_203"/>
+    </navPoint>
+    <navPoint id="navPoint-52" playOrder="52">
+      <navLabel>
+        <text>The Rumor Of The Adventurer</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_204"/>
+    </navPoint>
+    <navPoint id="navPoint-53" playOrder="53">
+      <navLabel>
+        <text>Adventurers Vs Ogre</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_205"/>
+    </navPoint>
+    <navPoint id="navPoint-54" playOrder="54">
+      <navLabel>
+        <text>Empire Knights Vs Ogre</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_206"/>
+    </navPoint>
+    <navPoint id="navPoint-55" playOrder="55">
+      <navLabel>
+        <text>Old Man×2 Vs Ogre</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_207"/>
+    </navPoint>
+    <navPoint id="navPoint-56" playOrder="56">
+      <navLabel>
+        <text>Oni 9 Calmly</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_208"/>
+    </navPoint>
+    <navPoint id="navPoint-57" playOrder="57">
+      <navLabel>
+        <text>The Sword King And The Magician</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_209"/>
+    </navPoint>
+    <navPoint id="navPoint-58" playOrder="58">
+      <navLabel>
+        <text>The Pope And The Ninja</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_210"/>
+    </navPoint>
+    <navPoint id="navPoint-59" playOrder="59">
+      <navLabel>
+        <text>The Country Of The Interstice</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_211"/>
+    </navPoint>
+    <navPoint id="navPoint-60" playOrder="60">
+      <navLabel>
+        <text>The Previous Sword Emperor</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_212"/>
+    </navPoint>
+    <navPoint id="navPoint-61" playOrder="61">
+      <navLabel>
+        <text>Sword God Vs Ogre</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_213"/>
+    </navPoint>
+    <navPoint id="navPoint-62" playOrder="62">
+      <navLabel>
+        <text>Oni 10 Emptiness</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_214"/>
+    </navPoint>
+    <navPoint id="navPoint-63" playOrder="63">
+      <navLabel>
+        <text>Oni Vs Oni ①</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_215"/>
+    </navPoint>
+    <navPoint id="navPoint-64" playOrder="64">
+      <navLabel>
+        <text>Oni Vs Oni ②</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_216"/>
+    </navPoint>
+    <navPoint id="navPoint-65" playOrder="65">
+      <navLabel>
+        <text>Oni Vs Oni ③</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_217"/>
+    </navPoint>
+    <navPoint id="navPoint-66" playOrder="66">
+      <navLabel>
+        <text>Oni Vs Oni ④</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_218"/>
+    </navPoint>
+    <navPoint id="navPoint-67" playOrder="67">
+      <navLabel>
+        <text>Oni Vs Oni ⑤</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_219"/>
+    </navPoint>
+    <navPoint id="navPoint-68" playOrder="68">
+      <navLabel>
+        <text>Oni Vs Oni ⑥</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_220"/>
+    </navPoint>
+    <navPoint id="navPoint-69" playOrder="69">
+      <navLabel>
+        <text>Chapter 213 Vampire Rearing Plan・Continued</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_221"/>
+    </navPoint>
+    <navPoint id="navPoint-70" playOrder="70">
+      <navLabel>
+        <text>Chapter 214 What I Can Do Now.</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_222"/>
+    </navPoint>
+    <navPoint id="navPoint-71" playOrder="71">
+      <navLabel>
+        <text>Chapter 215 Like I’d Live In This World! I’m Going Home!</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_223"/>
+    </navPoint>
+    <navPoint id="navPoint-72" playOrder="72">
+      <navLabel>
+        <text>Chapter 216 Temporary Return</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_224"/>
+    </navPoint>
+    <navPoint id="navPoint-73" playOrder="73">
+      <navLabel>
+        <text>Chapter 217 - Wakaba Hiiro</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_225"/>
+    </navPoint>
+    <navPoint id="navPoint-74" playOrder="74">
+      <navLabel>
+        <text>Chapter 218 - A Maid Appears</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_226"/>
+    </navPoint>
+    <navPoint id="navPoint-75" playOrder="75">
+      <navLabel>
+        <text>Chapter 219 - Training (Clone) Results</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_227"/>
+    </navPoint>
+    <navPoint id="navPoint-76" playOrder="76">
+      <navLabel>
+        <text>Chapter 220 - The Other Side Of The Snowy Mountain</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_228"/>
+    </navPoint>
+    <navPoint id="navPoint-77" playOrder="77">
+      <navLabel>
+        <text>Lesson 1</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_229"/>
+    </navPoint>
+    <navPoint id="navPoint-78" playOrder="78">
+      <navLabel>
+        <text>Chapter 221 - Vampire-Child Observation Diary</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_230"/>
+    </navPoint>
+    <navPoint id="navPoint-79" playOrder="79">
+      <navLabel>
+        <text>Chapter 222 - Daily Healthy Tomato Juice</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_231"/>
+    </navPoint>
+    <navPoint id="navPoint-80" playOrder="80">
+      <navLabel>
+        <text>Chapter 223 - The End Of The Journey</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_232"/>
+    </navPoint>
+    <navPoint id="navPoint-81" playOrder="81">
+      <navLabel>
+        <text>Chapter 224 - Archduke</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_233"/>
+    </navPoint>
+    <navPoint id="navPoint-82" playOrder="82">
+      <navLabel>
+        <text>Chapter 225 - Secret Manoeuvres, Secretly Manoeuvring</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_234"/>
+    </navPoint>
+    <navPoint id="navPoint-83" playOrder="83">
+      <navLabel>
+        <text>Chapter 226 - Secret Manoeuvres, Secretly Manoeuvring, Secret Manoeuvres</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_235"/>
+    </navPoint>
+    <navPoint id="navPoint-84" playOrder="84">
+      <navLabel>
+        <text>Chapter 227 - She Who Does Not Work, Neither Shall She Eat</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_236"/>
+    </navPoint>
+    <navPoint id="navPoint-85" playOrder="85">
+      <navLabel>
+        <text>Chapter 228 Whyyy!?</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_237"/>
+    </navPoint>
+    <navPoint id="navPoint-86" playOrder="86">
+      <navLabel>
+        <text>Chapter 229 - The Mastermind</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_238"/>
+    </navPoint>
+    <navPoint id="navPoint-87" playOrder="87">
+      <navLabel>
+        <text>Chapter 230 - I Have Been Too Naive</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_239"/>
+    </navPoint>
+    <navPoint id="navPoint-88" playOrder="88">
+      <navLabel>
+        <text>Chapter 231 - The Start Of The Politics Of Fear</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_240"/>
+    </navPoint>
+    <navPoint id="navPoint-89" playOrder="89">
+      <navLabel>
+        <text>Chapter 232 - The Raccoon And Fox Spider Try To Outfox Each Other</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_241"/>
+    </navPoint>
+    <navPoint id="navPoint-90" playOrder="90">
+      <navLabel>
+        <text>Chapter 233 - The Black-Hearted Biles</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_242"/>
+    </navPoint>
+    <navPoint id="navPoint-91" playOrder="91">
+      <navLabel>
+        <text>Chapter 234 - The Demon Of Envy And The Demon Of Wrath</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_243"/>
+    </navPoint>
+    <navPoint id="navPoint-92" playOrder="92">
+      <navLabel>
+        <text>Chapter 235 - H, Help!</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_244"/>
+    </navPoint>
+    <navPoint id="navPoint-93" playOrder="93">
+      <navLabel>
+        <text>Chapter 236 - The Dragon, The Pitfall, And Some Kinda Monster Hunter…</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_245"/>
+    </navPoint>
+    <navPoint id="navPoint-94" playOrder="94">
+      <navLabel>
+        <text>Chapter 237 - Many Events Makes Flag Management A Pain</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_246"/>
+    </navPoint>
+    <navPoint id="navPoint-95" playOrder="95">
+      <navLabel>
+        <text>Chapter 238 - Academy × 2</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_247"/>
+    </navPoint>
+    <navPoint id="navPoint-96" playOrder="96">
+      <navLabel>
+        <text>Chapter 239 - Varied Academy Life</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_248"/>
+    </navPoint>
+    <navPoint id="navPoint-97" playOrder="97">
+      <navLabel>
+        <text>Chapter 240 - The Hero Title</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_249"/>
+    </navPoint>
+    <navPoint id="navPoint-98" playOrder="98">
+      <navLabel>
+        <text>The Commander’s Bad Day</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_250"/>
+    </navPoint>
+    <navPoint id="navPoint-99" playOrder="99">
+      <navLabel>
+        <text>Ss Christmas</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_251"/>
+    </navPoint>
+    <navPoint id="navPoint-100" playOrder="100">
+      <navLabel>
+        <text>Chapter 241 - The Clown On Stage</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_252"/>
+    </navPoint>
+    <navPoint id="navPoint-101" playOrder="101">
+      <navLabel>
+        <text>Chapter 242 - The Devotion Of The Fool</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_253"/>
+    </navPoint>
+    <navPoint id="navPoint-102" playOrder="102">
+      <navLabel>
+        <text>Chapter 243 - Guys With A Screw Loose Are Such…</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_254"/>
+    </navPoint>
+    <navPoint id="navPoint-103" playOrder="103">
+      <navLabel>
+        <text>Chapter 244 - This Yandere Imouto Is So In Love I Can’t Get Through To Her</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_255"/>
+    </navPoint>
+    <navPoint id="navPoint-104" playOrder="104">
+      <navLabel>
+        <text>Chapter 245 - Let’s Start With “Seiza”</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_256"/>
+    </navPoint>
+    <navPoint id="navPoint-105" playOrder="105">
+      <navLabel>
+        <text>Chapter 246 - I Can’t Stop Laughing</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_257"/>
+    </navPoint>
+    <navPoint id="navPoint-106" playOrder="106">
+      <navLabel>
+        <text>Chapter 247 - The Young Lady Villain Bursts Into Tears</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_258"/>
+    </navPoint>
+    <navPoint id="navPoint-107" playOrder="107">
+      <navLabel>
+        <text>Chapter 248 - A Vampire’s Nature</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_259"/>
+    </navPoint>
+    <navPoint id="navPoint-108" playOrder="108">
+      <navLabel>
+        <text>Chapter 249 - Here Oni, Oni</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_260"/>
+    </navPoint>
+    <navPoint id="navPoint-109" playOrder="109">
+      <navLabel>
+        <text>Chapter 250 - Tag With Oni</text>
+      </navLabel>
+      <content src="Text/Section0001.xhtml#sigil_toc_id_261"/>
+    </navPoint>
+  </navMap>
+</ncx>

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.snaquekiller.getln</groupId>
-  <artifactId>get-ln</artifactId>
+  <artifactId>getln</artifactId>
   <packaging>pom</packaging>
   <version>0.5.0</version>
 
