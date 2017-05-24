@@ -1,5 +1,6 @@
 package getLn;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,15 +26,18 @@ public class Chapter {
     /** The bookName associate of the chapter **/
     private String bookName;
 
+
     private String fileName;
+
+    /** The list that contains all the text of the chapter **/
+    private List<String> textList;
 
     /**
      * The text of the
      */
     private String text;
 
-    public Chapter(String name, String filePath, int chapterNumber, String bookName, String fileName) {
-        this.name = name;
+    public Chapter( String filePath, int chapterNumber, String bookName, String fileName) {
         this.filePath = filePath;
         this.chapterNumber = chapterNumber;
         this.bookName = bookName;
@@ -167,5 +171,23 @@ public class Chapter {
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    /**
+     * Sets new The list that contains all the text of the chapter.
+     *
+     * @param textList New value of The list that contains all the text of the chapter.
+     */
+    public void setTextList(List<String> textList) {
+        this.textList = textList;
+    }
+
+    /**
+     * Gets The list that contains all the text of the chapter.
+     *
+     * @return Value of The list that contains all the text of the chapter.
+     */
+    public List<String> getTextList() {
+        return textList;
     }
 }

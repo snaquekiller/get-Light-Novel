@@ -4,9 +4,13 @@
     <facet type="web" name="Web">
       <configuration>
         <webroots>
-          <root url="file://$MODULE_DIR$/src/getLn" relative="/" />
+          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots />
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src" />
+          <root url="file://$MODULE_DIR$/manga" />
+          <root url="file://$MODULE_DIR$/doc" />
+        </sourceRoots>
       </configuration>
     </facet>
   </component>
@@ -18,8 +22,11 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/manga" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/doc" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/manga/Zhan_Long" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/dist" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/dist/lib" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
-      <excludeFolder url="file://$MODULE_DIR$/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/nbproject" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

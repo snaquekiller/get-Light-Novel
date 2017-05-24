@@ -7,11 +7,11 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * @author Nicolas
@@ -28,21 +28,16 @@ public class getLn {
     public static void main(String[] args) throws IOException {
 
         String title = "";
-        List<Chapter> chapters = new ArrayList<>();
+        final List<Chapter> chapters = new ArrayList<Chapter>();
         for (int i = 761; i < 906; i++) {
             try {
-                final Document doc = Jsoup.connect("http://lnmtl.com/chapter/" + ligh_novel + i).get();
-                final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
-                System.out.println(chapterTitle);
-                Element el = doc.getElementById("chapter-container");
 
-                Elements elements = el.getElementsByClass("translated");
                 final String bookWithoutSpecialChar = BOOK_NAME.replace("\\W\\S", "_");
                 final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, i);
-                Chapter chapter = new Chapter(chapterTitle, String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
-                writeChapter(BOOK_NAME, elements, chapter);
-                String list = String.format("\t<li>\n\t<a href=\"%s#%d\">%s</a>\n</li>\n", fileName, i, chapterTitle);
-                title += list;
+                Chapter chapter = new Chapter(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
+                chapter = addTextAndTitle(i, chapter);
+                writeChapter(BOOK_NAME, chapter.getTextList(), chapter);
+                title += String.format("\t<li>\n\t<a href=\"%s#%d\">%s</a>\n</li>\n", fileName, i, chapter.getName());
                 chapters.add(chapter);
             } catch (Exception e) {
                 System.err.println("Chapter  " + i + "not found ");
@@ -50,7 +45,18 @@ public class getLn {
         }
         createTableMatiere(BOOK_NAME, title);
         createTOX(BOOK_NAME, chapters);
+    }
 
+    private static Chapter addTextAndTitle(final int i, final Chapter chapter) throws IOException {
+        final Document doc = Jsoup.connect("http://lnmtl.com/chapter/" + ligh_novel + i).get();
+        final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
+        System.out.println(chapterTitle);
+        final List<String> textList =
+            doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
+                .collect(Collectors.toList());
+        chapter.setName(chapterTitle);
+        chapter.setTextList(textList);
+        return chapter;
     }
 
     private static void createTableMatiere(String titleBook, String list) {
@@ -80,7 +86,7 @@ public class getLn {
         }
     }
 
-    private static void writeChapter(String titleBook, Elements elements, Chapter chapter) {
+    private static void writeChapter(String titleBook, List<String> textList, Chapter chapter) {
         Writer writer = null;
         String head =
             "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" + "\t<head>\n" +
@@ -95,8 +101,8 @@ public class getLn {
                 new OutputStreamWriter(new FileOutputStream(String.format("%s/%s", chapter.getFilePath(), chapter.getFileName())),
                     "utf-8"));
             writer.write(head);
-            for (Element element : elements) {
-                writer.write(String.format("<p>%s</p>\n\n", element.text()));
+            for (String text : textList) {
+                writer.write(String.format("<p>%s</p>\n\n", text));
 
             }
             writer.write(end);
