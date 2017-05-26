@@ -4,7 +4,7 @@
     <facet type="web" name="Web">
       <configuration>
         <webroots>
-          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
+          <root url="file://$MODULE_DIR$" relative="/" />
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src" />
@@ -26,6 +26,8 @@
       <sourceFolder url="file://$MODULE_DIR$/dist" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/dist/lib" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/doc" />
+      <excludeFolder url="file://$MODULE_DIR$/manga" />
       <excludeFolder url="file://$MODULE_DIR$/nbproject" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

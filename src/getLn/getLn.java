@@ -29,10 +29,10 @@ public class getLn {
 
         String title = "";
         final List<Chapter> chapters = new ArrayList<Chapter>();
-        for (int i = 761; i < 906; i++) {
+        for (int i = 1066; i < 1068; i++) {
             try {
 
-                final String bookWithoutSpecialChar = BOOK_NAME.replace("\\W\\S", "_");
+                final String bookWithoutSpecialChar = BOOK_NAME.replaceAll("\\W", "_");
                 final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, i);
                 Chapter chapter = new Chapter(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
                 chapter = addTextAndTitle(i, chapter);

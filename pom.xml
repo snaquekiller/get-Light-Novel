@@ -4,7 +4,7 @@
 
   <groupId>getLn</groupId>
   <artifactId>getLn</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>0.5.0</version>
 
   <name>get-light-novel</name>
@@ -20,4 +20,17 @@
       <version>1.10.2</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
