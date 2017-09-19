@@ -26,7 +26,6 @@ public class Chapter {
     /** The bookName associate of the chapter **/
     private String bookName;
 
-
     private String fileName;
 
     /** The list that contains all the text of the chapter **/
@@ -37,7 +36,7 @@ public class Chapter {
      */
     private String text;
 
-    public Chapter( String filePath, int chapterNumber, String bookName, String fileName) {
+    public Chapter(final String filePath, final int chapterNumber, final String bookName, final String fileName) {
         this.filePath = filePath;
         this.chapterNumber = chapterNumber;
         this.bookName = bookName;
@@ -58,7 +57,7 @@ public class Chapter {
      *
      * @param name New value of The chapter name.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -76,7 +75,7 @@ public class Chapter {
      *
      * @param text New value of The text of the.
      */
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -94,7 +93,7 @@ public class Chapter {
      *
      * @param chapterNumber New value of The chapter Number.
      */
-    public void setChapterNumber(int chapterNumber) {
+    public void setChapterNumber(final int chapterNumber) {
         this.chapterNumber = chapterNumber;
     }
 
@@ -112,12 +111,12 @@ public class Chapter {
      *
      * @param filePath New value of The Chapter FileName.
      */
-    public void setFilePath(String filePath) {
+    public void setFilePath(final String filePath) {
         this.filePath = filePath;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -125,7 +124,7 @@ public class Chapter {
             return false;
         }
 
-        Chapter that = (Chapter) o;
+        final Chapter that = (Chapter) o;
 
         return Objects.equals(this.name, that.name) && Objects.equals(this.filePath, that.filePath) &&
             Objects.equals(this.chapterNumber, that.chapterNumber) && Objects.equals(this.bookName, that.bookName) &&
@@ -151,7 +150,7 @@ public class Chapter {
      *
      * @param bookName New value of The bookName associate of the chapter.
      */
-    public void setBookName(String bookName) {
+    public void setBookName(final String bookName) {
         this.bookName = bookName;
     }
 
@@ -169,7 +168,7 @@ public class Chapter {
      *
      * @param fileName New value of fileName.
      */
-    public void setFileName(String fileName) {
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
@@ -178,7 +177,7 @@ public class Chapter {
      *
      * @param textList New value of The list that contains all the text of the chapter.
      */
-    public void setTextList(List<String> textList) {
+    public void setTextList(final List<String> textList) {
         this.textList = textList;
     }
 
