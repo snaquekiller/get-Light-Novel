@@ -32,6 +32,5 @@ public class ScheduledGetLn {
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
         log.info("The time is dd {}", environment.getProperty("ds.password"));
-        log.info("The time is dd {}", this.getClass().getResourceAsStream("ds.password"));
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import getLn.configuration.GetLnConfiguration;
+import getLn.model.Chapter;
 
 /**
  * @author Nicolas

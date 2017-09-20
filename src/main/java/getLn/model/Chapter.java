@@ -1,4 +1,4 @@
-package getLn;
+package getLn.model;
 
 import java.util.List;
 import java.util.Objects;
