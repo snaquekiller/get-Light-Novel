@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * The chapter of a book
  */
-public class Chapter {
+public class ChapterDto {
 
     /**
      * The chapter name
@@ -36,7 +36,7 @@ public class Chapter {
      */
     private String text;
 
-    public Chapter(final String filePath, final int chapterNumber, final String bookName, final String fileName) {
+    public ChapterDto(final String filePath, final int chapterNumber, final String bookName, final String fileName) {
         this.filePath = filePath;
         this.chapterNumber = chapterNumber;
         this.bookName = bookName;
@@ -124,7 +124,7 @@ public class Chapter {
             return false;
         }
 
-        final Chapter that = (Chapter) o;
+        final ChapterDto that = (ChapterDto) o;
 
         return Objects.equals(this.name, that.name) && Objects.equals(this.filePath, that.filePath) &&
             Objects.equals(this.chapterNumber, that.chapterNumber) && Objects.equals(this.bookName, that.bookName) &&

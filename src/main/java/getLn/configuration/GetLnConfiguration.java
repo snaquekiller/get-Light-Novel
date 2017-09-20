@@ -8,6 +8,7 @@ import org.springframework.boot.actuate.info.EnvironmentInfoContributor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -18,6 +19,7 @@ import getLn.GetLnJob;
 //@formatter:off
 @Configuration
 @PropertySource("classpath:spring/prd.properties")
+@Import({ JpaConfiguration.class })
 @ComponentScan(basePackageClasses = {
     GetLnJob.class,
     })

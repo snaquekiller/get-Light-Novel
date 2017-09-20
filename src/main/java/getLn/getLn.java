@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import getLn.configuration.GetLnConfiguration;
-import getLn.model.Chapter;
+import getLn.model.ChapterDto;
 
 /**
  * @author Nicolas
@@ -41,13 +41,13 @@ public class getLn {
         SpringApplication.run(getLn.class);
         if (false) {
             String title = "";
-            final List<Chapter> chapters = new ArrayList<Chapter>();
+            final List<ChapterDto> chapters = new ArrayList<ChapterDto>();
             for (int i = 1066; i < 1068; i++) {
                 try {
 
                     final String bookWithoutSpecialChar = BOOK_NAME.replaceAll("\\W", "_");
                     final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, i);
-                    Chapter chapter = new Chapter(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
+                    ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
                     chapter = addTextAndTitle(i, chapter);
                     writeChapter(BOOK_NAME, chapter.getTextList(), chapter);
                     title += String.format("\t<li>\n\t<a href=\"%s#%d\">%s</a>\n</li>\n", fileName, i, chapter.getName());
@@ -61,7 +61,7 @@ public class getLn {
         }
     }
 
-    private static Chapter addTextAndTitle(final int i, final Chapter chapter) throws IOException {
+    private static ChapterDto addTextAndTitle(final int i, final ChapterDto chapter) throws IOException {
         final Document doc = Jsoup.connect("http://lnmtl.com/chapter/" + ligh_novel + i).get();
         final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
         System.out.println(chapterTitle);
@@ -100,7 +100,7 @@ public class getLn {
         }
     }
 
-    private static void writeChapter(final String titleBook, final List<String> textList, final Chapter chapter) {
+    private static void writeChapter(final String titleBook, final List<String> textList, final ChapterDto chapter) {
         Writer writer = null;
         final String head =
             "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" + "\t<head>\n" +
@@ -133,7 +133,7 @@ public class getLn {
         }
     }
 
-    private static void createTOX(final String titleBook, final List<Chapter> chapters) {
+    private static void createTOX(final String titleBook, final List<ChapterDto> chapters) {
         Writer writer = null;
         final String head = "<?xml version='1.0' encoding='utf-8'?>\n" + "<!DOCTYPE ncx PUBLIC \"-//NISO//DTD ncx 2005-1//EN\"" +
             " \"http://www.daisy.org/z3986/2005/ncx-2005-1.dtd\"><ncx version=\"2005-1\" xmlns=\"http://www.daisy.org/z3986/2005/ncx/\">\n" +
@@ -145,7 +145,7 @@ public class getLn {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("tox.ncx"), "utf-8"));
             writer.write(head);
             for (int i = 0; i < chapters.size(); i++) {
-                final Chapter chapter = chapters.get(i);
+                final ChapterDto chapter = chapters.get(i);
                 writer.write(String.format(
                     "<navPoint id=\"navPoint-%d\" playOrder=\"%d\">\n<navLabel>\n<text>%s</text>\n</navLabel>\n<content src=\"Text/%s\"/>\n</navPoint>",
                     i, i, chapter.getName(), chapter.getFileName()));
