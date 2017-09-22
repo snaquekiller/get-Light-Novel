@@ -15,6 +15,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
 import getLn.GetLnJob;
+import getLn.data.Data;
 
 //@formatter:off
 @Configuration
@@ -22,6 +23,7 @@ import getLn.GetLnJob;
 @Import({ JpaConfiguration.class })
 @ComponentScan(basePackageClasses = {
     GetLnJob.class,
+    Data.class,
     })
 //@formatter:on
 public class GetLnConfiguration {

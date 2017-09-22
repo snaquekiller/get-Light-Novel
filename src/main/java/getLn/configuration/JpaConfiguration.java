@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -18,10 +19,14 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import getLn.data.Data;
+
 /**
  * Base JPA configuration.
  */
 @Configuration
+@EnableJpaRepositories(entityManagerFactoryRef = "mainEntityManagerFactory", transactionManagerRef = "mainTransactionManager", basePackageClasses = {
+    Data.class})
 public abstract class JpaConfiguration {
 
     /** The env. */
@@ -101,11 +106,8 @@ public abstract class JpaConfiguration {
         return new HibernateExceptionTranslator();
     }
 
-    /**
-     * Returns the packages to scan.
-     *
-     * @return The packages to scan.
-     */
-    protected abstract String[] getPackagesToScan();
+    private String[] getPackagesToScan() {
+        return new String[]{Data.class.getPackage().getName()};
+    }
 
 }
