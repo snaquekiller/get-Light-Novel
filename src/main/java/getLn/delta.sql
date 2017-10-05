@@ -1,0 +1,49 @@
+CREATE TABLE manga
+(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(200),
+  author VARCHAR(100),
+  notes VARCHAR(100),
+  url VARCHAR(1000),
+  type VARCHAR(100)
+);
+
+CREATE TABLE chapter_out
+(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  id_manga INT NOT NULL,
+  hours INT NOT NULL,
+  minutes INT NOT NULL,
+  secondes INT NOT NULL,
+  days INT
+);
+
+CREATE TABLE chapter
+(
+  id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  text VARCHAR(10000),
+  num INT(11),
+  title VARCHAR(1000),
+  creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  tome INT(11),
+  file_id INT(11)
+);
+
+
+CREATE TABLE file
+(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(1000),
+  type VARCHAR(100),
+  url VARCHAR(1000)
+);
+
+CREATE TABLE user
+(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(1000),
+  pseudo VARCHAR(100),
+  nom VARCHAR(1000),
+  prenom VARCHAR(1000)
+);

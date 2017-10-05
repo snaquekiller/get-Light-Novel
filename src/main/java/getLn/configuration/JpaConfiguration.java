@@ -9,6 +9,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -59,7 +60,8 @@ public abstract class JpaConfiguration {
      *
      * @return The entity manager factory.
      */
-    @Bean
+    @Bean(name = "mainEntityManagerFactory")
+    @Primary
     public EntityManagerFactory entityManagerFactory() {
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         final LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
@@ -89,7 +91,8 @@ public abstract class JpaConfiguration {
      *
      * @return The platform transaction manager.
      */
-    @Bean
+    @Bean(name = "mainTransactionManager")
+    @Primary
     public PlatformTransactionManager transactionManager() {
         final JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory());
