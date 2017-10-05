@@ -11,6 +11,10 @@ services:
       - MARIADB_ROOT_PASSWORD=pwd123
     volumes:
       - 'mariadb_data:/bitnami'
+  postfix:
+    container_name: getLn-postfix
+    image: tozd/postfix
+
 volumes:
   mariadb_data:
     driver: local
