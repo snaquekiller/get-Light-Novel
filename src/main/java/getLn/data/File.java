@@ -1,11 +1,15 @@
 package getLn.data;
 
+import java.util.StringJoiner;
+
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * .
  */
 @Entity
+@Table(name = "file", schema = "LN")
 public class File extends AbstractDeletableJpaEntity<Long> {
 
     /** the name of the file **/
@@ -79,5 +83,12 @@ public class File extends AbstractDeletableJpaEntity<Long> {
      */
     public String getUrl() {
         return url;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("type = " + type)
+            .add("url = " + url).add("creationDate = " + creationDate).add("deletionDate = " + updateDate)
+            .add("deleted = " + deleted).add("id = " + id).toString();
     }
 }

@@ -22,7 +22,7 @@ public abstract class AbstractJpaEntity<I extends Serializable> {
     /** The id. */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private I id;
+    protected I id;
 
     /**
      * {@inheritDoc}

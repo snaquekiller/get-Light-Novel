@@ -1,12 +1,16 @@
 package getLn.data;
 
+import java.util.StringJoiner;
+
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * .
  */
 @Entity
-public class Manga extends AbstractJpaEntity<Long> {
+@Table(name = "manga", schema = "LN")
+public class Manga extends AbstractDeletableJpaEntity<Long> {
 
     /**
      * The name of the of the manga
@@ -133,5 +137,11 @@ public class Manga extends AbstractJpaEntity<Long> {
      */
     public void setUrl(final String url) {
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("author = " + author)
+            .add("Comment = " + Comment).add("url = " + url).add("type = " + type).add("id = " + id).toString();
     }
 }

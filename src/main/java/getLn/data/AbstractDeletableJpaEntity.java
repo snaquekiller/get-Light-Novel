@@ -16,22 +16,19 @@ import javax.persistence.TemporalType;
 @MappedSuperclass
 public abstract class AbstractDeletableJpaEntity<I extends Serializable> extends AbstractJpaEntity<I> {
 
-    /** The serial version UID. */
-    private static final long serialVersionUID = 1L;
-
     /** The creation date. */
-    @Column
+    @Column(name = "creation_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
+    protected Date creationDate;
 
     /** The deletion date. */
-    @Column
+    @Column(name = "update_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date deletionDate;
+    protected Date updateDate;
 
     /** Whether the entity has been deleted. */
     @Column
-    private boolean deleted;
+    protected boolean deleted;
 
     /**
      * {@inheritDoc}
@@ -57,11 +54,11 @@ public abstract class AbstractDeletableJpaEntity<I extends Serializable> extends
     /**
      * {@inheritDoc}
      */
-    public Date getDeletionDate() {
-        if (deletionDate == null) {
+    public Date getUpdateDate() {
+        if (updateDate == null) {
             return null;
         }
-        return new Date(deletionDate.getTime());
+        return new Date(updateDate.getTime());
     }
 
     /**
@@ -76,7 +73,7 @@ public abstract class AbstractDeletableJpaEntity<I extends Serializable> extends
      */
     public void delete() {
         deleted = true;
-        deletionDate = new Date();
+        updateDate = new Date();
     }
 
     /**
@@ -84,7 +81,7 @@ public abstract class AbstractDeletableJpaEntity<I extends Serializable> extends
      */
     public void restore() {
         deleted = false;
-        deletionDate = null;
+        updateDate = null;
     }
 
 }

@@ -1,14 +1,18 @@
 package getLn.data;
 
+import java.util.StringJoiner;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * .
  */
 @Entity
+@Table(name = "chapter", schema = "LN")
 public class Chapter extends AbstractDeletableJpaEntity<Long> {
 
     @Column(name = "name")
@@ -144,5 +148,13 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
      */
     public void setFile(final File file) {
         this.file = file;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("texte = " + texte)
+            .add("num = " + num).add("title = " + title).add("Tome = " + Tome).add("file = " + file)
+            .add("creationDate = " + creationDate).add("deletionDate = " + updateDate).add("deleted = " + deleted)
+            .add("id = " + id).toString();
     }
 }

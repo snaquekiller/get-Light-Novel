@@ -1,11 +1,15 @@
 package getLn.data;
 
+import java.util.StringJoiner;
+
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * .
  */
 @Entity
+@Table(name = "user", schema = "LN")
 public class User extends AbstractDeletableJpaEntity<Long> {
 
     /** the email of the user **/
@@ -100,5 +104,12 @@ public class User extends AbstractDeletableJpaEntity<Long> {
      */
     public String getPrenom() {
         return prenom;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("email = " + email).add("nom = " + nom)
+            .add("prenom = " + prenom).add("pseudo = " + pseudo).add("creationDate = " + creationDate)
+            .add("deletionDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
     }
 }

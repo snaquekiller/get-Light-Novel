@@ -1,11 +1,15 @@
 package getLn.data;
 
+import java.util.StringJoiner;
+
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * .
  */
 @Entity
+@Table(name = "chapter_out", schema = "LN")
 public class ChapterOut extends AbstractDeletableJpaEntity<Long> {
 
     /** hours **/
@@ -100,5 +104,12 @@ public class ChapterOut extends AbstractDeletableJpaEntity<Long> {
      */
     public void setHours(final int hours) {
         this.hours = hours;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("hours = " + hours)
+            .add("minutes = " + minutes).add("secondes = " + secondes).add("days = " + days).add("creationDate = " + creationDate)
+            .add("deletionDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
     }
 }

@@ -5,7 +5,10 @@ CREATE TABLE manga
   author VARCHAR(100),
   notes VARCHAR(100),
   url VARCHAR(1000),
-  type VARCHAR(100)
+  type VARCHAR(100),
+  creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  deleted TINYINT(1) DEFAULT 0
 );
 
 CREATE TABLE chapter_out
@@ -15,7 +18,10 @@ CREATE TABLE chapter_out
   hours INT NOT NULL,
   minutes INT NOT NULL,
   secondes INT NOT NULL,
-  days INT
+  days INT,
+  creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  deleted TINYINT(1) DEFAULT 0
 );
 
 CREATE TABLE chapter
@@ -27,7 +33,8 @@ CREATE TABLE chapter
   creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   tome INT(11),
-  file_id INT(11)
+  file_id INT(11),
+  deleted TINYINT(1) DEFAULT 0
 );
 
 
@@ -36,7 +43,10 @@ CREATE TABLE file
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(1000),
   type VARCHAR(100),
-  url VARCHAR(1000)
+  url VARCHAR(1000),
+  creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  deleted TINYINT(1) DEFAULT 0
 );
 
 CREATE TABLE user
@@ -45,5 +55,10 @@ CREATE TABLE user
   email VARCHAR(1000),
   pseudo VARCHAR(100),
   nom VARCHAR(1000),
-  prenom VARCHAR(1000)
+  prenom VARCHAR(1000),
+  creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  deleted TINYINT(1) DEFAULT 0
 );
+INSERT INTO LN.user (email, pseudo, nom, prenom) VALUES ('nic.guitton@gmail.com', 'snaquekiller', 'guitton', 'nicolas
+');
