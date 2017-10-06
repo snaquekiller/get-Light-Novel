@@ -14,16 +14,20 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
+import getLn.Controller.ApiControllerInterface;
 import getLn.GetLnJob;
 import getLn.data.Data;
 
 //@formatter:off
 @Configuration
 @PropertySource("classpath:spring/prd.properties")
-@Import({ JpaConfiguration.class })
+@Import({ JpaConfiguration.class
+    , NukeServletApiConfiguration.class
+})
 @ComponentScan(basePackageClasses = {
     GetLnJob.class,
     Data.class,
+    ApiControllerInterface.class
     })
 //@formatter:on
 public class GetLnConfiguration {
