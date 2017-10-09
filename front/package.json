@@ -1,0 +1,31 @@
+{
+  "name": "GetLighNovel",
+  "version": "1.0.0",
+  "description": "Get the light novel and transform them into epub",
+  "main": "index.js",
+  "repository": "https://github.com/snaquekiller/get-Light-Novel",
+  "author": "snaquekiller",
+  "license": "",
+  "scripts": {
+    "build": "./bin/lint && ./bin/build",
+    "start": "./bin/start_dev"
+  },
+  "babel": {
+    "plugins": [
+      "react-hot-loader/babel",
+      "transform-class-properties",
+      "transform-runtime",
+      "transform-decorators-legacy"
+    ],
+    "presets": [
+      "es2015",
+      "es2017",
+      "stage-3",
+      "react"
+    ]
+  },
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
+}

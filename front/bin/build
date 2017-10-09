@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source $SCRIPT_DIR/utils.sh
+
+cmd \
+  "Removing old builds" \
+  "rm -rf $SCRIPT_DIR/../public"
+
+cmd \
+  "Building project" \
+  "NODE_ENV=production $SCRIPT_DIR/../node_modules/.bin/webpack -c" 1
+
+
+
