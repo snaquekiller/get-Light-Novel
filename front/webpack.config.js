@@ -14,7 +14,7 @@ const withBuild = module => (isBuild ? module : null);
 const entries = require('./entries.config');
 
 module.exports = {
-  context: path.join(__dirname, './src/www'),
+  context: path.join(__dirname, './app'),
   entry: entries,
   output: {
     publicPath: '/',
@@ -22,7 +22,7 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   resolve: {
-    root: [path.resolve('./src/www'), path.resolve('./node_modules')],
+    root: [path.resolve('./app'), path.resolve('./node_modules')],
     extensions: ['', '.js', '.jsx', '.css', '.gif']
   },
   devtool: isBuild ? 'source-map' : 'eval',
@@ -33,7 +33,8 @@ module.exports = {
       { test: /\.scss$/, loaders: ['style', 'css', 'resolve-url', 'sass'] },
       // { test: /\.html$/, loader: 'raw' },
       { test: /\.css$/, loader: 'style!css' },
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=10000&minetype=application/font-woff'
       },
       { test: /\.gif$/, loader: 'url?limit=10000&minetype=image/gif' },
@@ -54,8 +55,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin('core.bundle.js'),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(env),
-        WITH_NK: JSON.stringify(process.env.WITH_NK)
+        NODE_ENV: JSON.stringify(env)
       }
     }),
     new HtmlWebpackPlugin({
@@ -74,7 +74,7 @@ module.exports = {
         minifyURLs: true
       }
     }),
-    withBuild(new webpack.optimize.OccurenceOrderPlugin()),
+    withBuild(new webpack.optimize.OccurrenceOrderPlugin()),
     withBuild(new webpack.NoErrorsPlugin()),
     withBuild(new webpack.optimize.DedupePlugin()),
     withBuild(new webpack.optimize.UglifyJsPlugin({
@@ -92,8 +92,8 @@ module.exports = {
       }
     })),
     withBuild(new CopyWebpackPlugin([
-            { from: 'assets/fonts', to: 'assets/fonts' },
-            { from: 'assets/images', to: 'assets/images' }
+      { from: 'assets/fonts', to: 'assets/fonts' },
+      { from: 'assets/images', to: 'assets/images' }
     ])),
   ])
 };
