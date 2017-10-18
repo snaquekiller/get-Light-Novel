@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 
 import getLn.data.User;
 import getLn.data.UserPersistence;
-
 /**
+
  * @author Nicolas
  */
 @Service
@@ -40,7 +40,7 @@ public class ScheduledGetLn {
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
         log.info("The time is dd {}", environment.getProperty("ds.password"));
-        final Iterable<User> all = userPersistence.findAll();
+        final Iterable<User> all = userPersistence.findAll(QUser.);
         log.info("The time is dd {}", all);
     }
 }
