@@ -2,41 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>getLn</groupId>
-  <artifactId>getLn</artifactId>
-  <packaging>pom</packaging>
+  <groupId>getLn-api</groupId>
+  <artifactId>getLn-api</artifactId>
+  <packaging>jar</packaging>
   <version>0.5.0</version>
 
   <name>get-light-novel</name>
-  <description>Get light Novel for ebook</description>
+  <description>Get light Novel for ebook API</description>
   <inceptionYear>2017</inceptionYear>
 
   <prerequisites>
     <maven>3.0.4</maven>
   </prerequisites>
 
-  <modules>
-    <module>get-ln-data</module>
-    <module>get-ln-api</module>
-  </modules>
-
-  <properties>
-    <java.version>1.8</java.version>
-    <tomcat-embed.version>8.5.15</tomcat-embed.version>
-    <spring-boot.version>1.5.7.RELEASE</spring-boot.version>
-    <hikaricp.version>2.6.1</hikaricp.version>
-    <java-mailx.version>1.4.1</java-mailx.version>
-    <jsoup.version>1.10.2</jsoup.version>
-    <javax-servlet.version>3.1.0</javax-servlet.version>
-    <querydsl.version>4.1.4</querydsl.version>
-    <apt.version>1.1.3</apt.version>
-  </properties>
-
   <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.7.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
+    <groupId>getLn</groupId>
+    <artifactId>getLn</artifactId>
+    <version>0.5.0</version>
   </parent>
 
   <dependencies>
@@ -98,37 +80,18 @@
     </dependency>
 
     <!--MYSQL and connection-->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-    </dependency>
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-      <version>${hikaricp.version}</version>
-    </dependency>
 
-    <dependency>
-      <groupId>com.querydsl</groupId>
-      <artifactId>querydsl-core</artifactId>
-      <version>${querydsl.version}</version>
-    </dependency>
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-apt</artifactId>
-      <version>${querydsl.version}</version>
+      <version>4.1.4</version>
     </dependency>
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>
-      <version>${querydsl.version}</version>
+      <version>4.1.4</version>
     </dependency>
-
     <!-- !MYSQL and connection-->
 
 
@@ -137,12 +100,29 @@
       <artifactId>mail</artifactId>
       <version>${java-mailx.version}</version>
     </dependency>
+    <dependency>
+      <groupId>getLn-data</groupId>
+      <artifactId>getLn-data</artifactId>
+      <version>0.5.0</version>
+    </dependency>
 
   </dependencies>
 
 
   <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
     <!-- Turn on filtering by default for application properties -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </resource>
+    </resources>
+
+
     <plugins>
 
       <plugin>
@@ -155,6 +135,35 @@
       </plugin>
 
       <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <webResources>
+            <resource>
+              <directory>src/main/resources/spring</directory>
+              <targetPath>WEB-INF/classes/spring</targetPath>
+              <filtering>true</filtering>
+              <includes>
+                <include>**/*.properties</include>
+              </includes>
+            </resource>
+          </webResources>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <webappDirectory>target/${project.name}/deploy</webappDirectory>
+            </configuration>
+            <goals>
+              <goal>exploded</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!--Generation des Predicates.-->
+
+      <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <argLine>-XX:MaxMetaspaceSize=512m</argLine>
@@ -162,6 +171,32 @@
         <version>2.18.1</version>
       </plugin>
 
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <executable>true</executable>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>

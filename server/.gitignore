@@ -1,0 +1,9 @@
+.checkstyle
+.classpath
+.project
+.settings
+.sonar-ide.properties
+target/
+.idea/
+*.iml
+.DS_store

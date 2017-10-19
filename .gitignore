@@ -1,7 +1,7 @@
 server/manga/*
-server/dist/*
-server/build/*
-server/target/*
+dist/*
+build/*
+target/*
 
 .idea
 .DS_STORE
