@@ -40,7 +40,7 @@ public class ScheduledGetLn {
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
         log.info("The time is dd {}", environment.getProperty("ds.password"));
-        final Iterable<User> all = userPersistence.findAll(QUser.us);
+        final Iterable<User> all = userPersistence.findAll();
         log.info("The time is dd {}", all);
     }
 
