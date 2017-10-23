@@ -14,7 +14,7 @@ const withBuild = module => (isBuild ? module : null);
 const entries = require('./entries.config');
 
 module.exports = {
-  context: path.join(__dirname, './app'),
+  context: path.join(__dirname, './src'),
   entry: entries,
   output: {
     publicPath: '/',
@@ -22,8 +22,8 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   resolve: {
-    modules: ['node_modules',
-      'app'],
+    modules: ['./node_modules',
+      './src'],
     extensions: ['.js', '.jsx', '.css', '.gif']
   },
   devtool: isBuild ? 'source-map' : 'eval',

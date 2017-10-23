@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-PORT=3001
-BASE=src/app
+PORT=15110
+BASE=src
 DEBUG=nuke:error webpack-dev-server \
     --history-api-fallback \
     --host 0.0.0.0 \

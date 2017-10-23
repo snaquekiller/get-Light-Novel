@@ -23,7 +23,7 @@
   },
   "scripts": {
     "clean": "rm -rf public/*",
-    "lint": "eslint ./app",
+    "lint": "eslint ./src",
     "lint:fix": "npm run lint -- --fix",
     "build": "./bin/lint && ./bin/build",
     "start": "./bin/start_dev"
@@ -48,7 +48,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-hot-loader": "^3.0.0",
-    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "resolve-url-loader": "^2.1.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
