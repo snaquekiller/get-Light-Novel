@@ -15,8 +15,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
 import get.ln.data.Data;
-import getLn.Controller.ApiControllerInterface;
 import getLn.GetLnJob;
+import getLn.controller.ApiControllerInterface;
 
 //@formatter:off
 @Configuration
