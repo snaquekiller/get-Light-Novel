@@ -22,14 +22,15 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   resolve: {
-    root: [path.resolve('./app'), path.resolve('./node_modules')],
-    extensions: ['', '.js', '.jsx', '.css', '.gif']
+    modules: ['node_modules',
+      'app'],
+    extensions: ['.js', '.jsx', '.css', '.gif']
   },
   devtool: isBuild ? 'source-map' : 'eval',
   module: {
     loaders: [
       { test: /\.json$/, loader: 'json-loader' },
-      { test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/ },
+      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.scss$/, loaders: ['style', 'css', 'resolve-url', 'sass'] },
       // { test: /\.html$/, loader: 'raw' },
       { test: /\.css$/, loader: 'style!css' },
@@ -43,9 +44,6 @@ module.exports = {
       { test: /\.png$/, loader: 'url?limit=10000&minetype=image/png' },
       { test: /\.ico/, loader: 'url?limit=10000&minetype=image/x-icon' },
     ]
-  },
-  sassLoader: {
-    // includePaths: [path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/')]
   },
   plugins: clean([
     new webpack.ProvidePlugin({
