@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import get.ln.data.MangaPersistenceService;
+import get.ln.data.QUser;
 import get.ln.data.User;
 import get.ln.data.UserPersistenceService;
 
@@ -40,7 +41,7 @@ public class ScheduledGetLn {
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
         log.info("The time is dd {}", environment.getProperty("ds.password"));
-        final Iterable<User> all = userPersistence.findAll();
+        final Iterable<User> all = userPersistence.findAll(QUser.user.id.eq(10L));
         log.info("The time is dd {}", all);
     }
 

@@ -10,8 +10,12 @@
       <sourceFolder url="file://$MODULE_DIR$/get-ln-data/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/get-ln-data/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/get-ln-data/src/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/get-ln-data/target/generated-sources/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/doc" />
       <excludeFolder url="file://$MODULE_DIR$/get-ln-api/target" />
+      <excludeFolder url="file://$MODULE_DIR$/get-ln-data/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/get-ln-data/target/maven-archiver" />
+      <excludeFolder url="file://$MODULE_DIR$/get-ln-data/target/maven-status" />
       <excludeFolder url="file://$MODULE_DIR$/manga" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

@@ -39,6 +39,20 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>get-ln-data</groupId>
+        <artifactId>get-ln-data</artifactId>
+        <version>0.5.0</version>
+      </dependency>
+      <dependency>
+        <groupId>get-ln-api</groupId>
+        <artifactId>get-ln-api</artifactId>
+        <version>0.5.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
     <dependency>
@@ -139,7 +153,6 @@
     </dependency>
 
   </dependencies>
-
 
   <build>
     <!-- Turn on filtering by default for application properties -->
