@@ -151,6 +151,10 @@
       <artifactId>mail</artifactId>
       <version>${java-mailx.version}</version>
     </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+    </dependency>
 
   </dependencies>
 
