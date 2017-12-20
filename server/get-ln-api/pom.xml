@@ -26,18 +26,15 @@
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
-      <version>${jsoup.version}</version>
     </dependency>
     <!-- springboot-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>
     <!-- tag::actuator[] -->
     <dependency>
@@ -56,27 +53,23 @@
     <dependency>
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
-      <version>1</version>
     </dependency>
 
     <!-- Servlet API -->
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-core</artifactId>
-      <version>${tomcat-embed.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
-      <version>${spring-boot.version}</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <version>${javax-servlet.version}</version>
     </dependency>
 
     <!--MYSQL and connection-->
@@ -85,12 +78,10 @@
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-apt</artifactId>
-      <version>4.1.4</version>
     </dependency>
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>
-      <version>4.1.4</version>
     </dependency>
     <!-- !MYSQL and connection-->
 
@@ -98,12 +89,10 @@
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>mail</artifactId>
-      <version>${java-mailx.version}</version>
     </dependency>
     <dependency>
       <groupId>getLn</groupId>
       <artifactId>get-ln-data</artifactId>
-      <version>${revisions}</version>
     </dependency>
 
   </dependencies>
