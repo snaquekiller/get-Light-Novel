@@ -5,9 +5,17 @@ import javax.inject.Inject;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import org.joda.time.DateTime;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.QSort;
 import org.springframework.stereotype.Service;
 
+import get.ln.data.Chapter;
+import get.ln.data.ChapterPersistenceService;
+import get.ln.data.Manga;
 import get.ln.data.MangaPersistenceService;
+import get.ln.data.QChapter;
 import get.ln.data.QMangaOut;
 
 /**
@@ -18,6 +26,18 @@ public class ScanService {
 
     @Inject
     private MangaPersistenceService mangaPersistenceService;
+
+    @Inject
+    private ChapterPersistenceService chapterPersistenceService;
+
+    private Chapter getLastChapter(Manga manga) {
+        if(manga != null && manga.getId() != null) {
+            Pageable page = new PageRequest(0, 1, new QSort(QChapter.chapter.creationDate.asc()));
+            final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(manga.getId()), page);
+            return all.getContent().get(0);
+        }
+        return null;
+    }
 
     private void getNextManga() {
         final DateTime dateTime = DateTime.now();

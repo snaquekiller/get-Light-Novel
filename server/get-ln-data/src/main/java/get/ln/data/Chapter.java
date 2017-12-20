@@ -1,5 +1,6 @@
 package get.ln.data;
 
+import java.util.Date;
 import java.util.StringJoiner;
 
 import javax.persistence.Column;
