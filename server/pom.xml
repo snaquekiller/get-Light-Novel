@@ -5,7 +5,7 @@
   <groupId>getLn</groupId>
   <artifactId>getLn</artifactId>
   <packaging>pom</packaging>
-  <version>0.5.0</version>
+  <version>${revisions}</version>
 
   <name>get-light-novel</name>
   <description>Get light Novel for ebook</description>
@@ -30,6 +30,7 @@
     <javax-servlet.version>3.1.0</javax-servlet.version>
     <querydsl.version>4.1.4</querydsl.version>
     <apt.version>1.1.3</apt.version>
+    <revisions>0.5.0</revisions>
   </properties>
 
   <parent>
@@ -42,14 +43,14 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>get-ln-data</groupId>
+        <groupId>getLn</groupId>
         <artifactId>get-ln-data</artifactId>
-        <version>0.5.0</version>
+        <version>${revisions}</version>
       </dependency>
       <dependency>
-        <groupId>get-ln-api</groupId>
+        <groupId>getLn</groupId>
         <artifactId>get-ln-api</artifactId>
-        <version>0.5.0</version>
+        <version>${revisions}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

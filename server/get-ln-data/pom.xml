@@ -2,23 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!--<groupId>get-ln-data</groupId>-->
   <artifactId>get-ln-data</artifactId>
   <packaging>jar</packaging>
-  <version>0.5.0</version>
+  <version>${revisions}</version>
 
   <name>get-light-novel-data</name>
   <description>Get light Novel for ebook data</description>
   <inceptionYear>2017</inceptionYear>
 
   <prerequisites>
-    <maven>3.0.4</maven>
+    <maven>3.3.9</maven>
   </prerequisites>
 
   <parent>
     <groupId>getLn</groupId>
     <artifactId>getLn</artifactId>
-    <version>0.5.0</version>
+    <version>${revisions}</version>
+    <relativePath>..</relativePath>
   </parent>
 
   <dependencies>

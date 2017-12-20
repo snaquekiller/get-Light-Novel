@@ -2,10 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>get-ln-api</groupId>
   <artifactId>get-ln-api</artifactId>
   <packaging>jar</packaging>
-  <version>0.5.0</version>
+  <version>${revisions}</version>
 
   <name>get-light-novel</name>
   <description>Get light Novel for ebook API</description>
@@ -18,7 +17,8 @@
   <parent>
     <groupId>getLn</groupId>
     <artifactId>getLn</artifactId>
-    <version>0.5.0</version>
+    <version>${revisions}</version>
+    <relativePath>..</relativePath>
   </parent>
 
   <dependencies>
@@ -101,9 +101,9 @@
       <version>${java-mailx.version}</version>
     </dependency>
     <dependency>
-      <groupId>getLn-data</groupId>
-      <artifactId>getLn-data</artifactId>
-      <version>0.5.0</version>
+      <groupId>getLn</groupId>
+      <artifactId>get-ln-data</artifactId>
+      <version>${revisions}</version>
     </dependency>
 
   </dependencies>
