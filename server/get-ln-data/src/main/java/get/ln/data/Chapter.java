@@ -5,8 +5,11 @@ import java.util.StringJoiner;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import get.ln.data.commons.AbstractDeletableJpaEntity;
 
 /**
  * .
@@ -18,13 +21,21 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
     @Column(name = "name")
     private String name;
 
+    @Column
     private String texte;
 
+    @Column
     private int num = 0;
 
+    @Column
     private String title;
 
+    @Column
     private String Tome;
+
+    @ManyToOne
+    @JoinColumn(name = "manga_id")
+    private Manga manga;
 
     @JoinColumn(name = "profile_picture")
     @OneToOne

@@ -2,8 +2,13 @@ package get.ln.data;
 
 import java.util.StringJoiner;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import get.ln.data.commons.AbstractDeletableJpaEntity;
 
 /**
  * .
@@ -13,16 +18,24 @@ import javax.persistence.Table;
 public class MangaOut extends AbstractDeletableJpaEntity<Long> {
 
     /** hours **/
+    @Column
     private int hours;
 
     /** minutes **/
+    @Column
     private int minutes;
 
     /** secondes **/
+    @Column
     private int secondes;
 
     /** the days */
+    @Column
     private Integer days;
+
+    @ManyToOne
+    @JoinColumn(name = "manga_id")
+    private Manga manga;
 
     public MangaOut() {
     }

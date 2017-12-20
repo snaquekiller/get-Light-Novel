@@ -10,7 +10,7 @@ public enum BOOK_TYPE {
     private final String book;
 
     /**
-     * @param text
+     * @param book
      */
     private BOOK_TYPE(final String book) {
         this.book = book;

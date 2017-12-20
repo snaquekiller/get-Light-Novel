@@ -2,8 +2,13 @@ package get.ln.data;
 
 import java.util.StringJoiner;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
+
+import get.ln.data.commons.AbstractDeletableJpaEntity;
 
 /**
  * .
@@ -15,12 +20,32 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
     /**
      * The name of the of the manga
      */
+    @Column
     private String name;
 
     /**
      * The author of the manga
      */
+    @Column
     private String author;
+
+    /**
+     * IF you have a comment
+     */
+    @Column
+    private String Comment;
+
+    /**
+     * The url where you can scrap the website
+     */
+    @Column
+    private String url;
+
+    /**
+     * BookType
+     */
+    @Enumerated(EnumType.STRING)
+    private BOOK_TYPE type;
 
     public Manga() {
     }
@@ -34,28 +59,21 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
     }
 
     /**
-     * IF you have a comment
-     */
-
-    private String Comment;
-
-    /**
-     * The url where you can scrap the website
-     */
-    private String url;
-
-    /**
-     * BookType
-     */
-    private BOOK_TYPE type;
-
-    /**
      * Gets The url where you can scrap the website.
      *
      * @return Value of The url where you can scrap the website.
      */
     public String getUrl() {
         return url;
+    }
+
+    /**
+     * Sets new The url where you can scrap the website.
+     *
+     * @param url New value of The url where you can scrap the website.
+     */
+    public void setUrl(final String url) {
+        this.url = url;
     }
 
     /**
@@ -68,12 +86,12 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
     }
 
     /**
-     * Sets new BookType.
+     * Sets new The name of the of the manga.
      *
-     * @param type New value of BookType.
+     * @param name New value of The name of the of the manga.
      */
-    public void setType(final BOOK_TYPE type) {
-        this.type = type;
+    public void setName(final String name) {
+        this.name = name;
     }
 
     /**
@@ -104,24 +122,6 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
     }
 
     /**
-     * Gets BookType.
-     *
-     * @return Value of BookType.
-     */
-    public BOOK_TYPE getType() {
-        return type;
-    }
-
-    /**
-     * Sets new The name of the of the manga.
-     *
-     * @param name New value of The name of the of the manga.
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
      * Sets new IF you have a comment.
      *
      * @param Comment New value of IF you have a comment.
@@ -131,12 +131,21 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
     }
 
     /**
-     * Sets new The url where you can scrap the website.
+     * Gets BookType.
      *
-     * @param url New value of The url where you can scrap the website.
+     * @return Value of BookType.
      */
-    public void setUrl(final String url) {
-        this.url = url;
+    public BOOK_TYPE getType() {
+        return type;
+    }
+
+    /**
+     * Sets new BookType.
+     *
+     * @param type New value of BookType.
+     */
+    public void setType(final BOOK_TYPE type) {
+        this.type = type;
     }
 
     @Override

@@ -2,11 +2,12 @@ package get.ln.data;
 
 import org.springframework.stereotype.Service;
 
+import get.ln.data.commons.DataRepository;
+
 /**
  * .
  */
 @Service
 public interface MangaOutPersistenceService extends DataRepository<MangaOut> {
-    //public class ChapterPersistence implements Repository<Chapter, Long> {
 
 }

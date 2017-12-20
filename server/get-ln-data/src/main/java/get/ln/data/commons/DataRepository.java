@@ -1,4 +1,4 @@
-package get.ln.data;
+package get.ln.data.commons;
 
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;

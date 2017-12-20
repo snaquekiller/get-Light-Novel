@@ -1,4 +1,4 @@
-package get.ln.data;
+package get.ln.data.commons;
 
 import java.io.Serializable;
 import java.util.Objects;

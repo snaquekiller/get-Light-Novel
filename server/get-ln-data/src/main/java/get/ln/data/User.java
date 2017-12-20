@@ -2,8 +2,11 @@ package get.ln.data;
 
 import java.util.StringJoiner;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import get.ln.data.commons.AbstractDeletableJpaEntity;
 
 /**
  * .
@@ -13,15 +16,19 @@ import javax.persistence.Table;
 public class User extends AbstractDeletableJpaEntity<Long> {
 
     /** the email of the user **/
+    @Column
     private String email;
 
     /** The name of the user **/
+    @Column
     private String nom;
 
     /** Prenom **/
+    @Column
     private String prenom;
 
     /** the pseudo **/
+    @Column
     private String pseudo;
 
     public User() {

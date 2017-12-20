@@ -2,8 +2,11 @@ package get.ln.data;
 
 import java.util.StringJoiner;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import get.ln.data.commons.AbstractDeletableJpaEntity;
 
 /**
  * .
@@ -13,12 +16,15 @@ import javax.persistence.Table;
 public class File extends AbstractDeletableJpaEntity<Long> {
 
     /** the name of the file **/
+    @Column
     private String name;
 
     /** the type of the file **/
+    @Column
     private String type;
 
     /** the url **/
+    @Column
     private String url;
 
     public File() {
