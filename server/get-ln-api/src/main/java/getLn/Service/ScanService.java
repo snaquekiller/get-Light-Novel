@@ -14,9 +14,12 @@ import org.springframework.stereotype.Service;
 import get.ln.data.Chapter;
 import get.ln.data.ChapterPersistenceService;
 import get.ln.data.Manga;
+import get.ln.data.MangaOut;
+import get.ln.data.MangaOutPersistenceService;
 import get.ln.data.MangaPersistenceService;
 import get.ln.data.QChapter;
 import get.ln.data.QMangaOut;
+import get.ln.data.Status;
 
 /**
  * .
@@ -28,25 +31,50 @@ public class ScanService {
     private MangaPersistenceService mangaPersistenceService;
 
     @Inject
+    private MangaOutPersistenceService mangaOutPersistenceService;
+
+    @Inject
     private ChapterPersistenceService chapterPersistenceService;
 
-    private Chapter getLastChapter(Manga manga) {
-        if(manga != null && manga.getId() != null) {
-            Pageable page = new PageRequest(0, 1, new QSort(QChapter.chapter.creationDate.asc()));
+    private Chapter getLastChapter(final Manga manga) {
+        if (manga != null && manga.getId() != null) {
+            final Pageable page = new PageRequest(0, 1, new QSort(QChapter.chapter.creationDate.asc()));
             final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(manga.getId()), page);
             return all.getContent().get(0);
         }
         return null;
     }
 
-    private void getNextManga() {
-        final DateTime dateTime = DateTime.now();
-        final int dayOfYear = dateTime.getDayOfYear();
-        final int hours = dateTime.getHourOfDay();
-        final int minuteOfDay = dateTime.getMinuteOfDay();
-        final QMangaOut mangaOut = QMangaOut.mangaOut;
-        final BooleanExpression between = ((QMangaOut) mangaOut).hours.between(hours, hours + 1);
+    private void dd() {
+        getNextManga().forEach(mangaOut -> {
+            mangaOut.setStatus(Status.IN_PROGRESS);
+            
+        });
 
-        mangaPersistenceService.findAll(QMangaOut.mangaOut.hours.eq(10));
+    }
+
+    private Iterable<MangaOut> getNextManga() {
+        final DateTime dateTime = DateTime.now();
+        final int minuteOfHour = dateTime.getMinuteOfHour();
+        final QMangaOut mangaOut = QMangaOut.mangaOut;
+        final int less15 = minuteOfHour - 15;
+
+        final BooleanExpression minutes;
+        if (minuteOfHour < 15) {
+            minutes = mangaOut.minutes.between(60 + less15, 60).or(mangaOut.minutes.between(0, minuteOfHour));
+        } else {
+            minutes = mangaOut.minutes.between(less15, minuteOfHour);
+        }
+
+        final int hours = dateTime.getHourOfDay();
+        final BooleanExpression between = mangaOut.hours.between(hours, hours + 1)
+            //minutes
+            .and(minutes)
+            //days
+            .and(mangaOut.days.isNull().or(mangaOut.days.eq(dateTime.getDayOfWeek())))
+            //
+            .and(mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.toDate()));
+
+        return mangaOutPersistenceService.findAll(between);
     }
 }

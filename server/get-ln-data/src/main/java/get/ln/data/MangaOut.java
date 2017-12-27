@@ -4,6 +4,8 @@ import java.util.StringJoiner;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -33,6 +35,17 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
     @Column
     private Integer days;
 
+    /** the days */
+    @Column(name = "nb_try")
+    private int nbTry;
+
+    /** the status of the mangaout if we already try or not */
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    /**
+     * The manga
+     */
     @ManyToOne
     @JoinColumn(name = "manga_id")
     private Manga manga;
@@ -119,10 +132,65 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
         this.hours = hours;
     }
 
+    /**
+     * Sets new The manga.
+     *
+     * @param manga New value of The manga.
+     */
+    public void setManga(final Manga manga) {
+        this.manga = manga;
+    }
+
+    /**
+     * Sets new the status of the mangaout if we already try or not.
+     *
+     * @param status New value of the status of the mangaout if we already try or not.
+     */
+    public void setStatus(final Status status) {
+        this.status = status;
+    }
+
+    /**
+     * Sets new the days.
+     *
+     * @param nbTry New value of the days.
+     */
+    public void setNbTry(final int nbTry) {
+        this.nbTry = nbTry;
+    }
+
+    /**
+     * Gets The manga.
+     *
+     * @return Value of The manga.
+     */
+    public Manga getManga() {
+        return manga;
+    }
+
+    /**
+     * Gets the days.
+     *
+     * @return Value of the days.
+     */
+    public int getNbTry() {
+        return nbTry;
+    }
+
+    /**
+     * Gets the status of the mangaout if we already try or not.
+     *
+     * @return Value of the status of the mangaout if we already try or not.
+     */
+    public Status getStatus() {
+        return status;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("hours = " + hours)
-            .add("minutes = " + minutes).add("secondes = " + secondes).add("days = " + days).add("creationDate = " + creationDate)
-            .add("deletionDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
+            .add("minutes = " + minutes).add("secondes = " + secondes).add("days = " + days).add("nbTry = " + nbTry)
+            .add("status = " + status).add("manga = " + manga).add("creationDate = " + creationDate)
+            .add("updateDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
     }
 }
