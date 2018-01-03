@@ -1,6 +1,7 @@
 package getLn.Service;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.sun.deploy.security.ValidationState.TYPE;
+import javax.inject.Inject;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,8 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import get.ln.data.Chapter;
-import get.ln.data.File;
+import get.ln.data.Manga;
 import getLn.model.ChapterDto;
 
 /**
@@ -27,6 +27,7 @@ import getLn.model.ChapterDto;
  */
 @Service
 public class ScrapService {
+
     /** The logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ScanService.class);
 
@@ -34,13 +35,17 @@ public class ScrapService {
 
     private static final String BOOK_NAME = "Douluo Dalu 3";
 
-    public static void main() throws IOException {
+    public static final String UTF_8 = "utf-8";
+
+    @Inject
+    private ZipService zipService;
+
+    public /*static */ void main() throws IOException {
         if (false) {
             String title = "";
             final List<ChapterDto> chapters = new ArrayList<ChapterDto>();
             for (int i = 1066; i < 1068; i++) {
                 try {
-
                     final String bookWithoutSpecialChar = BOOK_NAME.replaceAll("\\W", "_");
                     final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, i);
                     ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
@@ -57,24 +62,24 @@ public class ScrapService {
         }
     }
 
-    public void test(String bookName, int chapterNumber) {
-        String title = "";
+    public ChapterDto scrapOne(Manga manga, int chapterNumber) {
         try {
-            final String bookWithoutSpecialChar = bookName.replaceAll("\\W", "_");
+            final String bookWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
             final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, chapterNumber);
+            String bookName = manga.getName();
             ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), chapterNumber, bookName, fileName);
             chapter = addTextAndTitle(chapterNumber, chapter);
-            writeChapter(bookName, chapter.getTextList(), chapter);
-              title += String.format("\t<li>\n\t<a href=\"%s#%d\">%s</a>\n</li>\n", fileName, chapterNumber, chapter.getName());
+            chapter.setFile(writeChapter(bookName, chapter.getTextList(), chapter));
+            return chapter;
         } catch (final Exception e) {
-            System.err.println("Chapter  " + chapterNumber + "not found ");
+            LOGGER.error("Chapter  " + chapterNumber + "not found ");
         }
+        return null;
     }
 
-    private static ChapterDto addTextAndTitle(final int i, final ChapterDto chapter) throws IOException {
+    private ChapterDto addTextAndTitle(final int i, final ChapterDto chapter) throws IOException {
         final Document doc = Jsoup.connect("http://lnmtl.com/chapter/" + ligh_novel + i).get();
         final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
-        System.out.println(chapterTitle);
         final List<String> textList =
             doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
                 .collect(Collectors.toList());
@@ -83,7 +88,7 @@ public class ScrapService {
         return chapter;
     }
 
-    private static void createTableMatiere(final String titleBook, final String list) {
+    private void createTableMatiere(final String titleBook, final String list) {
         final String title = titleBook.replace(" ", "_");
 
         final String head =
@@ -111,7 +116,7 @@ public class ScrapService {
         }
     }
 
-    private static void writeChapter(final String titleBook, final List<String> textList, final ChapterDto chapter) {
+    private File writeChapter(final String titleBook, final List<String> textList, final ChapterDto chapter) {
         Writer writer = null;
         final String head =
             "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" + "\t<head>\n" +
@@ -123,26 +128,15 @@ public class ScrapService {
         final String end = "  </body>\n" + "</html>";
         try {
             final String name = String.format("%s/%s", chapter.getFilePath(), chapter.getFileName());
-            writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(name),
-                    "utf-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), "utf-8"));
             writer.write(head);
             String texte = "";
             for (final String text : textList) {
-                texte = texte + "\n"+ text;
+                texte = texte + "\n" + text;
                 writer.write(String.format("<p>%s</p>\n\n", text));
             }
             writer.write(end);
-
-
-            File file = new File();
-            file.setName(name);
-            file.setType();
-            Chapter chapter1 = new Chapter();
-            chapter1.setFile(file);
-            chapter1.setNum(chapter.getChapterNumber());
-            chapter1.setTexte(texte);
-            chapter1.setTome();
+            return new java.io.File(name);
         } catch (final IOException ex) {
             // report
             LOGGER.error("can't write" + ex);
@@ -155,9 +149,15 @@ public class ScrapService {
                 LOGGER.error("c'ant close" + ex);
             }
         }
+        return null;
     }
 
-    private static void createTOX(final String titleBook, final List<ChapterDto> chapters) {
+    /**
+     * Function for create the table of chapter
+     * @param titleBook the book name
+     * @param chapters all chapters you want list
+     */
+    private File createTOX(final String titleBook, final List<ChapterDto> chapters) {
         Writer writer = null;
         final String head = "<?xml version='1.0' encoding='utf-8'?>\n" + "<!DOCTYPE ncx PUBLIC \"-//NISO//DTD ncx 2005-1//EN\"" +
             " \"http://www.daisy.org/z3986/2005/ncx-2005-1.dtd\"><ncx version=\"2005-1\" xmlns=\"http://www.daisy.org/z3986/2005/ncx/\">\n" +
@@ -166,7 +166,8 @@ public class ScrapService {
             "\t\t<meta content=\"0\" name=\"dtb:maxPageNumber\"/>\n" + "\t</head>\n" + "\t<docTitle>\n" + "\t\t<text>" +
             titleBook + "</text>\n" + "\t</docTitle>\n\t<navMap>";
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("tox.ncx"), "utf-8"));
+            final String name = "tox.ncx";
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), UTF_8));
             writer.write(head);
             for (int i = 0; i < chapters.size(); i++) {
                 final ChapterDto chapter = chapters.get(i);
@@ -175,17 +176,19 @@ public class ScrapService {
                     i, i, chapter.getName(), chapter.getFileName()));
             }
             writer.write("</navMap>\n" + "</ncx>");
+            return new File(name);
         } catch (final IOException ex) {
             // report
-            System.err.println("can't write" + ex);
+            LOGGER.error("can't write" + ex);
         } finally {
             try {
                 if (null != writer) {
                     writer.close();
                 }
             } catch (final Exception ex) {/*ignore*/
-                System.err.println("c'ant close" + ex);
+                LOGGER.error("c'ant close" + ex);
             }
         }
+        return null;
     }
 }

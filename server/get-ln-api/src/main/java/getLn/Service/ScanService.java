@@ -7,21 +7,13 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.QSort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import get.ln.data.Chapter;
-import get.ln.data.ChapterPersistenceService;
-import get.ln.data.Manga;
 import get.ln.data.MangaOut;
 import get.ln.data.MangaOutPersistenceService;
 import get.ln.data.MangaPersistenceService;
-import get.ln.data.QChapter;
 import get.ln.data.QMangaOut;
 import get.ln.data.Status;
 
@@ -40,17 +32,9 @@ public class ScanService {
     @Inject
     private MangaOutPersistenceService mangaOutPersistenceService;
 
-    @Inject
-    private ChapterPersistenceService chapterPersistenceService;
 
-    private Chapter getLastChapter(final Manga manga) {
-        if (manga != null && manga.getId() != null) {
-            final Pageable page = new PageRequest(0, 1, new QSort(QChapter.chapter.creationDate.asc()));
-            final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(manga.getId()), page);
-            return all.getContent().get(0);
-        }
-        return null;
-    }
+
+
 
     @Transactional(propagation = Propagation.REQUIRES_NEW )
     public void setStatus(MangaOut mangaOut){

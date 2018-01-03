@@ -148,6 +148,15 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
         this.type = type;
     }
 
+    public String getBookNameWithoutSpecialChar(){
+        return name.replaceAll("\\W", "_");
+    }
+
+    public String getChapterFileName(int chapterNumber){
+        String bookWithoutSpecialChar = getBookNameWithoutSpecialChar();
+        return String.format("%s_%d.xhtml", bookWithoutSpecialChar, chapterNumber);
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("author = " + author)

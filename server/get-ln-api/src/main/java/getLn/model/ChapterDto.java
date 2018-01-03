@@ -1,5 +1,6 @@
 package getLn.model;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +31,16 @@ public class ChapterDto {
 
     /** The list that contains all the text of the chapter **/
     private List<String> textList;
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(final File file) {
+        this.file = file;
+    }
+
+    private File file;
 
     /**
      * The text of the
