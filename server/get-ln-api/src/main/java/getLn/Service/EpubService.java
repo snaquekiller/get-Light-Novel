@@ -6,20 +6,16 @@ import java.util.Collections;
 import javax.inject.Inject;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.QSort;
 import org.springframework.stereotype.Service;
 
-import get.ln.data.Chapter;
-import get.ln.data.ChapterPersistenceService;
-import get.ln.data.FilePersistenceService;
-import get.ln.data.Manga;
-import get.ln.data.MangaSubscription;
-import get.ln.data.MangaSubscriptionService;
-import get.ln.data.QChapter;
-import get.ln.data.QMangaSubscription;
 import getLn.model.ChapterDto;
+import getln.data.Entity.Chapter;
+import getln.data.Entity.Manga;
+import getln.data.Entity.MangaSubscription;
+import getln.data.Service.ChapterPersistenceService;
+import getln.data.Service.ChapterService;
+import getln.data.Service.FilePersistenceService;
+import getln.data.Service.MangaSubscriptionService;
 
 /**
  * .
@@ -32,6 +28,9 @@ public class EpubService {
 
     @Inject
     private ZipService zipService;
+
+    @Inject
+    private ChapterService chapterService;
 
     @Inject
     private ChapterPersistenceService chapterPersistenceService;
@@ -47,8 +46,7 @@ public class EpubService {
 
     private Chapter getLastChapter(final Manga manga) {
         if (manga != null && manga.getId() != null) {
-            final Pageable page = new PageRequest(0, 1, new QSort(QChapter.chapter.creationDate.asc()));
-            final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(manga.getId()), page);
+            final Page<Chapter> all = chapterService.findByMangaId(0, 1, manga.getId());
             return all.getContent().get(0);
         }
         return null;
@@ -63,13 +61,15 @@ public class EpubService {
         final String name = chapterXhtml.getFileName().split(".")[0] + ".epub";
         // create the zip
         final File epub = zipService.zipFile(name, Collections.singletonList(chapterXhtml.getFile()));
-        final get.ln.data.File file = new get.ln.data.File();
+        final getln.data.Entity.File file = new getln.data.Entity.File();
         file.setName(epub.getName());
         file.setType("epub");
         file.setUrl(epub.getPath());
 
+        chapterXhtml.getFile().delete();
+
         // Create the File
-        final get.ln.data.File epubSql = filePersistenceService.save(file);
+        final getln.data.Entity.File epubSql = filePersistenceService.save(file);
         final Chapter newChapter = new Chapter();
         newChapter.setNum(chapterNumber);
         newChapter.setFile(epubSql);
@@ -77,8 +77,7 @@ public class EpubService {
         chapterPersistenceService.save(newChapter);
 
         //need to send chapter to all user who subscribe
-        final Iterable<MangaSubscription> all =
-            mangaSubscriptionService.findAll(QMangaSubscription.mangaSubscription.manga.id.eq(manga.getId()));
+        final Iterable<MangaSubscription> all = mangaSubscriptionService.findByMangaId(manga.getId());
         all.forEach(mangaSubscription -> {
             //then send mail
             mailService.sendMail(mangaSubscription.getUser().getEmail(), epub.getPath(), epub.getName());

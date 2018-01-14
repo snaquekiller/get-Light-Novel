@@ -1,8 +1,9 @@
-package get.ln.data;
+package getln.data.Service;
 
 import org.springframework.stereotype.Service;
 
-import get.ln.data.commons.DataRepository;
+import getln.data.Entity.Manga;
+import getln.data.commons.DataRepository;
 
 /**
  * .

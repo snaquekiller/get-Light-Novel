@@ -1,4 +1,4 @@
-package get.ln.data;
+package getln.data;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

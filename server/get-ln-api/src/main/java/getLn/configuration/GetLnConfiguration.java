@@ -14,7 +14,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
-import get.ln.data.Data;
+import getln.data.Data;
 import getLn.GetLnJob;
 import getLn.controller.ApiControllerInterface;
 

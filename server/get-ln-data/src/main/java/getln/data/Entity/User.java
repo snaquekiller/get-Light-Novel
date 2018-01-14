@@ -1,4 +1,4 @@
-package get.ln.data;
+package getln.data.Entity;
 
 import java.util.StringJoiner;
 
@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import get.ln.data.commons.AbstractDeletableJpaEntity;
+import getln.data.commons.AbstractDeletableJpaEntity;
 
 /**
  * .

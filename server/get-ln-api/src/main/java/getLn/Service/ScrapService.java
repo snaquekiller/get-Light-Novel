@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import get.ln.data.Manga;
+import getln.data.Entity.Manga;
 import getLn.model.ChapterDto;
 
 /**
@@ -150,6 +150,10 @@ public class ScrapService {
             }
         }
         return null;
+    }
+
+    public void deleteOldChapter(File file){
+        file.delete();
     }
 
     /**

@@ -20,7 +20,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import get.ln.data.Data;
+import getln.data.Data;
 
 /**
  * Base JPA configuration.

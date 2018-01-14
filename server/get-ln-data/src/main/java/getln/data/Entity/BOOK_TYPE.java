@@ -1,4 +1,4 @@
-package get.ln.data;
+package getln.data.Entity;
 
 /**
  * .
