@@ -13,9 +13,9 @@ import getln.data.Entity.Chapter;
 import getln.data.Entity.Manga;
 import getln.data.Entity.MangaSubscription;
 import getln.data.Service.ChapterPersistenceService;
-import getln.data.Service.ChapterService;
 import getln.data.Service.FilePersistenceService;
-import getln.data.Service.MangaSubscriptionService;
+import getln.service.ChapterService;
+import getln.service.MangaSubscriptionService;
 
 /**
  * .
@@ -52,7 +52,7 @@ public class EpubService {
         return null;
     }
 
-    public void transformOneChapter(Manga manga) {
+    public void transformOneChapter(final Manga manga) {
         final Chapter lastChapter = getLastChapter(manga);
         final int chapterNumber = lastChapter.getNum() + 1;
 

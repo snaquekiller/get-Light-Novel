@@ -1,4 +1,4 @@
-package getln.data.Service;
+package getln.service;
 
 import javax.inject.Inject;
 
@@ -9,7 +9,8 @@ import org.springframework.data.querydsl.QSort;
 import org.springframework.stereotype.Service;
 
 import getln.data.Entity.Chapter;
-import getln.data.QChapter;
+import getln.data.Entity.QChapter;
+import getln.data.Service.ChapterPersistenceService;
 
 /**
  * .
@@ -20,8 +21,7 @@ public class ChapterService {
     @Inject
     private ChapterPersistenceService chapterPersistenceService;
 
-
-    public Page<Chapter>  findByMangaId(int page, int size, Long id){
+    public Page<Chapter> findByMangaId(final int page, final int size, final Long id) {
         final Pageable pageable = new PageRequest(0, 1, new QSort(QChapter.chapter.creationDate.asc()));
         final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(id), pageable);
         return all;

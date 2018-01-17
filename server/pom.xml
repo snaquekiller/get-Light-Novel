@@ -17,6 +17,7 @@
 
   <modules>
     <module>get-ln-data</module>
+    <module>get-ln-service</module>
     <module>get-ln-api</module>
   </modules>
 
@@ -47,7 +48,11 @@
         <artifactId>get-ln-api</artifactId>
         <version>${revisions}</version>
       </dependency>
-
+      <dependency>
+        <groupId>getLn</groupId>
+        <artifactId>get-ln-service</artifactId>
+        <version>${revisions}</version>
+      </dependency>
       <dependency>
         <groupId>javax.inject</groupId>
         <artifactId>javax.inject</artifactId>
@@ -85,6 +90,11 @@
     <dependency>
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>4.3.11.RELEASE</version>
     </dependency>
   </dependencies>
 

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import getln.data.Entity.MangaOut;
 import getln.data.Entity.Status;
 import getln.data.Service.MangaOutPersistenceService;
-import getln.data.Service.MangaOutService;
+import getln.service.MangaOutService;
 
 /**
  * .
@@ -31,18 +31,17 @@ public class ScanService {
     @Inject
     private EpubService epubService;
 
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW )
-    public void setStatus(MangaOut mangaOut){
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void setStatus(final MangaOut mangaOut) {
         mangaOut.setStatus(Status.IN_PROGRESS);
         mangaOutPersistenceService.save(mangaOut);
     }
+
     public void scanAndSendNewManga() {
         mangaOutService.getNextManga().forEach(mangaOut -> {
             setStatus(mangaOut);
             epubService.transformOneChapter(mangaOut.getManga());
         });
     }
-
 
 }

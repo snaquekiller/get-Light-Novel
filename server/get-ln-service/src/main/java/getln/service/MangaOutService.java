@@ -1,4 +1,4 @@
-package getln.data.Service;
+package getln.service;
 
 import javax.inject.Inject;
 
@@ -8,8 +8,9 @@ import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import getln.data.Entity.MangaOut;
+import getln.data.Entity.QMangaOut;
 import getln.data.Entity.Status;
-import getln.data.QMangaOut;
+import getln.data.Service.MangaOutPersistenceService;
 
 /**
  * .
@@ -17,10 +18,8 @@ import getln.data.QMangaOut;
 @Service
 public class MangaOutService {
 
-
     @Inject
     private MangaOutPersistenceService mangaOutPersistenceService;
-
 
     public Iterable<MangaOut> getNextManga() {
         final DateTime dateTime = DateTime.now();
