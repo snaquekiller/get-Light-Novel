@@ -1,4 +1,4 @@
-package getLn.Service;
+package getLn.service;
 
 import java.util.Properties;
 
@@ -33,7 +33,7 @@ public class MailService {
     /** The logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
 
-    public void sendMail(String emailTo, String pathFile, String fileName) {
+    public void sendMail(final String emailTo, final String pathFile, final String fileName) {
         // Recipient's email ID needs to be mentioned.
         //        final String to = "nic.guitton@gmail.com";
 
@@ -80,11 +80,11 @@ public class MailService {
         }
     }
 
-    private Multipart attachementFile(String pathFile, String fileName) throws MessagingException {
-        Multipart multipart = new MimeMultipart();
+    private Multipart attachementFile(final String pathFile, final String fileName) throws MessagingException {
+        final Multipart multipart = new MimeMultipart();
 
-        MimeBodyPart messageBodyPart = new MimeBodyPart();
-        DataSource source = new FileDataSource(pathFile);
+        final MimeBodyPart messageBodyPart = new MimeBodyPart();
+        final DataSource source = new FileDataSource(pathFile);
         messageBodyPart.setDataHandler(new DataHandler(source));
         messageBodyPart.setFileName(fileName);
         multipart.addBodyPart(messageBodyPart);

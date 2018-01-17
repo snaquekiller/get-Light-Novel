@@ -16,7 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import getLn.Service.ScanService;
+import getLn.service.ScanService;
 
 /**
  * @author Nicolas

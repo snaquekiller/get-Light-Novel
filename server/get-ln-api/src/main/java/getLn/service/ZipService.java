@@ -1,4 +1,4 @@
-package getLn.Service;
+package getLn.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +39,7 @@ public class ZipService {
         fis.close();
     }
 
-    public File zipFile(String zipName, List<File> files) {
+    public File zipFile(final String zipName, final List<File> files) {
 
         try {
             final FileOutputStream fos = new FileOutputStream(zipName);
@@ -48,15 +48,15 @@ public class ZipService {
             files.forEach(file -> {
                 try {
                     addToZipFile(file.getName(), zos);
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     LOGGER.error("Can't add the file={} to the zipname={}", file.getName(), zipName);
                 }
             });
             zos.close();
             fos.close();
             return new File(zipName);
-        }  catch (IOException e) {
-            LOGGER.error("Can't create the zip={}",  zipName);
+        } catch (final IOException e) {
+            LOGGER.error("Can't create the zip={}", zipName);
         }
         return null;
     }

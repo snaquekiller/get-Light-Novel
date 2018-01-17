@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import getLn.Service.ScrapService;
 import getLn.configuration.GetLnConfiguration;
+import getLn.service.ScrapService;
 
 /**
  * @author Nicolas
@@ -36,7 +36,5 @@ public class getLn {
         SpringApplication.run(getLn.class);
         scrapService.main();
     }
-
-
 
 }

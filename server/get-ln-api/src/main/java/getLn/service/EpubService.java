@@ -1,4 +1,4 @@
-package getLn.Service;
+package getLn.service;
 
 import java.io.File;
 import java.util.Collections;

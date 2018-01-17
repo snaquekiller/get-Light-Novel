@@ -1,4 +1,4 @@
-package getLn.Service;
+package getLn.service;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,8 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import getln.data.Entity.Manga;
 import getLn.model.ChapterDto;
+import getln.data.Entity.Manga;
 
 /**
  * .
@@ -62,11 +62,11 @@ public class ScrapService {
         }
     }
 
-    public ChapterDto scrapOne(Manga manga, int chapterNumber) {
+    public ChapterDto scrapOne(final Manga manga, final int chapterNumber) {
         try {
             final String bookWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
             final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, chapterNumber);
-            String bookName = manga.getName();
+            final String bookName = manga.getName();
             ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), chapterNumber, bookName, fileName);
             chapter = addTextAndTitle(chapterNumber, chapter);
             chapter.setFile(writeChapter(bookName, chapter.getTextList(), chapter));
@@ -152,14 +152,15 @@ public class ScrapService {
         return null;
     }
 
-    public void deleteOldChapter(File file){
+    public void deleteOldChapter(final File file) {
         file.delete();
     }
 
     /**
      * Function for create the table of chapter
+     *
      * @param titleBook the book name
-     * @param chapters all chapters you want list
+     * @param chapters  all chapters you want list
      */
     private File createTOX(final String titleBook, final List<ChapterDto> chapters) {
         Writer writer = null;
