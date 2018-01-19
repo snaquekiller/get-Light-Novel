@@ -11,9 +11,9 @@
   <description>Get light Novel for ebook</description>
   <inceptionYear>2017</inceptionYear>
 
-  <prerequisites>
-    <maven>3.3.9</maven>
-  </prerequisites>
+  <!--<prerequisites>-->
+  <!--<maven>3.3.9</maven>-->
+  <!--</prerequisites>-->
 
   <modules>
     <module>get-ln-data</module>

@@ -10,10 +10,6 @@
   <description>Get light Novel for ebook data</description>
   <inceptionYear>2017</inceptionYear>
 
-  <prerequisites>
-    <maven>3.3.9</maven>
-  </prerequisites>
-
   <parent>
     <groupId>getLn</groupId>
     <artifactId>getLn</artifactId>

@@ -10,9 +10,9 @@
   <description>Get light Novel for ebook API</description>
   <inceptionYear>2017</inceptionYear>
 
-  <prerequisites>
-    <maven>3.0.4</maven>
-  </prerequisites>
+  <!--<prerequisites>-->
+  <!--<maven>3.0.4</maven>-->
+  <!--</prerequisites>-->
 
   <parent>
     <groupId>getLn</groupId>
