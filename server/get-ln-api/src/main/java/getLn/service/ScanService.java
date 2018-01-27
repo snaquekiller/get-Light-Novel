@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import getln.data.Entity.MangaOut;
 import getln.data.Entity.Status;
 import getln.data.Service.MangaOutPersistenceService;
-import getln.service.MangaOutService;
+import getln.service.common.MangaOutService;
 
 /**
  * .

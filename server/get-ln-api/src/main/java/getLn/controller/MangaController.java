@@ -1,9 +1,18 @@
 package getLn.controller;
 
+import getLn.model.request.MangaRequestDto;
+import getLn.model.request.MangaSubscriptionRequestDto;
+import getLn.model.request.UserRequestDto;
+import getln.data.Entity.User;
+import getln.service.common.MangaService;
+import getln.service.common.UserService;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.inject.Inject;
 
 /**
  * .
@@ -11,17 +20,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MangaController {
 
+    @Inject
+    private UserService userService;
+
+    @Inject
+    private MangaService mangaService;
 
     /**
      * List reviewers.
      *
      * @return the reviewers response
      */
-    @RequestMapping(value = "/user", method = RequestMethod.PUT)
-    public String addUser(@RequestParam(required = true, defaultValue = "nom") final String nom) {
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public void addUser(@Validated @RequestBody(required = true) final UserRequestDto userRequestDto) {
         // @formatter:on
+        final User user = userService.createUser(userRequestDto.getEmail(), userRequestDto.getNom(), userRequestDto.getPrenom(), userRequestDto.getPseudo());
+    }
 
-        return "coucou";
+    @RequestMapping(value = "/manga", method = RequestMethod.POST)
+    public void addManga(@Validated @RequestBody(required = true) final MangaRequestDto mangaRequestDto) {
+        mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(), mangaRequestDto.getUrl(), mangaRequestDto.getType());
+    }
+
+    @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
+    public void addSubscribe(@Validated @RequestBody(required = true) final MangaSubscriptionRequestDto mangaRequestDto) {
+        mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(), mangaRequestDto.getUrl(), mangaRequestDto.getType());
     }
 
     /**
@@ -35,7 +58,6 @@ public class MangaController {
 
         return "pascoucocu";
     }
-
 
 
 }

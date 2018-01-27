@@ -33,7 +33,7 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
      * IF you have a comment
      */
     @Column
-    private String Comment;
+    private String comment;
 
     /**
      * The url where you can scrap the website
@@ -53,7 +53,7 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
     public Manga(final String name, final String author, final String comment, final String url, final BOOK_TYPE type) {
         this.name = name;
         this.author = author;
-        Comment = comment;
+        this.comment = comment;
         this.url = url;
         this.type = type;
     }
@@ -118,7 +118,7 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
      * @return Value of IF you have a comment.
      */
     public String getComment() {
-        return Comment;
+        return comment;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
      * @param Comment New value of IF you have a comment.
      */
     public void setComment(final String Comment) {
-        this.Comment = Comment;
+        this.comment = Comment;
     }
 
     /**
@@ -160,6 +160,6 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("author = " + author)
-            .add("Comment = " + Comment).add("url = " + url).add("type = " + type).add("id = " + id).toString();
+            .add("comment = " + comment).add("url = " + url).add("type = " + type).add("id = " + id).toString();
     }
 }

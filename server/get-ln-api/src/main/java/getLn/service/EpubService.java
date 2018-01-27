@@ -14,8 +14,8 @@ import getln.data.Entity.Manga;
 import getln.data.Entity.MangaSubscription;
 import getln.data.Service.ChapterPersistenceService;
 import getln.data.Service.FilePersistenceService;
-import getln.service.ChapterService;
-import getln.service.MangaSubscriptionService;
+import getln.service.common.ChapterService;
+import getln.service.common.MangaSubscriptionService;
 
 /**
  * .

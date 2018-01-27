@@ -1,13 +1,14 @@
 package getLn.model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * The chapter of a book
  */
-public class ChapterDto {
+public class ChapterDto implements Serializable {
 
     /**
      * The chapter name
@@ -24,12 +25,16 @@ public class ChapterDto {
      */
     private int chapterNumber;
 
-    /** The bookName associate of the chapter **/
+    /**
+     * The bookName associate of the chapter
+     **/
     private String bookName;
 
     private String fileName;
 
-    /** The list that contains all the text of the chapter **/
+    /**
+     * The list that contains all the text of the chapter
+     **/
     private List<String> textList;
 
     public File getFile() {
@@ -138,8 +143,8 @@ public class ChapterDto {
         final ChapterDto that = (ChapterDto) o;
 
         return Objects.equals(this.name, that.name) && Objects.equals(this.filePath, that.filePath) &&
-            Objects.equals(this.chapterNumber, that.chapterNumber) && Objects.equals(this.bookName, that.bookName) &&
-            Objects.equals(this.fileName, that.fileName) && Objects.equals(this.text, that.text);
+                Objects.equals(this.chapterNumber, that.chapterNumber) && Objects.equals(this.bookName, that.bookName) &&
+                Objects.equals(this.fileName, that.fileName) && Objects.equals(this.text, that.text);
     }
 
     @Override
