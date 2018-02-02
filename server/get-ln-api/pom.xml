@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <version>${revisions}</version>
 
-  <name>get-light-novel</name>
+  <name>get-light-novel-api</name>
   <description>Get light Novel for ebook API</description>
   <inceptionYear>2017</inceptionYear>
 
@@ -169,6 +169,8 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
           <executable>true</executable>
+          <fork>true</fork>
+          <skip>false</skip>
         </configuration>
         <executions>
           <execution>

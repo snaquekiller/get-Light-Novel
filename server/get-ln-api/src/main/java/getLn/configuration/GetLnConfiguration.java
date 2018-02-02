@@ -14,9 +14,10 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
-import getln.data.Data;
 import getLn.GetLnJob;
 import getLn.controller.ApiControllerInterface;
+import getln.data.Data;
+import getln.service.common.Service;
 
 //@formatter:off
 @Configuration
@@ -27,7 +28,8 @@ import getLn.controller.ApiControllerInterface;
 @ComponentScan(basePackageClasses = {
     GetLnJob.class,
     Data.class,
-    ApiControllerInterface.class
+    ApiControllerInterface.class,
+    Service.class
     })
 //@formatter:on
 public class GetLnConfiguration {
