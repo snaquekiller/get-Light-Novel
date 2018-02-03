@@ -1,12 +1,11 @@
-package getln.data.Entity;
+package getln.data.entity;
 
-import java.util.StringJoiner;
+import getln.data.commons.AbstractDeletableJpaEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import getln.data.commons.AbstractDeletableJpaEntity;
+import java.util.StringJoiner;
 
 /**
  * .
@@ -15,19 +14,27 @@ import getln.data.commons.AbstractDeletableJpaEntity;
 @Table(name = "user", schema = "LN")
 public class User extends AbstractDeletableJpaEntity<Long> {
 
-    /** the email of the user **/
+    /**
+     * the email of the user
+     **/
     @Column
     private String email;
 
-    /** The name of the user **/
+    /**
+     * The name of the user
+     **/
     @Column
     private String nom;
 
-    /** Prenom **/
+    /**
+     * Prenom
+     **/
     @Column
     private String prenom;
 
-    /** the pseudo **/
+    /**
+     * the pseudo
+     **/
     @Column
     private String pseudo;
 
@@ -116,7 +123,7 @@ public class User extends AbstractDeletableJpaEntity<Long> {
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("email = " + email).add("nom = " + nom)
-            .add("prenom = " + prenom).add("pseudo = " + pseudo).add("creationDate = " + creationDate)
-            .add("deletionDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
+                .add("prenom = " + prenom).add("pseudo = " + pseudo).add("creationDate = " + creationDate)
+                .add("deletionDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
     }
 }

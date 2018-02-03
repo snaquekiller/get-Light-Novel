@@ -1,12 +1,11 @@
-package getln.data.Entity;
+package getln.data.entity;
 
-import java.util.StringJoiner;
+import getln.data.commons.AbstractDeletableJpaEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import getln.data.commons.AbstractDeletableJpaEntity;
+import java.util.StringJoiner;
 
 /**
  * .
@@ -15,15 +14,21 @@ import getln.data.commons.AbstractDeletableJpaEntity;
 @Table(name = "file", schema = "LN")
 public class File extends AbstractDeletableJpaEntity<Long> {
 
-    /** the name of the file **/
+    /**
+     * the name of the file
+     **/
     @Column
     private String name;
 
-    /** the type of the file **/
+    /**
+     * the type of the file
+     **/
     @Column
     private String type;
 
-    /** the url **/
+    /**
+     * the url
+     **/
     @Column
     private String url;
 
@@ -94,7 +99,7 @@ public class File extends AbstractDeletableJpaEntity<Long> {
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("type = " + type)
-            .add("url = " + url).add("creationDate = " + creationDate).add("deletionDate = " + updateDate)
-            .add("deleted = " + deleted).add("id = " + id).toString();
+                .add("url = " + url).add("creationDate = " + creationDate).add("deletionDate = " + updateDate)
+                .add("deleted = " + deleted).add("id = " + id).toString();
     }
 }

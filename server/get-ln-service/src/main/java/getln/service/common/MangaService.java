@@ -1,9 +1,9 @@
 package getln.service.common;
 
-import getln.data.Entity.BOOK_TYPE;
-import getln.data.Entity.Manga;
-import getln.data.Entity.QManga;
-import getln.data.Service.MangaPersistenceService;
+import getln.data.entity.BOOK_TYPE;
+import getln.data.entity.Manga;
+import getln.data.entity.QManga;
+import getln.data.service.MangaPersistenceService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;

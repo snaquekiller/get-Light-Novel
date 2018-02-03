@@ -1,14 +1,9 @@
-package getln.data.Entity;
-
-import java.util.StringJoiner;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+package getln.data.entity;
 
 import getln.data.commons.AbstractDeletableJpaEntity;
+
+import javax.persistence.*;
+import java.util.StringJoiner;
 
 /**
  * .
@@ -148,18 +143,18 @@ public class Manga extends AbstractDeletableJpaEntity<Long> {
         this.type = type;
     }
 
-    public String getBookNameWithoutSpecialChar(){
+    public String getBookNameWithoutSpecialChar() {
         return name.replaceAll("\\W", "_");
     }
 
-    public String getChapterFileName(int chapterNumber){
-        String bookWithoutSpecialChar = getBookNameWithoutSpecialChar();
+    public String getChapterFileName(final int chapterNumber) {
+        final String bookWithoutSpecialChar = getBookNameWithoutSpecialChar();
         return String.format("%s_%d.xhtml", bookWithoutSpecialChar, chapterNumber);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("author = " + author)
-            .add("comment = " + comment).add("url = " + url).add("type = " + type).add("id = " + id).toString();
+                .add("comment = " + comment).add("url = " + url).add("type = " + type).add("id = " + id).toString();
     }
 }

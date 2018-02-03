@@ -1,11 +1,11 @@
-package getln.data.Entity;
+package getln.data.entity;
+
+import getln.data.commons.AbstractDeletableJpaEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import getln.data.commons.AbstractDeletableJpaEntity;
 
 /**
  * .

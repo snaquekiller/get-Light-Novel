@@ -1,9 +1,7 @@
-package getln.data.Service;
+package getln.data.service;
 
+import getln.data.entity.File;
 import org.springframework.stereotype.Service;
-
-import getln.data.Entity.File;
-import getln.data.commons.DataRepository;
 
 /**
  * .

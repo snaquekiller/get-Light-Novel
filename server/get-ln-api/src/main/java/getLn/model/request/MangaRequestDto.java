@@ -1,6 +1,6 @@
 package getLn.model.request;
 
-import getln.data.Entity.BOOK_TYPE;
+import getln.data.entity.BOOK_TYPE;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;

@@ -1,12 +1,7 @@
 package getLn.configuration;
 
-import java.util.Properties;
-
-import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
-
 import com.zaxxer.hikari.HikariDataSource;
-
+import getln.data.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -20,17 +15,21 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import getln.data.Data;
+import javax.inject.Inject;
+import javax.persistence.EntityManagerFactory;
+import java.util.Properties;
 
 /**
  * Base JPA configuration.
  */
 @Configuration
 @EnableJpaRepositories(entityManagerFactoryRef = "mainEntityManagerFactory", transactionManagerRef = "mainTransactionManager", basePackageClasses = {
-    Data.class})
+        Data.class})
 public abstract class JpaConfiguration {
 
-    /** The env. */
+    /**
+     * The env.
+     */
     @Inject
     private Environment env;
 
@@ -56,7 +55,7 @@ public abstract class JpaConfiguration {
     }
 
     /**
-     * Entity manager factory.
+     * entity manager factory.
      *
      * @return The entity manager factory.
      */

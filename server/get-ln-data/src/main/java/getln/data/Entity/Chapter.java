@@ -1,15 +1,9 @@
-package getln.data.Entity;
-
-import java.util.StringJoiner;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+package getln.data.entity;
 
 import getln.data.commons.AbstractDeletableJpaEntity;
+
+import javax.persistence.*;
+import java.util.StringJoiner;
 
 /**
  * .
@@ -164,8 +158,8 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("texte = " + texte)
-            .add("num = " + num).add("title = " + title).add("Tome = " + Tome).add("file = " + file)
-            .add("creationDate = " + creationDate).add("deletionDate = " + updateDate).add("deleted = " + deleted)
-            .add("id = " + id).toString();
+                .add("num = " + num).add("title = " + title).add("Tome = " + Tome).add("file = " + file)
+                .add("creationDate = " + creationDate).add("deletionDate = " + updateDate).add("deleted = " + deleted)
+                .add("id = " + id).toString();
     }
 }

@@ -1,17 +1,16 @@
 package getLn.service;
 
-import javax.inject.Inject;
-
+import getln.data.entity.MangaOut;
+import getln.data.entity.Status;
+import getln.data.service.MangaOutPersistenceService;
+import getln.service.common.MangaOutService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import getln.data.Entity.MangaOut;
-import getln.data.Entity.Status;
-import getln.data.Service.MangaOutPersistenceService;
-import getln.service.common.MangaOutService;
+import javax.inject.Inject;
 
 /**
  * .
@@ -19,7 +18,9 @@ import getln.service.common.MangaOutService;
 @Service
 public class ScanService {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ScanService.class);
 
     @Inject

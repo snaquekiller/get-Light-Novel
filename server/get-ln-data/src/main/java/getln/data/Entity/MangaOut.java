@@ -1,16 +1,9 @@
-package getln.data.Entity;
-
-import java.util.StringJoiner;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+package getln.data.entity;
 
 import getln.data.commons.AbstractDeletableJpaEntity;
+
+import javax.persistence.*;
+import java.util.StringJoiner;
 
 /**
  * .
@@ -19,27 +12,39 @@ import getln.data.commons.AbstractDeletableJpaEntity;
 @Table(name = "manga_out", schema = "LN")
 public class MangaOut extends AbstractDeletableJpaEntity<Long> {
 
-    /** hours **/
+    /**
+     * hours
+     **/
     @Column
     private int hours;
 
-    /** minutes **/
+    /**
+     * minutes
+     **/
     @Column
     private int minutes;
 
-    /** secondes **/
+    /**
+     * secondes
+     **/
     @Column
     private int secondes;
 
-    /** the days */
+    /**
+     * the days
+     */
     @Column
     private Integer days;
 
-    /** the days */
+    /**
+     * the days
+     */
     @Column(name = "nb_try")
     private int nbTry;
 
-    /** the status of the mangaout if we already try or not */
+    /**
+     * the status of the mangaout if we already try or not
+     */
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -189,8 +194,8 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("hours = " + hours)
-            .add("minutes = " + minutes).add("secondes = " + secondes).add("days = " + days).add("nbTry = " + nbTry)
-            .add("status = " + status).add("manga = " + manga).add("creationDate = " + creationDate)
-            .add("updateDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
+                .add("minutes = " + minutes).add("secondes = " + secondes).add("days = " + days).add("nbTry = " + nbTry)
+                .add("status = " + status).add("manga = " + manga).add("creationDate = " + creationDate)
+                .add("updateDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
     }
 }

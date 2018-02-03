@@ -1,12 +1,11 @@
 package getln.service.common;
 
-import javax.inject.Inject;
-
+import getln.data.entity.MangaSubscription;
+import getln.data.entity.QMangaSubscription;
+import getln.data.service.MangaSubscriptionPersistanceService;
 import org.springframework.stereotype.Service;
 
-import getln.data.Entity.MangaSubscription;
-import getln.data.Entity.QMangaSubscription;
-import getln.data.Service.MangaSubscriptionPersistanceService;
+import javax.inject.Inject;
 
 /**
  * .
