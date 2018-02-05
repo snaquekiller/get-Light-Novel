@@ -22,13 +22,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import getln.data.Data;
 import getln.data.entity.EntityData;
+import getln.data.service.DataRepository;
 
 /**
  * Base JPA configuration.
  */
 @Configuration
 @EnableJpaRepositories(entityManagerFactoryRef = "mainEntityManagerFactory", transactionManagerRef = "mainTransactionManager", basePackageClasses = {
-    EntityData.class})
+    EntityData.class, DataRepository.class})
 public abstract class JpaConfiguration {
 
     /**

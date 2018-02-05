@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 
 import getLn.GetLnJob;
 import getLn.controller.ApiControllerInterface;
+import getLn.service.ApiService;
 import getln.data.Data;
 import getln.service.common.Service;
 
@@ -29,7 +30,8 @@ import getln.service.common.Service;
     GetLnJob.class,
     Data.class,
     ApiControllerInterface.class,
-    Service.class
+    Service.class,
+    ApiService.class
     })
 //@formatter:on
 public class GetLnConfiguration {
