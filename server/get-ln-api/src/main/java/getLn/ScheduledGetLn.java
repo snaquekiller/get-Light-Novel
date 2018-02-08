@@ -37,7 +37,6 @@ public class ScheduledGetLn {
     @Scheduled(cron = "${scheduled.getln.task}")
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
-        log.info("The time is dd {}", environment.getProperty("ds.password"));
         scanService.scanAndSendNewManga();
     }
 

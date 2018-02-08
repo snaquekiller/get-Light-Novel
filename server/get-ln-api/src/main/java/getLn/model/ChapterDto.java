@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * The chapter of a book
@@ -37,15 +38,7 @@ public class ChapterDto implements Serializable {
      **/
     private List<String> textList;
 
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(final File file) {
-        this.file = file;
-    }
-
-    private File file;
+    private List<File> file;
 
     /**
      * The text of the
@@ -143,8 +136,8 @@ public class ChapterDto implements Serializable {
         final ChapterDto that = (ChapterDto) o;
 
         return Objects.equals(this.name, that.name) && Objects.equals(this.filePath, that.filePath) &&
-                Objects.equals(this.chapterNumber, that.chapterNumber) && Objects.equals(this.bookName, that.bookName) &&
-                Objects.equals(this.fileName, that.fileName) && Objects.equals(this.text, that.text);
+            Objects.equals(this.chapterNumber, that.chapterNumber) && Objects.equals(this.bookName, that.bookName) &&
+            Objects.equals(this.fileName, that.fileName) && Objects.equals(this.text, that.text);
     }
 
     @Override
@@ -204,5 +197,30 @@ public class ChapterDto implements Serializable {
      */
     public List<String> getTextList() {
         return textList;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name)
+            .add("filePath = " + filePath).add("chapterNumber = " + chapterNumber).add("bookName = " + bookName)
+            .add("fileName = " + fileName).add("file = " + file).add("text = " + text).toString();
+    }
+
+    /**
+     * Sets new file.
+     *
+     * @param file New value of file.
+     */
+    public void setFile(final List<File> file) {
+        this.file = file;
+    }
+
+    /**
+     * Gets file.
+     *
+     * @return Value of file.
+     */
+    public List<File> getFile() {
+        return file;
     }
 }

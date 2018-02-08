@@ -18,38 +18,34 @@ import getln.data.commons.AbstractDeletableJpaEntity;
 @Table(name = "chapter", schema = "LN")
 public class Chapter extends AbstractDeletableJpaEntity<Long> {
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column
-    private String texte;
+    private String text;
 
     @Column
     private int num = 0;
 
     @Column
-    private String title;
-
-    @Column
-    private String Tome;
+    private String tome;
 
     @ManyToOne
     @JoinColumn(name = "manga_id")
     private Manga manga;
 
-    @JoinColumn(name = "profile_picture")
+    @JoinColumn(name = "file_id")
     @OneToOne
     private File file;
 
     public Chapter() {
     }
 
-    public Chapter(final String name, final String texte, final int num, final String title, final String tome, final File file) {
-        this.name = name;
-        this.texte = texte;
+    public Chapter(final String text, final int num, final String title, final String tome, final File file) {
+        this.text = text;
         this.num = num;
         this.title = title;
-        Tome = tome;
+        this.tome = tome;
         this.file = file;
     }
 
@@ -95,7 +91,7 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
      * @return Value of Tome.
      */
     public String getTome() {
-        return Tome;
+        return tome;
     }
 
     /**
@@ -104,25 +100,7 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
      * @param Tome New value of Tome.
      */
     public void setTome(final String Tome) {
-        this.Tome = Tome;
-    }
-
-    /**
-     * Gets name.
-     *
-     * @return Value of name.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets new name.
-     *
-     * @param name New value of name.
-     */
-    public void setName(final String name) {
-        this.name = name;
+        this.tome = Tome;
     }
 
     /**
@@ -131,7 +109,7 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
      * @return Value of texte.
      */
     public String getTexte() {
-        return texte;
+        return text;
     }
 
     /**
@@ -140,7 +118,7 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
      * @param texte New value of texte.
      */
     public void setTexte(final String texte) {
-        this.texte = texte;
+        this.text = texte;
     }
 
     /**
@@ -163,9 +141,8 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("texte = " + texte)
-            .add("num = " + num).add("title = " + title).add("Tome = " + Tome).add("file = " + file)
-            .add("creationDate = " + creationDate).add("deletionDate = " + updateDate).add("deleted = " + deleted)
-            .add("id = " + id).toString();
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("texte = " + text).add("num = " + num)
+            .add("title = " + title).add("Tome = " + tome).add("file = " + file).add("creationDate = " + creationDate)
+            .add("deletionDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
     }
 }

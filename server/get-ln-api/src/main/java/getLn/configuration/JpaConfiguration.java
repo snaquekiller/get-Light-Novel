@@ -85,8 +85,9 @@ public abstract class JpaConfiguration {
      */
     private Properties jpaProperties() {
         final Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-        properties.setProperty("hibernate.hbm2ddl.auto", "none");
+        properties.put("hibernate.show_sql", "false");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.put("hibernate.id.new_generator_mappings", "false");
         return properties;
     }
 

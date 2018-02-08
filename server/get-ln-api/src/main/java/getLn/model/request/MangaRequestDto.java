@@ -1,12 +1,14 @@
 package getLn.model.request;
 
-import getln.data.entity.BOOK_TYPE;
+import java.io.Serializable;
+import java.util.StringJoiner;
+
 import org.hibernate.validator.constraints.NotBlank;
 
-import java.io.Serializable;
-
+import getln.data.entity.BOOK_TYPE;
 
 public class MangaRequestDto implements Serializable {
+
     /**
      * The name of the of the manga
      */
@@ -76,4 +78,10 @@ public class MangaRequestDto implements Serializable {
      */
     @NotBlank
     private BOOK_TYPE type;
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("author = " + author)
+            .add("comment = " + comment).add("url = " + url).add("type = " + type).toString();
+    }
 }

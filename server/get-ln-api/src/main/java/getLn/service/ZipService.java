@@ -47,16 +47,16 @@ public class ZipService {
 
             files.forEach(file -> {
                 try {
-                    addToZipFile(file.getName(), zos);
+                    addToZipFile(file.getAbsolutePath(), zos);
                 } catch (final IOException e) {
-                    LOGGER.error("Can't add the file={} to the zipname={}", file.getName(), zipName);
+                    LOGGER.error("Can't add the file={} to the zipname={}", file.getName(), zipName, e);
                 }
             });
             zos.close();
             fos.close();
             return new File(zipName);
         } catch (final IOException e) {
-            LOGGER.error("Can't create the zip={}", zipName);
+            LOGGER.error("Can't create the zip={}", zipName, e);
         }
         return null;
     }
