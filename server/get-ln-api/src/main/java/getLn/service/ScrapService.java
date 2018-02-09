@@ -40,6 +40,8 @@ public class ScrapService {
 
     public static final String UTF_8 = "utf-8";
 
+    public static final String DIRECTORY = "/data";
+
     @Inject
     private ZipService zipService;
 
@@ -70,7 +72,8 @@ public class ScrapService {
             final String bookWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
             final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, chapterNumber);
             final String bookName = manga.getName();
-            ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), chapterNumber, bookName, fileName);
+            ChapterDto chapter =
+                new ChapterDto(String.format("%s/%s", DIRECTORY, bookWithoutSpecialChar), chapterNumber, bookName, fileName);
             chapter = addTextAndTitle(chapterNumber, chapter);
             final File file = writeChapter(bookName, chapter.getTextList(), chapter);
 
@@ -108,7 +111,7 @@ public class ScrapService {
 
         Writer writer = null;
 
-        final String name = String.format("data/%s/book.opf", chapter.getFilePath());
+        final String name = String.format("%s/book.opf", chapter.getFilePath());
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), "utf-8"));
             writer.write(head);
@@ -189,10 +192,10 @@ public class ScrapService {
 
         final String end = "  </body>\n" + "</html>";
         try {
-            final String name = String.format("data/%s/%s", chapter.getFilePath(), chapter.getFileName());
+            final String name = String.format("%s/%s", chapter.getFilePath(), chapter.getFileName());
 
             final File file = new File(name);
-            final File directory = new File(String.format("data/%s", chapter.getFilePath()));
+            final File directory = new File(String.format("%s", chapter.getFilePath()));
             directory.mkdirs();
 
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), "utf-8"));

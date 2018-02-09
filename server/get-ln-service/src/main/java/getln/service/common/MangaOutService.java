@@ -22,6 +22,8 @@ public class MangaOutService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MangaOutService.class);
 
+    public static int MAX_TRY = 5;
+
     @Inject
     private MangaOutPersistenceService mangaOutPersistenceService;
 
@@ -48,9 +50,9 @@ public class MangaOutService {
             //days
             .and(mangaOut.days.isNull().or(mangaOut.days.eq(dateTime.getDayOfWeek())))
             //
-            //            .and(mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.toDate()))
+            .and(mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.toDate()))
             //status
-            .and(mangaOut.status.eq(Status.AVAILABLE));
+            .and(mangaOut.status.eq(Status.AVAILABLE).or(mangaOut.status.eq(Status.RE_TRY).and(mangaOut.nbTry.loe(MAX_TRY))));
 
         LOGGER.info("Search manga out with predicate={}", expression);
         return mangaOutPersistenceService.findAll(expression);

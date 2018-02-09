@@ -30,6 +30,9 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
     @Column
     private String tome;
 
+    /**
+     * The manga associate of the chapter
+     */
     @ManyToOne
     @JoinColumn(name = "manga_id")
     private Manga manga;
@@ -104,24 +107,6 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
     }
 
     /**
-     * Gets texte.
-     *
-     * @return Value of texte.
-     */
-    public String getTexte() {
-        return text;
-    }
-
-    /**
-     * Sets new texte.
-     *
-     * @param texte New value of texte.
-     */
-    public void setTexte(final String texte) {
-        this.text = texte;
-    }
-
-    /**
      * Gets file.
      *
      * @return Value of file.
@@ -144,5 +129,41 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("texte = " + text).add("num = " + num)
             .add("title = " + title).add("Tome = " + tome).add("file = " + file).add("creationDate = " + creationDate)
             .add("deletionDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
+    }
+
+    /**
+     * Gets text.
+     *
+     * @return Value of text.
+     */
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * Gets The manga associate of the chapter.
+     *
+     * @return Value of The manga associate of the chapter.
+     */
+    public Manga getManga() {
+        return manga;
+    }
+
+    /**
+     * Sets new text.
+     *
+     * @param text New value of text.
+     */
+    public void setText(final String text) {
+        this.text = text;
+    }
+
+    /**
+     * Sets new The manga associate of the chapter.
+     *
+     * @param manga New value of The manga associate of the chapter.
+     */
+    public void setManga(final Manga manga) {
+        this.manga = manga;
     }
 }

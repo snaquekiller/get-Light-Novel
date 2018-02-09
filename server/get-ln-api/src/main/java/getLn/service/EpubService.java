@@ -61,13 +61,19 @@ public class EpubService {
         return null;
     }
 
-    public void transformOneChapter(final Manga manga) {
+    public void transformOneChapter(final Manga manga) throws Exception {
         final Chapter lastChapter = getLastChapter(manga);
-        final int chapterNumber = lastChapter.getNum() + 1;
+        int chapterNumber = 1;
+        if (lastChapter == null) {
+            chapterNumber = lastChapter.getNum() + 1;
+        }
 
         // we scrap one
         final ChapterDto chapterXhtml = scrapService.scrapOne(manga, chapterNumber);
-        LOGGER.error("chapter ={}", chapterXhtml);
+        if (chapterXhtml == null) {
+            throw new Exception("Can't scrap");
+        }
+        //        LOGGER.error("chapter ={}", chapterXhtml);
         final String name = chapterXhtml.getFileName().split("\\.")[0] + ".epub";
 
         // create the zip
@@ -85,6 +91,7 @@ public class EpubService {
         newChapter.setNum(chapterNumber);
         newChapter.setFile(epubSql);
         newChapter.setTitle(chapterXhtml.getName());
+        newChapter.setManga(manga);
         chapterPersistenceService.save(newChapter);
 
         //need to send chapter to all user who subscribe

@@ -78,15 +78,22 @@ CREATE TABLE manga_subscription
 INSERT INTO LN.chapter (text, num, title, creation_date, update_date, tome, file_id, deleted)
 VALUES ('""', 1583, 'test', '2018-02-08 11:27:29', '2018-02-08 11:27:29', 1, NULL, 0);
 
-INSERT INTO LN.user (email, pseudo, nom, prenom) VALUES ('nic.guitton@gmail.com', 'snaquekiller', 'guitton', 'nicolas
-');
+INSERT INTO LN.user (email, pseudo, nom, prenom, creation_date, update_date, deleted)
+VALUES ('nic.guitton@gmail.com', 'snaquekiller', 'guitton', 'nicolas
+', '2018-02-07 17:14:44', '2018-02-07 17:14:44', 0);
+INSERT INTO LN.user (email, pseudo, nom, prenom, creation_date, update_date, deleted)
+VALUES ('nicolas.guitton@kindle.com', 'snaquekiller', 'guitton', 'nicolas
+', '2018-02-07 17:14:44', '2018-02-07 17:14:44', 0);
 
 INSERT INTO LN.manga_out (manga_id, hours, minutes, secondes, days, nb_try, status, creation_date, update_date, deleted)
 VALUES (2, 12, 15, 0, NULL, 0, 'AVAILABLE', '2018-02-08 11:20:13', '2018-02-08 11:20:13', 0);
 INSERT INTO LN.manga_out (manga_id, hours, minutes, secondes, days, nb_try, status, creation_date, update_date, deleted)
 VALUES (2, 15, 35, 0, NULL, 0, 'AVAILABLE', '2018-02-08 11:20:13', '2018-02-08 11:20:13', 0);
+
 INSERT INTO LN.manga_subscription (user_id, manga_id, num_chapter, creation_date, update_date, deleted)
 VALUES (1, 2, 1583, '2018-02-07 17:39:22', '2018-02-07 17:39:22', 0);
+INSERT INTO LN.manga_subscription (user_id, manga_id, num_chapter, creation_date, update_date, deleted)
+VALUES (2, 2, 1583, '2018-02-07 17:39:22', '2018-02-07 17:39:22', 0);
 
 INSERT INTO LN.manga (name, author, comment, url, type, creation_date, update_date, deleted) VALUES ('
 Douluo Dalu 3 - Dragon King''s Legend', 'Tang Jia San Shao', NULL,

@@ -1,5 +1,6 @@
 package getln.data.entity;
 
+import java.util.Date;
 import java.util.StringJoiner;
 
 import javax.persistence.Column;
@@ -141,6 +142,7 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
      * @param hours New value of hours.
      */
     public void setHours(final int hours) {
+        update();
         this.hours = hours;
     }
 
@@ -150,6 +152,7 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
      * @param manga New value of The manga.
      */
     public void setManga(final Manga manga) {
+        update();
         this.manga = manga;
     }
 
@@ -159,7 +162,12 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
      * @param status New value of the status of the mangaout if we already try or not.
      */
     public void setStatus(final Status status) {
+        update();
         this.status = status;
+    }
+
+    public void update() {
+        updateDate = new Date();
     }
 
     /**
@@ -168,6 +176,7 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
      * @param nbTry New value of the days.
      */
     public void setNbTry(final int nbTry) {
+        update();
         this.nbTry = nbTry;
     }
 
