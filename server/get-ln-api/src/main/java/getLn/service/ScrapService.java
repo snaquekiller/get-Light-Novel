@@ -84,9 +84,27 @@ public class ScrapService {
 
     private List<File> createOpfFile(final List<File> files, final ChapterDto chapter) {
 
-        final String head = "<manifest>";
+        //@formatter:off
 
-        final String end = " </manifest>";
+        final String head = "<?xml version='1.0' encoding='utf-8'?>\n" +
+            "<package xmlns=\"http://www.idpf.org/2007/opf\" unique-identifier=\"uuid_id\" version=\"2.0\">\n" +
+            "  <metadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:opf=\"http://www.idpf.org/2007/opf\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:calibre=\"http://calibre.kovidgoyal.net/2009/metadata\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n" +
+            "    <meta name=\"calibre:title_sort\" content=\"\"/>\n"
+            + "    <dc:language>en</dc:language>\n" +
+            "    <dc:creator opf:file-as=\"Vert\" opf:role=\"aut\">Vert</dc:creator>\n" +
+            "    <meta name=\"calibre:timestamp\" content=\"2015-03-17T06:36:27.069000+00:00\"/>\n" +
+            "    <dc:title>"+ chapter.getBookName() +"</dc:title>\n"
+            + "    <meta name=\"cover\" content=\"cover\"/>\n" +
+            "    <dc:date>0101-01-01T00:00:00+00:00</dc:date>\n" +
+            "    <dc:contributor opf:role=\"bkp\">calibre (1.48.0) [http://calibre-ebook.com]</dc:contributor>\n" +
+            "    <dc:identifier id=\"uuid_id\" opf:scheme=\"uuid\">a792e058-bdd8-45a0-9ef5-1cec35281eef</dc:identifier>\n" +
+            "    <dc:identifier opf:scheme=\"calibre\">a792e058-bdd8-45a0-9ef5-1cec35281eef</dc:identifier>\n" +
+            "  </metadata>\n" +
+            "<manifest>";
+
+        final String end = "  \n"
+            + "</package>\n";
+        //@formatter:on
 
         Writer writer = null;
 
@@ -94,12 +112,17 @@ public class ScrapService {
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), "utf-8"));
             writer.write(head);
+            String spine = "<spine toc=\"ncx\">\n";
+            String manifest = "<manifest>\n";
             for (final File file : files) {
-
-                final String dd = String
-                    .format("<item id=\"%s\" href=\"%s\" media-type=\"application/xhtml+xml\">", file.getName(), file.getName());
-                writer.write(dd);
+                manifest += String.format("<item id=\"%s\" href=\"%s\" media-type=\"application/xhtml+xml\">\n", file.getName(),
+                    file.getName());
+                spine += String.format("<itemref idref=\"%s\"/>", file.getName());
             }
+            manifest += "</manifest>\n";
+            spine += "</spine>\n";
+            writer.write(manifest);
+            writer.write(spine);
             writer.write(end);
         } catch (final IOException ex) {
             // report
