@@ -64,10 +64,13 @@ public class EpubService {
     public void transformOneChapter(final Manga manga) throws Exception {
         final Chapter lastChapter = getLastChapter(manga);
         int chapterNumber = 1;
-        if (lastChapter == null) {
+        LOGGER.info("chaper = {}", lastChapter);
+        if (lastChapter != null) {
             chapterNumber = lastChapter.getNum() + 1;
+            LOGGER.info("chaper3 = {}", lastChapter.getNum());
+            LOGGER.info("chaper2 = {}", lastChapter.getNum() + 1);
         }
-
+        LOGGER.info("chaper1 = {}", chapterNumber);
         // we scrap one
         final ChapterDto chapterXhtml = scrapService.scrapOne(manga, chapterNumber);
         if (chapterXhtml == null) {
@@ -77,7 +80,7 @@ public class EpubService {
         final String name = chapterXhtml.getFileName().split("\\.")[0] + ".epub";
 
         // create the zip
-        final File epub = zipService.zipFile("data/" + chapterXhtml.getFilePath() + name, chapterXhtml.getFile());
+        final File epub = zipService.zipFile(chapterXhtml.getFilePath() + name, chapterXhtml.getFile());
         final getln.data.entity.File file = new getln.data.entity.File();
         file.setName(epub.getName());
         file.setType("epub");

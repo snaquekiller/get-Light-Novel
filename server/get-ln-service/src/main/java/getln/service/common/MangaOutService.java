@@ -45,14 +45,18 @@ public class MangaOutService {
                 //hours
                 .and(mangaOut.hours.eq(hours));
         }
-
+        final BooleanExpression between = mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.toDate());
+        //@formatter:off
         final BooleanExpression expression = minutesAndHours
             //days
             .and(mangaOut.days.isNull().or(mangaOut.days.eq(dateTime.getDayOfWeek())))
-            //
-            .and(mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.toDate()))
             //status
-            .and(mangaOut.status.eq(Status.AVAILABLE).or(mangaOut.status.eq(Status.RE_TRY).and(mangaOut.nbTry.loe(MAX_TRY))));
+            .and((mangaOut.status.eq(Status.AVAILABLE).and(mangaOut.updateDate.notBetween(dateTime.minusMinutes(15).toDate(), dateTime.toDate())))
+                .or(
+                mangaOut.status.eq(Status.RE_TRY).and(mangaOut.nbTry.loe(MAX_TRY))
+                    .and(between)
+            ));
+        //@formatter:on
 
         LOGGER.info("Search manga out with predicate={}", expression);
         return mangaOutPersistenceService.findAll(expression);

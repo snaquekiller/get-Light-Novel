@@ -40,7 +40,7 @@ public class ScrapService {
 
     public static final String UTF_8 = "utf-8";
 
-    public static final String DIRECTORY = "/data";
+    public static final String DIRECTORY = "data";
 
     @Inject
     private ZipService zipService;
@@ -54,7 +54,8 @@ public class ScrapService {
                     final String bookWithoutSpecialChar = BOOK_NAME.replaceAll("\\W", "_");
                     final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, i);
                     ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
-                    chapter = addTextAndTitle(i, chapter);
+                    chapter =
+                        addTextAndTitle(i, chapter, "https://lnmtl.com/chapter/douluo-dalu-3-dragon-king-s-legend-chapter-");
                     writeChapter(BOOK_NAME, chapter.getTextList(), chapter);
                     title += String.format("\t<li>\n\t<a href=\"%s#%d\">%s</a>\n</li>\n", fileName, i, chapter.getName());
                     chapters.add(chapter);
@@ -74,7 +75,7 @@ public class ScrapService {
             final String bookName = manga.getName();
             ChapterDto chapter =
                 new ChapterDto(String.format("%s/%s", DIRECTORY, bookWithoutSpecialChar), chapterNumber, bookName, fileName);
-            chapter = addTextAndTitle(chapterNumber, chapter);
+            chapter = addTextAndTitle(chapterNumber, chapter, manga.getUrl());
             final File file = writeChapter(bookName, chapter.getTextList(), chapter);
 
             chapter.setFile(createOpfFile(Collections.singletonList(file), chapter));
@@ -142,15 +143,23 @@ public class ScrapService {
         return filess;
     }
 
-    private ChapterDto addTextAndTitle(final int i, final ChapterDto chapter) throws IOException {
-        final Document doc = Jsoup.connect("http://lnmtl.com/chapter/" + ligh_novel + i).get();
-        final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
-        final List<String> textList =
-            doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
-                .collect(Collectors.toList());
-        chapter.setName(chapterTitle);
-        chapter.setTextList(textList);
-        return chapter;
+    private ChapterDto addTextAndTitle(final int i, final ChapterDto chapter, final String url) throws IOException {
+        final String format = String.format(url, i);
+        try {
+            final Document doc = Jsoup.connect(format)
+                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                .referrer("http://www.google.com").get();
+            final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
+            final List<String> textList =
+                doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
+                    .collect(Collectors.toList());
+            chapter.setName(chapterTitle);
+            chapter.setTextList(textList);
+            return chapter;
+        } catch (final Exception e) {
+            LOGGER.error("can't scrap the url ={}", format, e);
+            throw e;
+        }
     }
 
     private void createTableMatiere(final String titleBook, final String list) {
@@ -198,7 +207,7 @@ public class ScrapService {
             final File directory = new File(String.format("%s", chapter.getFilePath()));
             directory.mkdirs();
 
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), "utf-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
             writer.write(head);
             String texte = "";
             for (final String text : textList) {
