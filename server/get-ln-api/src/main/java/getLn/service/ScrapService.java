@@ -197,7 +197,7 @@ public class ScrapService {
                 "\t<title>" + titleBook + "</title>\n" +
                 "\t<link href=\"../styles/stylesheet.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" + "\t</head>\n" +
                 " \t\t<body>\n" + "\t\t<h1 class=\"center\" id=\"" + chapter.getChapterNumber() + "\">" + chapter.getName() +
-                "</h2>\n";
+                "</h1>\n";
 
         final String end = "  </body>\n" + "</html>";
         try {
