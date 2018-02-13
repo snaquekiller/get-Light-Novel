@@ -5,6 +5,7 @@ import java.util.StringJoiner;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -43,7 +44,7 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
      * All file for each chapter
      */
     //@formatter:off
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "LN", name = "chapter_files",
         joinColumns = @JoinColumn(name = "chapter_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "file_id", referencedColumnName = "id")

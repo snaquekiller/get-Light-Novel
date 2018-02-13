@@ -35,13 +35,13 @@ public class ScheduledGetLn {
     @Inject
     private MobiService mobiService;
 
-    //    @Scheduled(cron = "${scheduled.getln.task}")
+    @Scheduled(cron = "${scheduled.getln.task}")
     public void newMangaCron() {
         //        log.info("The time is now {}", dateFormat.format(new Date()));
         scanService.scanAndSendNewManga();
     }
 
-    @Scheduled(cron = "${scheduled.getln.task}")
+    //    @Scheduled(cron = "${scheduled.getln.task}")
     public void testEpub() {
         log.info("The time is now {}", dateFormat.format(new Date()));
         mobiService

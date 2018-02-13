@@ -58,7 +58,7 @@ public class EbookService {
     private Chapter getLastChapter(final Manga manga) {
         LOGGER.info("get the last chapter for manga={}", manga);
         if (manga != null && manga.getId() != null) {
-            final Page<Chapter> all = chapterService.findByMangaId(0, 1, manga.getId());
+            final Page<Chapter> all = chapterService.findLastChapter(manga.getId());
             final List<Chapter> content = all.getContent();
             if (!content.isEmpty()) {
                 LOGGER.info("Found the last chapter for manga={} chapter={}", manga, content.get(0));
@@ -74,10 +74,7 @@ public class EbookService {
         LOGGER.info("chaper = {}", lastChapter);
         if (lastChapter != null) {
             chapterNumber = lastChapter.getNum() + 1;
-            LOGGER.info("chaper3 = {}", lastChapter.getNum());
-            LOGGER.info("chaper2 = {}", lastChapter.getNum() + 1);
         }
-        LOGGER.info("chaper1 = {}", chapterNumber);
         // we scrap one
         final ChapterDto chapterXhtml = scrapService.scrapOne(manga, chapterNumber);
         if (chapterXhtml == null) {
@@ -92,20 +89,22 @@ public class EbookService {
         personalEpub.setName(epub.getName());
         personalEpub.setType(BOOK_FORMAT.EPUB.name());
         personalEpub.setUrl(epub.getPath());
+        personalEpub = filePersistenceService.save(personalEpub);
 
         final File mobi = mobiService.epubToMbi(epub);
-        final FileStorage mobiPeronalFile = new FileStorage();
+        FileStorage mobiPeronalFile = new FileStorage();
         mobiPeronalFile.setName(mobi.getName());
         mobiPeronalFile.setType(BOOK_FORMAT.MOBI.name());
         mobiPeronalFile.setUrl(mobi.getPath());
+        mobiPeronalFile = filePersistenceService.save(mobiPeronalFile);
 
         //        chapterXhtml.getFile().delete();
 
         // Create the File
-        personalEpub = filePersistenceService.save(personalEpub);
         final Set<FileStorage> files = new HashSet<>();
         files.add(personalEpub);
         files.add(mobiPeronalFile);
+
         final Chapter newChapter = new Chapter();
         newChapter.setNum(chapterNumber);
         newChapter.setFiles(files);
@@ -116,8 +115,16 @@ public class EbookService {
         //need to send chapter to all user who subscribe
         final Iterable<MangaSubscription> all = mangaSubscriptionService.findByMangaId(manga.getId());
         all.forEach(mangaSubscription -> {
-            //then send mail
-            mailService.sendMail(mangaSubscription.getUser().getEmail(), epub.getPath(), epub.getName());
+            String path = null;
+            if (mangaSubscription.getFormat().equals(BOOK_FORMAT.EPUB)) {
+                //then send mail
+                path = epub.getPath();
+            } else if (mangaSubscription.getFormat().equals(BOOK_FORMAT.MOBI)) {
+                path = mobi.getPath();
+            }
+            if (path != null) {
+                mailService.sendMail(mangaSubscription.getUser().getEmail(), path, epub.getName());
+            }
         });
 
     }

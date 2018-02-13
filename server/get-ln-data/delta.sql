@@ -105,6 +105,13 @@ VALUES (1, 2, 1583, '2018-02-07 17:39:22', '2018-02-07 17:39:22', 0, 'MOBI');
 INSERT INTO LN.manga_subscription (user_id, manga_id, num_chapter, creation_date, update_date, deleted, format)
 VALUES (2, 2, 1583, '2018-02-07 17:39:22', '2018-02-07 17:39:22', 0, 'MOBI');
 
+INSERT INTO LN.chapter (text, num, title, creation_date, update_date, tome, file_id, manga_id, deleted)
+VALUES ('""', 1589, 'test', '2018-02-08 11:27:29', '2018-02-08 11:27:29', 1, NULL, 2, 0);
+INSERT INTO LN.chapter (text, num, title, creation_date, update_date, tome, file_id, manga_id, deleted)
+VALUES (NULL, 1584, '#1584: golden-colored dragon pattern(s)', '2018-02-08 16:31:01', '2018-02-08 16:31:01', NULL, 1, NULL, 0);
+INSERT INTO LN.chapter (text, num, title, creation_date, update_date, tome, file_id, manga_id, deleted)
+VALUES (NULL, 1590, '#1590: The concern finished', '2018-02-10 14:25:00', '2018-02-10 14:25:00', NULL, 19, 2, 0);
+
 INSERT INTO LN.manga (name, author, comment, url, type, creation_date, update_date, deleted) VALUES ('
 Douluo Dalu 3 - Dragon King''s Legend', 'Tang Jia San Shao', NULL,
                                                                                                      'https://lnmtl.com/chapter/douluo-dalu-3-dragon-king-s-legend-chapter-',

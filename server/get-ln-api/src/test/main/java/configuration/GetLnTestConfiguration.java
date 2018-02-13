@@ -1,4 +1,4 @@
-package main.java.configuration;
+package configuration;
 
 import org.springframework.context.annotation.Configuration;
 

@@ -22,7 +22,13 @@ public class ChapterService {
     private ChapterPersistenceService chapterPersistenceService;
 
     public Page<Chapter> findByMangaId(final int page, final int size, final Long id) {
-        final Pageable pageable = new PageRequest(page, size, new QSort(QChapter.chapter.creationDate.asc()));
+        final Pageable pageable = new PageRequest(page, size, new QSort(QChapter.chapter.creationDate.desc()));
+        final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(id), pageable);
+        return all;
+    }
+
+    public Page<Chapter> findLastChapter(final Long id) {
+        final Pageable pageable = new PageRequest(0, 1, new QSort(QChapter.chapter.num.desc()));
         final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(id), pageable);
         return all;
     }

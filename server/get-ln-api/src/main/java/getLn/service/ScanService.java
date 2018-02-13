@@ -48,7 +48,7 @@ public class ScanService {
                 //TODO need to check if the chapter is not already found
                 epubService.transformOneChapter(mangaOut.getManga());
                 mangaOut.setNbTry(0);
-                setStatus(mangaOut, Status.RE_TRY);
+                setStatus(mangaOut, Status.AVAILABLE);
             } catch (final Exception e) {
                 LOGGER.error("Can't found the manga={}", mangaOut, e);
                 mangaOut.setNbTry(mangaOut.getNbTry() + 1);
