@@ -1,12 +1,14 @@
 package getln.data.entity;
 
+import java.util.Set;
 import java.util.StringJoiner;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import getln.data.commons.AbstractDeletableJpaEntity;
@@ -37,19 +39,31 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
     @JoinColumn(name = "manga_id")
     private Manga manga;
 
-    @JoinColumn(name = "file_id")
-    @OneToOne
-    private File file;
+    /**
+     * All file for each chapter
+     */
+    //@formatter:off
+    @OneToMany
+    @JoinTable(schema = "LN", name = "chapter_files",
+        joinColumns = @JoinColumn(name = "chapter_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "file_id", referencedColumnName = "id")
+    )
+    //@formatter:on
+    private Set<FileStorage> files;
+
+    //    @JoinColumn(name = "file_id")
+    //    @OneToOne
+    //    private File file;
 
     public Chapter() {
     }
 
-    public Chapter(final String text, final int num, final String title, final String tome, final File file) {
+    public Chapter(final String text, final int num, final String title, final String tome, final Set<FileStorage> files) {
         this.text = text;
         this.num = num;
         this.title = title;
         this.tome = tome;
-        this.file = file;
+        this.files = files;
     }
 
     /**
@@ -107,31 +121,6 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
     }
 
     /**
-     * Gets file.
-     *
-     * @return Value of file.
-     */
-    public File getFile() {
-        return file;
-    }
-
-    /**
-     * Sets new file.
-     *
-     * @param file New value of file.
-     */
-    public void setFile(final File file) {
-        this.file = file;
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("texte = " + text).add("num = " + num)
-            .add("title = " + title).add("Tome = " + tome).add("file = " + file).add("creationDate = " + creationDate)
-            .add("deletionDate = " + updateDate).add("deleted = " + deleted).add("id = " + id).toString();
-    }
-
-    /**
      * Gets text.
      *
      * @return Value of text.
@@ -165,5 +154,31 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
      */
     public void setManga(final Manga manga) {
         this.manga = manga;
+    }
+
+    /**
+     * Gets All file for each chapter.
+     *
+     * @return Value of All file for each chapter.
+     */
+    public Set<FileStorage> getFiles() {
+        return files;
+    }
+
+    /**
+     * Sets new All file for each chapter.
+     *
+     * @param files New value of All file for each chapter.
+     */
+    public void setFiles(final Set<FileStorage> files) {
+        this.files = files;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("title = " + title).add("text = " + text)
+            .add("num = " + num).add("tome = " + tome).add("manga = " + manga).add("files = " + files)
+            .add("creationDate = " + creationDate).add("updateDate = " + updateDate).add("deleted = " + deleted).add("id = " + id)
+            .toString();
     }
 }

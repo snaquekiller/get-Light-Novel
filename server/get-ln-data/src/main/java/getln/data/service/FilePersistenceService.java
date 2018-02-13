@@ -2,12 +2,12 @@ package getln.data.service;
 
 import org.springframework.stereotype.Service;
 
-import getln.data.entity.File;
+import getln.data.entity.FileStorage;
 
 /**
  * .
  */
 @Service
-public interface FilePersistenceService extends DataRepository<File> {
+public interface FilePersistenceService extends DataRepository<FileStorage> {
 
 }

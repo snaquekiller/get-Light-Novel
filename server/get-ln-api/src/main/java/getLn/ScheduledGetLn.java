@@ -35,16 +35,17 @@ public class ScheduledGetLn {
     @Inject
     private MobiService mobiService;
 
-//    @Scheduled(cron = "${scheduled.getln.task}")
+    //    @Scheduled(cron = "${scheduled.getln.task}")
     public void newMangaCron() {
-//        log.info("The time is now {}", dateFormat.format(new Date()));
+        //        log.info("The time is now {}", dateFormat.format(new Date()));
         scanService.scanAndSendNewManga();
     }
 
     @Scheduled(cron = "${scheduled.getln.task}")
     public void testEpub() {
         log.info("The time is now {}", dateFormat.format(new Date()));
-        mobiService.epubToMbi(new File("/home/nicolas/Project/get-Light-Novel/server/testEpub/_Douluo_Dalu_3___Dragon_King_s_Legend_Douluo_Dalu_3___Dragon_King_s_Legend_1590.epub"));
+        mobiService
+            .epubToMbi(new File("testEpub/_Douluo_Dalu_3___Dragon_King_s_Legend_Douluo_Dalu_3___Dragon_King_s_Legend_1590.epub"));
     }
 
 }

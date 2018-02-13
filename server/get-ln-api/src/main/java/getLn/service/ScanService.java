@@ -31,7 +31,7 @@ public class ScanService {
     private MangaOutPersistenceService mangaOutPersistenceService;
 
     @Inject
-    private EpubService epubService;
+    private EbookService epubService;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void setStatus(final MangaOut mangaOut, final Status status) {

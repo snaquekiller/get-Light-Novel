@@ -2,6 +2,8 @@ package getln.data.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -34,6 +36,12 @@ public class MangaSubscription extends AbstractDeletableJpaEntity<Long> {
      */
     @Column(name = "num_chapter")
     private int numChapter;
+
+    /**
+     * The type of book you want receive epub or mobi
+     */
+    @Enumerated(EnumType.STRING)
+    private BOOK_FORMAT format;
 
     public MangaSubscription() {
     }
@@ -90,5 +98,23 @@ public class MangaSubscription extends AbstractDeletableJpaEntity<Long> {
      */
     public void setManga(final Manga manga) {
         this.manga = manga;
+    }
+
+    /**
+     * Sets new The type of book you want receive epub or mobi.
+     *
+     * @param format New value of The type of book you want receive epub or mobi.
+     */
+    public void setFormat(final BOOK_FORMAT format) {
+        this.format = format;
+    }
+
+    /**
+     * Gets The type of book you want receive epub or mobi.
+     *
+     * @return Value of The type of book you want receive epub or mobi.
+     */
+    public BOOK_FORMAT getFormat() {
+        return format;
     }
 }

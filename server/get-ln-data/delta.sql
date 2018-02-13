@@ -64,12 +64,22 @@ CREATE TABLE LN.user
   deleted       TINYINT(1)                      DEFAULT 0
 );
 
+CREATE TABLE chapter_files
+(
+  chapter_id BIGINT(20) UNSIGNED,
+  type       ENUM ('EPUB', 'MOBI')           NOT NULL,
+  file_id    BIGINT(20) UNSIGNED PRIMARY KEY NOT NULL
+);
+CREATE UNIQUE INDEX chapter_files_file_id_uindex
+  ON chapter_files (file_id);
+
 CREATE TABLE manga_subscription
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   user_id       BIGINT(20) UNSIGNED,
   manga_id      BIGINT(20) UNSIGNED,
   num_chapter   INT UNSIGNED,
+  format        ENUM ('EPUB', 'MOBI'),
   creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   update_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   deleted       TINYINT(1)                      DEFAULT 0
@@ -90,10 +100,10 @@ VALUES (2, 12, 15, 0, NULL, 0, 'AVAILABLE', '2018-02-08 11:20:13', '2018-02-08 1
 INSERT INTO LN.manga_out (manga_id, hours, minutes, secondes, days, nb_try, status, creation_date, update_date, deleted)
 VALUES (2, 15, 35, 0, NULL, 0, 'AVAILABLE', '2018-02-08 11:20:13', '2018-02-08 11:20:13', 0);
 
-INSERT INTO LN.manga_subscription (user_id, manga_id, num_chapter, creation_date, update_date, deleted)
-VALUES (1, 2, 1583, '2018-02-07 17:39:22', '2018-02-07 17:39:22', 0);
-INSERT INTO LN.manga_subscription (user_id, manga_id, num_chapter, creation_date, update_date, deleted)
-VALUES (2, 2, 1583, '2018-02-07 17:39:22', '2018-02-07 17:39:22', 0);
+INSERT INTO LN.manga_subscription (user_id, manga_id, num_chapter, creation_date, update_date, deleted, format)
+VALUES (1, 2, 1583, '2018-02-07 17:39:22', '2018-02-07 17:39:22', 0, 'MOBI');
+INSERT INTO LN.manga_subscription (user_id, manga_id, num_chapter, creation_date, update_date, deleted, format)
+VALUES (2, 2, 1583, '2018-02-07 17:39:22', '2018-02-07 17:39:22', 0, 'MOBI');
 
 INSERT INTO LN.manga (name, author, comment, url, type, creation_date, update_date, deleted) VALUES ('
 Douluo Dalu 3 - Dragon King''s Legend', 'Tang Jia San Shao', NULL,
