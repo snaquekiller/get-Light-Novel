@@ -37,28 +37,40 @@ public class MangaOutService {
 
         final BooleanExpression minutesAndHours;
         if (minuteOfHour < 15) {
-            minutesAndHours = mangaOut.minutes.between(60 + less15, 60).or(mangaOut.minutes.between(0, minuteOfHour + 2))
+            minutesAndHours = mangaOut.minutes.between(60 + less15, 60).and(mangaOut.hours.eq(hours - 1))
                 //hours
-                .and(mangaOut.hours.between(hours - 1, hours));
+                .or(mangaOut.minutes.between(0, minuteOfHour + 2).and(mangaOut.hours.eq(hours)));
         } else {
             minutesAndHours = mangaOut.minutes.between(less15, minuteOfHour + 2)
                 //hours
                 .and(mangaOut.hours.eq(hours));
         }
-        final BooleanExpression between = mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.toDate());
+        final BooleanExpression between =
+            mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.minusMinutes(10).toDate());
         //@formatter:off
-        final BooleanExpression expression = minutesAndHours
+        final BooleanExpression expression =
             //days
-            .and(mangaOut.days.isNull().or(mangaOut.days.eq(dateTime.getDayOfWeek())))
+            mangaOut.days.isNull().or(mangaOut.days.eq(dateTime.getDayOfWeek()))
             //status
-            .and((mangaOut.status.eq(Status.AVAILABLE).and(mangaOut.updateDate.notBetween(dateTime.minusMinutes(15).toDate(), dateTime.toDate())))
-                .or(
-                mangaOut.status.eq(Status.RE_TRY).and(mangaOut.nbTry.loe(MAX_TRY))
+            .and((
+                mangaOut.status.eq(Status.AVAILABLE)
+                    .and(mangaOut.updateDate.notBetween(dateTime.minusMinutes(15).toDate(), dateTime.toDate()))
+                    .and(minutesAndHours)
+                ).or(
+                mangaOut.status.eq(Status.RE_TRY)
+                    .and(mangaOut.nbTry.loe(MAX_TRY))
                     .and(between)
-            ));
+                    .and(mangaOut.hours.between(hours - 1, hours))
+                ).or(
+                mangaOut.status.eq(Status.RE_TRY)
+                    .and(minutesAndHours)
+                    .and(mangaOut.nbTry.goe(MAX_TRY))
+                .and(mangaOut.updateDate.before(dateTime.minusHours(12).toDate()))
+                )
+            );
         //@formatter:on
 
-        LOGGER.info("Search manga out with predicate={}", expression);
+        //        LOGGER.info("Search manga out with predicate={}", expression);
         return mangaOutPersistenceService.findAll(expression);
     }
 }

@@ -2,6 +2,7 @@ package getLn.service;
 
 import javax.inject.Inject;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,10 @@ public class ScanService {
             try {
                 LOGGER.info("Try to found a new manga for chapter={}", mangaOut);
                 setStatus(mangaOut, Status.IN_PROGRESS);
-
+                if ((mangaOut.getStatus() == Status.RE_TRY) &&
+                    mangaOut.getUpdateDate().before(DateTime.now().minusHours(12).toDate())) {
+                    mangaOut.setNbTry(0);
+                }
                 //TODO need to check if the chapter is not already found
                 epubService.transformOneChapter(mangaOut.getManga());
                 mangaOut.setNbTry(0);

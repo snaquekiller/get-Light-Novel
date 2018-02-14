@@ -67,7 +67,7 @@ CREATE TABLE LN.user
 CREATE TABLE chapter_files
 (
   chapter_id BIGINT(20) UNSIGNED,
-  type       ENUM ('EPUB', 'MOBI')           NOT NULL,
+  #   type       ENUM ('EPUB', 'MOBI')           NOT NULL,
   file_id    BIGINT(20) UNSIGNED PRIMARY KEY NOT NULL
 );
 CREATE UNIQUE INDEX chapter_files_file_id_uindex

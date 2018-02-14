@@ -1,5 +1,7 @@
 package getLn.service;
 
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.List;
@@ -85,17 +87,11 @@ public class EbookService {
 
         // create the zip
         final File epub = zipService.zipFile(chapterXhtml.getFilePath() + name, chapterXhtml.getFile());
-        FileStorage personalEpub = new FileStorage();
-        personalEpub.setName(epub.getName());
-        personalEpub.setType(BOOK_FORMAT.EPUB.name());
-        personalEpub.setUrl(epub.getPath());
+        FileStorage personalEpub = new FileStorage(epub.getName(), BOOK_FORMAT.EPUB.name(), epub.getPath());
         personalEpub = filePersistenceService.save(personalEpub);
 
         final File mobi = mobiService.epubToMbi(epub);
-        FileStorage mobiPeronalFile = new FileStorage();
-        mobiPeronalFile.setName(mobi.getName());
-        mobiPeronalFile.setType(BOOK_FORMAT.MOBI.name());
-        mobiPeronalFile.setUrl(mobi.getPath());
+        FileStorage mobiPeronalFile = new FileStorage(mobi.getName(), BOOK_FORMAT.MOBI.name(), mobi.getPath());
         mobiPeronalFile = filePersistenceService.save(mobiPeronalFile);
 
         //        chapterXhtml.getFile().delete();
@@ -115,15 +111,15 @@ public class EbookService {
         //need to send chapter to all user who subscribe
         final Iterable<MangaSubscription> all = mangaSubscriptionService.findByMangaId(manga.getId());
         all.forEach(mangaSubscription -> {
-            String path = null;
-            if (mangaSubscription.getFormat().equals(BOOK_FORMAT.EPUB)) {
+            File send = null;
+            if (mangaSubscription.getFormat().compareTo(BOOK_FORMAT.EPUB) == 0) {
                 //then send mail
-                path = epub.getPath();
-            } else if (mangaSubscription.getFormat().equals(BOOK_FORMAT.MOBI)) {
-                path = mobi.getPath();
+                send = epub;
+            } else if (mangaSubscription.getFormat().compareTo(BOOK_FORMAT.MOBI) == 0) {
+                send = mobi;
             }
             if (path != null) {
-                mailService.sendMail(mangaSubscription.getUser().getEmail(), path, epub.getName());
+                mailService.sendMail(mangaSubscription.getUser().getEmail(), send.getPath(), send.getName());
             }
         });
 

@@ -16,11 +16,12 @@ public class MobiService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MobiService.class);
 
     public File epubToMbi(final File file) {
-        LOGGER.info("try to create epub  for File={}", file);
+        LOGGER.info("try to create mobi  for File={}", file);
         try {
-            Runtime.getRuntime().exec("kindle/kindlegen " + file.getPath());
+            final Process exec = Runtime.getRuntime().exec("kindle/kindlegen " + file.getPath());
+            exec.waitFor();
             return new File(file.getPath().replace(".epub", ".mobi"));
-        } catch (final IOException e) {
+        } catch (final IOException | InterruptedException e) {
             LOGGER.error("Can't create the epub File={}", file);
             return null;
         }
