@@ -17,7 +17,7 @@ import org.springframework.core.env.Environment;
 import getLn.GetLnJob;
 import getLn.controller.ApiControllerInterface;
 import getLn.service.ApiService;
-import getln.data.Data;
+import getln.data.LnData;
 import getln.service.common.Service;
 
 //@formatter:off
@@ -28,7 +28,7 @@ import getln.service.common.Service;
 })
 @ComponentScan(basePackageClasses = {
     GetLnJob.class,
-    Data.class,
+    LnData.class,
     ApiControllerInterface.class,
     Service.class,
     ApiService.class

@@ -18,6 +18,7 @@ import getln.data.commons.AbstractDeletableJpaEntity;
  */
 @Entity
 @Table(name = "manga_out", schema = "LN")
+@lombok.Data
 public class MangaOut extends AbstractDeletableJpaEntity<Long> {
 
     /**
@@ -74,79 +75,6 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
     }
 
     /**
-     * Gets hours.
-     *
-     * @return Value of hours.
-     */
-    public int getHours() {
-        return hours;
-    }
-
-    /**
-     * Sets new minutes.
-     *
-     * @param minutes New value of minutes.
-     */
-    public void setMinutes(final int minutes) {
-        this.minutes = minutes;
-    }
-
-    /**
-     * Sets new secondes.
-     *
-     * @param secondes New value of secondes.
-     */
-    public void setSecondes(final int secondes) {
-        this.secondes = secondes;
-    }
-
-    /**
-     * Gets the days.
-     *
-     * @return Value of the days.
-     */
-    public Integer getDays() {
-        return days;
-    }
-
-    /**
-     * Sets new the days.
-     *
-     * @param days New value of the days.
-     */
-    public void setDays(final Integer days) {
-        this.days = days;
-    }
-
-    /**
-     * Gets secondes.
-     *
-     * @return Value of secondes.
-     */
-    public int getSecondes() {
-        return secondes;
-    }
-
-    /**
-     * Gets minutes.
-     *
-     * @return Value of minutes.
-     */
-    public int getMinutes() {
-        return minutes;
-    }
-
-    /**
-     * Sets new hours.
-     *
-     * @param hours New value of hours.
-     */
-    public void setHours(final int hours) {
-        update();
-        this.hours = hours;
-    }
-
-    /**
      * Sets new The manga.
      *
      * @param manga New value of The manga.
@@ -178,33 +106,6 @@ public class MangaOut extends AbstractDeletableJpaEntity<Long> {
     public void setNbTry(final int nbTry) {
         update();
         this.nbTry = nbTry;
-    }
-
-    /**
-     * Gets The manga.
-     *
-     * @return Value of The manga.
-     */
-    public Manga getManga() {
-        return manga;
-    }
-
-    /**
-     * Gets the days.
-     *
-     * @return Value of the days.
-     */
-    public int getNbTry() {
-        return nbTry;
-    }
-
-    /**
-     * Gets the status of the mangaout if we already try or not.
-     *
-     * @return Value of the status of the mangaout if we already try or not.
-     */
-    public Status getStatus() {
-        return status;
     }
 
     @Override

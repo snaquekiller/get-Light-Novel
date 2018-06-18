@@ -44,6 +44,10 @@
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/com.mysema.maven/apt-maven-plugin -->
     <!-- !MYSQL and connection-->
   </dependencies>

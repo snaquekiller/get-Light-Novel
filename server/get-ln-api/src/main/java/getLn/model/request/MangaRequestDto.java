@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import getln.data.entity.BOOK_TYPE;
 
+@lombok.Data
 public class MangaRequestDto implements Serializable {
 
     /**

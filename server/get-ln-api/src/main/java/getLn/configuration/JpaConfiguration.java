@@ -20,7 +20,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import getln.data.Data;
+import getln.data.LnData;
 import getln.data.entity.EntityData;
 import getln.data.service.DataRepository;
 
@@ -115,7 +115,7 @@ public abstract class JpaConfiguration {
     }
 
     private String[] getPackagesToScan() {
-        return new String[]{Data.class.getPackage().getName()};
+        return new String[]{LnData.class.getPackage().getName()};
     }
 
 }

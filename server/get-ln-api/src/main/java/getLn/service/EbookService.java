@@ -94,7 +94,7 @@ public class EbookService {
         FileStorage mobiPeronalFile = new FileStorage(mobi.getName(), BOOK_FORMAT.MOBI.name(), mobi.getPath());
         mobiPeronalFile = filePersistenceService.save(mobiPeronalFile);
 
-        //        chapterXhtml.getFile().delete();
+        chapterXhtml.getFile().forEach(File::deleteOnExit);
 
         // Create the File
         final Set<FileStorage> files = new HashSet<>();

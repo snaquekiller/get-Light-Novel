@@ -98,6 +98,10 @@
       <groupId>getLn</groupId>
       <artifactId>get-ln-service</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
 
   </dependencies>
 

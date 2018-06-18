@@ -19,6 +19,7 @@ import getln.data.commons.AbstractDeletableJpaEntity;
  */
 @Entity
 @Table(name = "chapter", schema = "LN")
+@lombok.Data
 public class Chapter extends AbstractDeletableJpaEntity<Long> {
 
     @Column(name = "title")
@@ -64,114 +65,6 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
         this.num = num;
         this.title = title;
         this.tome = tome;
-        this.files = files;
-    }
-
-    /**
-     * Gets title.
-     *
-     * @return Value of title.
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Sets new title.
-     *
-     * @param title New value of title.
-     */
-    public void setTitle(final String title) {
-        this.title = title;
-    }
-
-    /**
-     * Gets num.
-     *
-     * @return Value of num.
-     */
-    public int getNum() {
-        return num;
-    }
-
-    /**
-     * Sets new num.
-     *
-     * @param num New value of num.
-     */
-    public void setNum(final int num) {
-        this.num = num;
-    }
-
-    /**
-     * Gets Tome.
-     *
-     * @return Value of Tome.
-     */
-    public String getTome() {
-        return tome;
-    }
-
-    /**
-     * Sets new Tome.
-     *
-     * @param Tome New value of Tome.
-     */
-    public void setTome(final String Tome) {
-        this.tome = Tome;
-    }
-
-    /**
-     * Gets text.
-     *
-     * @return Value of text.
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * Gets The manga associate of the chapter.
-     *
-     * @return Value of The manga associate of the chapter.
-     */
-    public Manga getManga() {
-        return manga;
-    }
-
-    /**
-     * Sets new text.
-     *
-     * @param text New value of text.
-     */
-    public void setText(final String text) {
-        this.text = text;
-    }
-
-    /**
-     * Sets new The manga associate of the chapter.
-     *
-     * @param manga New value of The manga associate of the chapter.
-     */
-    public void setManga(final Manga manga) {
-        this.manga = manga;
-    }
-
-    /**
-     * Gets All file for each chapter.
-     *
-     * @return Value of All file for each chapter.
-     */
-    public Set<FileStorage> getFiles() {
-        return files;
-    }
-
-    /**
-     * Sets new All file for each chapter.
-     *
-     * @param files New value of All file for each chapter.
-     */
-    public void setFiles(final Set<FileStorage> files) {
         this.files = files;
     }
 

@@ -6,8 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +88,13 @@ public class ScrapService {
         return null;
     }
 
+    private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
+
+    private final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+
+    /** The serial version UID. */
+    private static final long serialVersionUID = 1L;
+
     private List<File> createOpfFile(final List<File> files, final ChapterDto chapter) {
 
         //@formatter:off
@@ -93,16 +102,16 @@ public class ScrapService {
         final String head = "<?xml version='1.0' encoding='utf-8'?>\n" +
             "<package xmlns=\"http://www.idpf.org/2007/opf\" unique-identifier=\"uuid_id\" version=\"2.0\">\n" +
             "  <metadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:opf=\"http://www.idpf.org/2007/opf\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:calibre=\"http://calibre.kovidgoyal.net/2009/metadata\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n" +
-            "    <meta name=\"calibre:title_sort\" content=\"\"/>\n"
-            + "    <dc:language>en</dc:language>\n" +
+            "    <meta name=\"calibre:title_sort\" content=\"\"/>\n"+
+            "    <dc:language>en</dc:language>\n" +
             "    <dc:creator opf:file-as=\"Vert\" opf:role=\"aut\">Vert</dc:creator>\n" +
-            "    <meta name=\"calibre:timestamp\" content=\"2015-03-17T06:36:27.069000+00:00\"/>\n" +
-            "    <dc:title>"+ chapter.getBookName() +"</dc:title>\n"
-            + "    <meta name=\"cover\" content=\"cover\"/>\n" +
-            "    <dc:date>0101-01-01T00:00:00+00:00</dc:date>\n" +
-            "    <dc:contributor opf:role=\"bkp\">calibre (1.48.0) [http://calibre-ebook.com]</dc:contributor>\n" +
-            "    <dc:identifier id=\"uuid_id\" opf:scheme=\"uuid\">a792e058-bdd8-45a0-9ef5-1cec35281eef</dc:identifier>\n" +
-            "    <dc:identifier opf:scheme=\"calibre\">a792e058-bdd8-45a0-9ef5-1cec35281eef</dc:identifier>\n" +
+            "    <meta name=\"calibre:timestamp\" content=\" "+ format.format(new Date())+"\"/>\n" +
+            "    <dc:title>"+ chapter.getBookName() + " : "  +chapter.getChapterNumber() +"</dc:title>\n"+
+            "    <meta name=\"cover\" content=\"cover\"/>\n" +
+            "    <dc:date>"+ format.format(new Date()) + "</dc:date>\n" +
+            "    <dc:contributor opf:role=\"bkp\">snaquekiller</dc:contributor>\n" +
+            "    <dc:identifier id=\"uuid_id\" opf:scheme=\"uuid\">" +  serialVersionUID +"</dc:identifier>\n" +
+            "    <dc:identifier opf:scheme=\"calibre\">" +  serialVersionUID +"</dc:identifier>\n" +
             "  </metadata>\n" +
             "<manifest>";
 

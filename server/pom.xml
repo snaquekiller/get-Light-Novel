@@ -23,7 +23,7 @@
 
   <properties>
     <java.version>1.8</java.version>
-    <spring-boot.version>1.5.7.RELEASE</spring-boot.version>
+    <spring-boot.version>2.0.2.RELEASE</spring-boot.version>
     <java-mailx.version>1.4.1</java-mailx.version>
     <jsoup.version>1.10.2</jsoup.version>
     <revisions>0.5.0</revisions>
@@ -92,10 +92,14 @@
       <artifactId>javax.inject</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>4.3.11.RELEASE</version>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
     </dependency>
+    <!--<dependency>-->
+    <!--<groupId>org.springframework</groupId>-->
+    <!--<artifactId>spring-core</artifactId>-->
+    <!--<version>4.3.11.RELEASE</version>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
