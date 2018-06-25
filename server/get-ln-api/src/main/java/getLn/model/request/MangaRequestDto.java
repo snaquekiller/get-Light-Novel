@@ -28,46 +28,6 @@ public class MangaRequestDto implements Serializable {
     @NotBlank
     private String comment;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(final String author) {
-        this.author = author;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(final String comment) {
-        this.comment = comment;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(final String url) {
-        this.url = url;
-    }
-
-    public BOOK_TYPE getType() {
-        return type;
-    }
-
-    public void setType(final BOOK_TYPE type) {
-        this.type = type;
-    }
-
     /**
      * The url where you can scrap the website
      */

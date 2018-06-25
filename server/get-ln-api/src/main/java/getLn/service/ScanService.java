@@ -40,6 +40,9 @@ public class ScanService {
         mangaOutPersistenceService.save(mangaOut);
     }
 
+    /**
+     * Function for scan and send the manga
+     */
     public void scanAndSendNewManga() {
         mangaOutService.getNextManga().forEach(mangaOut -> {
             try {

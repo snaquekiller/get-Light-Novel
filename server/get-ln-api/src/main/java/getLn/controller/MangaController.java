@@ -1,17 +1,18 @@
 package getLn.controller;
 
-import getLn.model.request.MangaRequestDto;
-import getLn.model.request.UserRequestDto;
-import getln.data.entity.User;
-import getln.service.common.MangaService;
-import getln.service.common.UserService;
+import javax.inject.Inject;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
+import getLn.model.request.MangaRequestDto;
+import getLn.model.request.UserRequestDto;
+import getln.data.entity.User;
+import getln.service.common.MangaService;
+import getln.service.common.UserService;
 
 /**
  * .
@@ -34,13 +35,19 @@ public class MangaController {
     public void addUser(@Validated @RequestBody(required = true) final UserRequestDto userRequestDto) {
         // @formatter:on
         final User user = userService.createUser(userRequestDto.getEmail(), userRequestDto.getNom(), userRequestDto.getPrenom(),
-                userRequestDto.getPseudo());
+            userRequestDto.getPseudo());
     }
 
     @RequestMapping(value = "/manga", method = RequestMethod.POST)
     public void addManga(@Validated @RequestBody(required = true) final MangaRequestDto mangaRequestDto) {
         mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(),
-                mangaRequestDto.getUrl(), mangaRequestDto.getType());
+            mangaRequestDto.getUrl(), mangaRequestDto.getType());
+    }
+
+    @RequestMapping(value = "/subscribe/{mangaId}", method = RequestMethod.POST)
+    public void subScribe(@Validated @RequestBody(required = true) final MangaRequestDto mangaRequestDto) {
+        mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(),
+            mangaRequestDto.getUrl(), mangaRequestDto.getType());
     }
 
     //    @RequestMapping(value = "/subscribe", method = RequestMethod.POST)

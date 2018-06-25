@@ -7,6 +7,7 @@ import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@lombok.Data
 public class MangaSubscriptionRequestDto implements Serializable {
 
     /**
@@ -28,39 +29,4 @@ public class MangaSubscriptionRequestDto implements Serializable {
             .add("mangaId = " + mangaId).toString();
     }
 
-    /**
-     * Gets The name of the of the manga.
-     *
-     * @return Value of The name of the of the manga.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Gets The manga.
-     *
-     * @return Value of The manga.
-     */
-    public Long getMangaId() {
-        return mangaId;
-    }
-
-    /**
-     * Sets new The manga.
-     *
-     * @param mangaId New value of The manga.
-     */
-    public void setMangaId(final Long mangaId) {
-        this.mangaId = mangaId;
-    }
-
-    /**
-     * Sets new The name of the of the manga.
-     *
-     * @param name New value of The name of the of the manga.
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
 }

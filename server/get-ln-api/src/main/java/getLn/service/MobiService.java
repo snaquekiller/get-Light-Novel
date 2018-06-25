@@ -15,6 +15,12 @@ public class MobiService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MobiService.class);
 
+    /**
+     * Create a Mobi file from an epub File.
+     *
+     * @param file
+     * @return
+     */
     public File epubToMbi(final File file) {
         LOGGER.info("try to create mobi  for File={}", file);
         try {

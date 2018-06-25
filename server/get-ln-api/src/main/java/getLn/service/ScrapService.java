@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,20 +35,24 @@ public class ScrapService {
     /**
      * The logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScanService.class);
-
-    private static final String ligh_novel = "douluo-dalu-3-dragon-king-s-legend-chapter-";
-
-    private static final String BOOK_NAME = "Douluo Dalu 3";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScrapService.class);
 
     public static final String UTF_8 = "utf-8";
 
     public static final String DIRECTORY = "data";
 
+    private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
+
+    private final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+
+    /** The serial version UID. */
+    private static final long serialVersionUID = 1L;
+
     @Inject
     private ZipService zipService;
 
     public /*static */ void main() throws IOException {
+        String BOOK_NAME = "Douluo Dalu 3";
         if (false) {
             String title = "";
             final List<ChapterDto> chapters = new ArrayList<ChapterDto>();
@@ -57,7 +62,7 @@ public class ScrapService {
                     final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, i);
                     ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
                     chapter =
-                        addTextAndTitle(i, chapter, "https://lnmtl.com/chapter/douluo-dalu-3-dragon-king-s-legend-chapter-");
+                        addTextAndTitleLNMTL(i, chapter, "https://lnmtl.com/chapter/douluo-dalu-3-dragon-king-s-legend-chapter-");
                     writeChapter(BOOK_NAME, chapter.getTextList(), chapter);
                     title += String.format("\t<li>\n\t<a href=\"%s#%d\">%s</a>\n</li>\n", fileName, i, chapter.getName());
                     chapters.add(chapter);
@@ -77,7 +82,7 @@ public class ScrapService {
             final String bookName = manga.getName();
             ChapterDto chapter =
                 new ChapterDto(String.format("%s/%s", DIRECTORY, bookWithoutSpecialChar), chapterNumber, bookName, fileName);
-            chapter = addTextAndTitle(chapterNumber, chapter, manga.getUrl());
+            chapter = addTextAndTitleLNMTL(chapterNumber, chapter, manga.getUrl());
             final File file = writeChapter(bookName, chapter.getTextList(), chapter);
 
             chapter.setFile(createOpfFile(Collections.singletonList(file), chapter));
@@ -88,17 +93,8 @@ public class ScrapService {
         return null;
     }
 
-    private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
-
-    private final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
-
-    /** The serial version UID. */
-    private static final long serialVersionUID = 1L;
-
     private List<File> createOpfFile(final List<File> files, final ChapterDto chapter) {
-
         //@formatter:off
-
         final String head = "<?xml version='1.0' encoding='utf-8'?>\n" +
             "<package xmlns=\"http://www.idpf.org/2007/opf\" unique-identifier=\"uuid_id\" version=\"2.0\">\n" +
             "  <metadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:opf=\"http://www.idpf.org/2007/opf\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:calibre=\"http://calibre.kovidgoyal.net/2009/metadata\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n" +
@@ -152,12 +148,16 @@ public class ScrapService {
         return filess;
     }
 
-    private ChapterDto addTextAndTitle(final int i, final ChapterDto chapter, final String url) throws IOException {
+    public Connection addInfo(Connection connect) {
+        return connect.userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+            .referrer("http://www.google.com");
+    }
+
+    private ChapterDto addTextAndTitleLNMTL(final int i, final ChapterDto chapter, final String url) throws IOException {
         final String format = String.format(url, i);
         try {
-            final Document doc = Jsoup.connect(format)
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("http://www.google.com").get();
+            Connection connect = Jsoup.connect(format);
+            final Document doc = addInfo(connect).get();
             final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
             final List<String> textList =
                 doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
@@ -238,10 +238,6 @@ public class ScrapService {
             }
         }
         return null;
-    }
-
-    public void deleteOldChapter(final File file) {
-        file.delete();
     }
 
     /**

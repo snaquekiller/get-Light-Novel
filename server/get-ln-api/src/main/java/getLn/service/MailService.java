@@ -33,6 +33,13 @@ public class MailService {
     /** The logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
 
+    /**
+     * Send Mail to someone fith file
+     *
+     * @param emailTo
+     * @param pathFile
+     * @param fileName
+     */
     public void sendMail(final String emailTo, final String pathFile, final String fileName) {
         // Recipient's email ID needs to be mentioned.
         //        final String to = "nic.guitton@gmail.com";
@@ -80,6 +87,14 @@ public class MailService {
         }
     }
 
+    /**
+     * Add Attachement to the mail
+     *
+     * @param pathFile
+     * @param fileName
+     * @return
+     * @throws MessagingException
+     */
     private Multipart attachementFile(final String pathFile, final String fileName) throws MessagingException {
         final Multipart multipart = new MimeMultipart();
 
