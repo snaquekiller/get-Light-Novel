@@ -39,24 +39,36 @@ public class ScrapMngDoom {
     @Inject
     private MangaService mangaService;
 
+    /**
+     * Get all manga from the news page
+     * @param i
+     * @param chapter
+     * @param url
+     * @return
+     * @throws IOException
+     */
     private ChapterDto addTextAndTitleMnDOOM(final int i, final ChapterDto chapter, final String url) throws IOException {
         final String format = String.format(url, i);
         try {
             Connection connect = Jsoup.connect(format);
             final Document doc = scrapService.addInfo(connect).get();
             Element manga_updates = doc.getElementsByClass("manga_updates").get(0);
-            Elements dl = manga_updates.getElementsByTag("dl");
-            dl.forEach(element -> {
+            Elements allManga = manga_updates.getElementsByTag("dl");
+            allManga.forEach(element -> {
+                //we get one line of last manga update
                 Element elementTitle = element.getElementsByClass("manga-info-qtip").get(0);
                 String urlElement = elementTitle.text().split("href=\"")[1].split("\" class")[0];
+                //we search if we have this manga on database
                 List<Manga> byUrl = mangaService.findByUrl(urlElement);
                 if (byUrl.size() > 0) {
+                    // if we have it we have need to foun
                     element.getElementsByTag("dd").forEach(element1 -> {
                         String a = element1.getElementsByTag("a").text();
                         String numberChapter = a.split("-")[1];
-                    })
+                    });
                 }
-            }); final List<String> textList =
+            });
+            final List<String> textList =
                 doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
                     .collect(Collectors.toList());
             chapter.setName(chapterTitle);
@@ -97,7 +109,7 @@ public class ScrapMngDoom {
             LOGGER.error("EROOR");
         }
 
-        return chapter;
+//        return chapter;
     }
 
 }
