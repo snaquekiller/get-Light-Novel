@@ -29,7 +29,7 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
     private String text;
 
     @Column
-    private int num = 0;
+    private double num = 0;
 
     @Column
     private String tome;
@@ -60,7 +60,7 @@ public class Chapter extends AbstractDeletableJpaEntity<Long> {
     public Chapter() {
     }
 
-    public Chapter(final String text, final int num, final String title, final String tome, final Set<FileStorage> files) {
+    public Chapter(final String text, final double num, final String title, final String tome, final Set<FileStorage> files) {
         this.text = text;
         this.num = num;
         this.title = title;

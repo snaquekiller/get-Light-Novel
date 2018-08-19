@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import getln.data.entity.Chapter;
+import getln.service.common.ChapterService;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -19,6 +21,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import getLn.model.ChapterDto;
@@ -38,6 +41,9 @@ public class ScrapMngDoom {
 
     @Inject
     private MangaService mangaService;
+
+    @Inject
+    private ChapterService chapterService;
 
     /**
      * Get all manga from the news page
@@ -61,10 +67,20 @@ public class ScrapMngDoom {
                 //we search if we have this manga on database
                 List<Manga> byUrl = mangaService.findByUrl(urlElement);
                 if (byUrl.size() > 0) {
-                    // if we have it we have need to foun
+                    // get the last chapter of this MANGA
+                    Chapter chapter1 = chapterService.findLastChapter(byUrl.get(0).getId()).getContent().get(0);
+
+
+                    // if we have it we have need to found the last chapter
                     element.getElementsByTag("dd").forEach(element1 -> {
                         String a = element1.getElementsByTag("a").text();
                         String numberChapter = a.split("-")[1];
+                        // we need to found
+                        double number = Double.parseDouble(numberChapter);
+                        if (number > chapter1.getNum()){
+                            Chapter chapter2 = new Chapter();
+                            chapter2.setNum(number);
+                        }
                     });
                 }
             });

@@ -27,9 +27,9 @@ public class ChapterService {
         return all;
     }
 
-    public Page<Chapter> findLastChapter(final Long id) {
+    public Page<Chapter> findLastChapter(final Long mangaId) {
         final Pageable pageable = new PageRequest(0, 1, new QSort(QChapter.chapter.num.desc()));
-        final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(id), pageable);
+        final Page<Chapter> all = chapterPersistenceService.findAll(QChapter.chapter.manga.id.eq(mangaId), pageable);
         return all;
     }
 }
