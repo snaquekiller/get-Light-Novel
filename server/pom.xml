@@ -1,139 +1,143 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>getLn</groupId>
-  <artifactId>getLn</artifactId>
-  <packaging>pom</packaging>
-  <version>${revisions}</version>
+    <groupId>getLn</groupId>
+    <artifactId>getLn</artifactId>
+    <packaging>pom</packaging>
+    <version>${revisions}</version>
 
-  <name>get-light-novel</name>
-  <description>Get light Novel for ebook</description>
-  <inceptionYear>2017</inceptionYear>
+    <name>get-light-novel</name>
+    <description>Get light Novel for ebook</description>
+    <inceptionYear>2017</inceptionYear>
 
-  <!--<prerequisites>-->
-  <!--<maven>3.3.9</maven>-->
-  <!--</prerequisites>-->
+    <!--<prerequisites>-->
+    <!--<maven>3.3.9</maven>-->
+    <!--</prerequisites>-->
 
-  <modules>
-    <module>get-ln-data</module>
-    <module>get-ln-service</module>
-    <module>get-ln-api</module>
-  </modules>
+    <modules>
+        <module>get-ln-data</module>
+        <module>get-ln-service</module>
+        <module>get-ln-api</module>
+    </modules>
 
-  <properties>
-    <java.version>1.8</java.version>
-    <spring-boot.version>2.0.2.RELEASE</spring-boot.version>
-    <java-mailx.version>1.4.1</java-mailx.version>
-    <jsoup.version>1.10.2</jsoup.version>
-    <revisions>0.5.0</revisions>
-  </properties>
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-boot.version>2.1.1.RELEASE</spring-boot.version>
+        <java-mailx.version>1.4.1</java-mailx.version>
+        <jsoup.version>1.10.2</jsoup.version>
+        <revisions>0.5.0</revisions>
+        <lombook.version>1.18.4</lombook.version>
+    </properties>
 
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.7.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>getLn</groupId>
-        <artifactId>get-ln-data</artifactId>
-        <version>${revisions}</version>
-      </dependency>
-      <dependency>
-        <groupId>getLn</groupId>
-        <artifactId>get-ln-api</artifactId>
-        <version>${revisions}</version>
-      </dependency>
-      <dependency>
-        <groupId>getLn</groupId>
-        <artifactId>get-ln-service</artifactId>
-        <version>${revisions}</version>
-      </dependency>
-      <dependency>
-        <groupId>javax.inject</groupId>
-        <artifactId>javax.inject</artifactId>
-        <version>1</version>
-      </dependency>
-
-      <dependency>
-        <groupId>javax.mail</groupId>
-        <artifactId>mail</artifactId>
-        <version>${java-mailx.version}</version>
-      </dependency>
-
-      <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-      <dependency>
-        <groupId>org.jsoup</groupId>
-        <artifactId>jsoup</artifactId>
-        <version>${jsoup.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.querydsl</groupId>
-      <artifactId>querydsl-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-    </dependency>
-    <!--<dependency>-->
-    <!--<groupId>org.springframework</groupId>-->
-    <!--<artifactId>spring-core</artifactId>-->
-    <!--<version>4.3.11.RELEASE</version>-->
-    <!--</dependency>-->
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <!-- Turn on filtering by default for application properties -->
-    <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
-      <plugin>
+    <parent>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.7.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>-XX:MaxMetaspaceSize=512m</argLine>
-        </configuration>
-        <version>2.18.1</version>
-      </plugin>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>getLn</groupId>
+                <artifactId>get-ln-data</artifactId>
+                <version>${revisions}</version>
+            </dependency>
+            <dependency>
+                <groupId>getLn</groupId>
+                <artifactId>get-ln-api</artifactId>
+                <version>${revisions}</version>
+            </dependency>
+            <dependency>
+                <groupId>getLn</groupId>
+                <artifactId>get-ln-service</artifactId>
+                <version>${revisions}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>1</version>
+            </dependency>
 
-    </plugins>
-  </build>
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${java-mailx.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombook.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-core</artifactId>-->
+        <!--<version>4.3.11.RELEASE</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Turn on filtering by default for application properties -->
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-XX:MaxMetaspaceSize=512m</argLine>
+                </configuration>
+                <version>2.18.1</version>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>

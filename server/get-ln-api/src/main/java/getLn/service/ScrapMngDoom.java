@@ -1,18 +1,10 @@
 package getLn.service;
 
-import static getln.data.entity.QChapter.chapter;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
+import getLn.model.ChapterDto;
 import getln.data.entity.Chapter;
+import getln.data.entity.Manga;
 import getln.service.common.ChapterService;
+import getln.service.common.MangaService;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -21,12 +13,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import getLn.model.ChapterDto;
-import getln.data.entity.Manga;
-import getln.service.common.MangaService;
+import javax.inject.Inject;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * .
@@ -47,6 +42,7 @@ public class ScrapMngDoom {
 
     /**
      * Get all manga from the news page
+     *
      * @param i
      * @param chapter
      * @param url
@@ -57,7 +53,7 @@ public class ScrapMngDoom {
         final String format = String.format(url, i);
         try {
             Connection connect = Jsoup.connect(format);
-            final Document doc = scrapService.addInfo(connect).get();
+            final Document doc = this.scrapService.addInfo(connect).get();
             Element manga_updates = doc.getElementsByClass("manga_updates").get(0);
             Elements allManga = manga_updates.getElementsByTag("dl");
             allManga.forEach(element -> {
@@ -65,10 +61,10 @@ public class ScrapMngDoom {
                 Element elementTitle = element.getElementsByClass("manga-info-qtip").get(0);
                 String urlElement = elementTitle.text().split("href=\"")[1].split("\" class")[0];
                 //we search if we have this manga on database
-                List<Manga> byUrl = mangaService.findByUrl(urlElement);
+                List<Manga> byUrl = this.mangaService.findByUrl(urlElement);
                 if (byUrl.size() > 0) {
                     // get the last chapter of this MANGA
-                    Chapter chapter1 = chapterService.findLastChapter(byUrl.get(0).getId()).getContent().get(0);
+                    Chapter chapter1 = this.chapterService.findLastChapter(byUrl.get(0).getId()).getContent().get(0);
 
 
                     // if we have it we have need to found the last chapter
@@ -77,7 +73,7 @@ public class ScrapMngDoom {
                         String numberChapter = a.split("-")[1];
                         // we need to found
                         double number = Double.parseDouble(numberChapter);
-                        if (number > chapter1.getNum()){
+                        if (number > chapter1.getNum()) {
                             Chapter chapter2 = new Chapter();
                             chapter2.setNum(number);
                         }
@@ -85,9 +81,9 @@ public class ScrapMngDoom {
                 }
             });
             final List<String> textList =
-                doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
-                    .collect(Collectors.toList());
-            chapter.setName(chapterTitle);
+                    doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
+                            .collect(Collectors.toList());
+            chapter.setName(chapter.getName());
             chapter.setTextList(textList);
             return chapter;
         } catch (final Exception e) {
@@ -103,7 +99,7 @@ public class ScrapMngDoom {
         String bookNameWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
         try {
             Connection connect = Jsoup.connect(format);
-            final Document doc = scrapService.addInfo(connect).get();
+            final Document doc = this.scrapService.addInfo(connect).get();
             Element manga_updates = doc.getElementsByClass("content-inner inner-page").get(0);
             Elements images = manga_updates.getElementsByClass("img-responsive");
             List<File> files = new ArrayList<>();

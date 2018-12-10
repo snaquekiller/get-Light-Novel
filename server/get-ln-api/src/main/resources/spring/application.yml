@@ -1,0 +1,10 @@
+scheduled.getln.task: * */5 * * * ?
+spring:
+  application:
+    name: Get light Novel
+  datasource:
+    username: ligh
+    password: root
+    url: jdbc:mysql://192.168.1.16:3307/LN?useUnicode=yes&characterEncoding=UTF-8
+
+

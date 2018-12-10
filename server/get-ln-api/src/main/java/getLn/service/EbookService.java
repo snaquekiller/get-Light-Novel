@@ -72,10 +72,10 @@ public class EbookService {
 
     public void transformOneChapter(final Manga manga) throws Exception {
         final Chapter lastChapter = getLastChapter(manga);
-        int chapterNumber = 1;
+        double chapterNumber = 1d;
         LOGGER.info("chaper = {}", lastChapter);
         if (lastChapter != null) {
-            chapterNumber = lastChapter.getNum() + 1;
+            chapterNumber = lastChapter.getNum() + 1d;
         }
         // we scrap one
         final ChapterDto chapterXhtml = scrapService.scrapOne(manga, chapterNumber);

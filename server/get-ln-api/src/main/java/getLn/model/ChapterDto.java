@@ -25,7 +25,7 @@ public class ChapterDto implements Serializable {
     /**
      * The chapter Number
      */
-    private int chapterNumber;
+    private double chapterNumber;
 
     /**
      * The bookName associate of the chapter
@@ -46,7 +46,7 @@ public class ChapterDto implements Serializable {
      */
     private String text;
 
-    public ChapterDto(final String filePath, final int chapterNumber, final String bookName, final String fileName) {
+    public ChapterDto(final String filePath, final double chapterNumber, final String bookName, final String fileName) {
         this.filePath = filePath;
         this.chapterNumber = chapterNumber;
         this.bookName = bookName;

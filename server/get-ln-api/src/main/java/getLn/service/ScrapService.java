@@ -75,7 +75,7 @@ public class ScrapService {
         }
     }
 
-    public ChapterDto scrapOne(final Manga manga, final int chapterNumber) {
+    public ChapterDto scrapOne(final Manga manga, final double chapterNumber) {
         try {
             final String bookWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
             final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, chapterNumber);
@@ -153,7 +153,7 @@ public class ScrapService {
             .referrer("http://www.google.com");
     }
 
-    private ChapterDto addTextAndTitleLNMTL(final int i, final ChapterDto chapter, final String url) throws IOException {
+    private ChapterDto addTextAndTitleLNMTL(final double i, final ChapterDto chapter, final String url) throws IOException {
         final String format = String.format(url, i);
         try {
             Connection connect = Jsoup.connect(format);
