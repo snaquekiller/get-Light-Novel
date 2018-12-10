@@ -1,4 +1,8 @@
-package getLn.service;
+package getLn.service.ebook;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,17 +12,15 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 /**
  * .
  */
 @Service
 public class ZipService {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ZipService.class);
 
     public void addToZipFile(final String fileName, final ZipOutputStream zos) throws IOException {
@@ -39,6 +41,13 @@ public class ZipService {
         fis.close();
     }
 
+    /**
+     * Can put all file into one compress file. The extension will depend on the ZipName
+     *
+     * @param zipName
+     * @param files
+     * @return
+     */
     public File zipFile(final String zipName, final List<File> files) {
 
         try {

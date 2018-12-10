@@ -1,25 +1,20 @@
 package getLn.service;
 
-import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.inject.Inject;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
+import java.util.Properties;
 
 /**
  * .
@@ -30,8 +25,11 @@ public class MailService {
     @Inject
     private Environment environment;
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
+
 
     /**
      * Send Mail to someone fith file
@@ -48,7 +46,7 @@ public class MailService {
         final String from = "nic.guitton@gmail.com";
 
         // Assuming you are sending email from localhost
-        final String host = environment.getProperty("postfix.url");
+        final String host = this.environment.getProperty("postfix.url");
 
         // Get system properties
         final Properties properties = System.getProperties();

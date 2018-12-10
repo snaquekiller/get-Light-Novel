@@ -1,6 +1,7 @@
-package getLn.service;
+package getLn.service.scrap;
 
 import getLn.model.ChapterDto;
+import getLn.service.ebook.EpubService;
 import getln.data.entity.Chapter;
 import getln.data.entity.Manga;
 import getln.service.common.ChapterService;
@@ -32,7 +33,7 @@ public class ScrapMngDoom {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScrapMngDoom.class);
 
     @Inject
-    private ScrapService scrapService;
+    private EpubService epubService;
 
     @Inject
     private MangaService mangaService;
@@ -53,7 +54,7 @@ public class ScrapMngDoom {
         final String format = String.format(url, i);
         try {
             Connection connect = Jsoup.connect(format);
-            final Document doc = this.scrapService.addInfo(connect).get();
+            final Document doc = this.epubService.addInfo(connect).get();
             Element manga_updates = doc.getElementsByClass("manga_updates").get(0);
             Elements allManga = manga_updates.getElementsByTag("dl");
             allManga.forEach(element -> {
@@ -92,6 +93,29 @@ public class ScrapMngDoom {
         }
     }
 
+    public Connection addInfo(Connection connect) {
+        return connect.userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                .referrer("http://www.google.com");
+    }
+
+    private ChapterDto addTextAndTitleLNMTL(final double i, final ChapterDto chapter, final String url) throws IOException {
+        final String format = String.format(url, i);
+        try {
+            Connection connect = Jsoup.connect(format);
+            final Document doc = addInfo(connect).get();
+            final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
+            final List<String> textList =
+                    doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
+                            .collect(Collectors.toList());
+            chapter.setName(chapterTitle);
+            chapter.setTextList(textList);
+            return chapter;
+        } catch (final Exception e) {
+            LOGGER.error("can't scrap the url ={}", format, e);
+            throw e;
+        }
+    }
+
     public void chapter(String url, Manga manga, String chapterNum) {
         //        "http://www.mngdoom.com/Tower-of-God/387;
         final String format = String.format(url + "/all-pages");
@@ -99,7 +123,7 @@ public class ScrapMngDoom {
         String bookNameWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
         try {
             Connection connect = Jsoup.connect(format);
-            final Document doc = this.scrapService.addInfo(connect).get();
+            final Document doc = this.epubService.addInfo(connect).get();
             Element manga_updates = doc.getElementsByClass("content-inner inner-page").get(0);
             Elements images = manga_updates.getElementsByClass("img-responsive");
             List<File> files = new ArrayList<>();

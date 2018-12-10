@@ -15,12 +15,21 @@ public class UserService {
     private UserPersistenceService userPersistenceService;
 
 
+    /**
+     * Create an user if the email is not already exist on the database
+     *
+     * @param email
+     * @param name
+     * @param firstname
+     * @param pseudo
+     * @return
+     */
     public User createUser(final String email, final String name, final String firstname, final String pseudo) {
         Objects.requireNonNull(email);
-        final long count = userPersistenceService.count(QUser.user.email.eq(email));
+        final long count = this.userPersistenceService.count(QUser.user.email.eq(email));
         if (count == 0L) {
             final User user = new User(email, name, firstname, pseudo);
-            return userPersistenceService.save(user);
+            return this.userPersistenceService.save(user);
         }
         return null;
     }

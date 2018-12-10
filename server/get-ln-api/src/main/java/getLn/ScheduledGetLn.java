@@ -5,19 +5,17 @@
  */
 package getLn;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.inject.Inject;
-
+import getLn.service.ebook.MobiService;
+import getLn.service.scrap.ScanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import getLn.service.MobiService;
-import getLn.service.ScanService;
+import javax.inject.Inject;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author Nicolas
@@ -38,14 +36,14 @@ public class ScheduledGetLn {
     @Scheduled(cron = "${scheduled.getln.task}")
     public void newMangaCron() {
         //        log.info("The time is now {}", dateFormat.format(new Date()));
-        scanService.scanAndSendNewManga();
+        this.scanService.scanAndSendNewManga();
     }
 
     //    @Scheduled(cron = "${scheduled.getln.task}")
     public void testEpub() {
         log.info("The time is now {}", dateFormat.format(new Date()));
-        mobiService
-            .epubToMbi(new File("testEpub/_Douluo_Dalu_3___Dragon_King_s_Legend_Douluo_Dalu_3___Dragon_King_s_Legend_1590.epub"));
+        this.mobiService
+                .epubToMbi(new File("testEpub/_Douluo_Dalu_3___Dragon_King_s_Legend_Douluo_Dalu_3___Dragon_King_s_Legend_1590.epub"));
     }
 
 }

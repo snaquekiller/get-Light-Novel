@@ -16,6 +16,16 @@ public class MangaService {
     @Inject
     private MangaPersistenceService mangaPersistenceService;
 
+    /**
+     * Add a new manga if the url and the name don't already exist
+     *
+     * @param name
+     * @param author
+     * @param comment
+     * @param url
+     * @param type
+     * @return
+     */
     public Manga addManga(final String name, final String author, final String comment, final String url, final BOOK_TYPE type) {
         final long count = this.mangaPersistenceService.count(QManga.manga.url.eq(url).or(QManga.manga.name.eq(name)));
         if (count == 0) {
@@ -25,6 +35,12 @@ public class MangaService {
         return null;
     }
 
+    /**
+     * Find a manga by his url
+     *
+     * @param url
+     * @return
+     */
     public List<Manga> findByUrl(String url) {
         return Lists.newArrayList(this.mangaPersistenceService.findAll(QManga.manga.url.contains(url)));
     }

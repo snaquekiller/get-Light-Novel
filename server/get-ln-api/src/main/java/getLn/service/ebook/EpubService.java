@@ -1,41 +1,29 @@
-package getLn.service;
+package getLn.service.ebook;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import getLn.model.ChapterDto;
+import getln.data.entity.Manga;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import getLn.model.ChapterDto;
-import getln.data.entity.Manga;
 
 /**
  * .
  */
 @Service
-public class ScrapService {
+public class EpubService {
 
     /**
      * The logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScrapService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EpubService.class);
 
     public static final String UTF_8 = "utf-8";
 
@@ -45,7 +33,9 @@ public class ScrapService {
 
     private final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
 
-    /** The serial version UID. */
+    /**
+     * The serial version UID.
+     */
     private static final long serialVersionUID = 1L;
 
     @Inject
@@ -62,7 +52,7 @@ public class ScrapService {
                     final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, i);
                     ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME, fileName);
                     chapter =
-                        addTextAndTitleLNMTL(i, chapter, "https://lnmtl.com/chapter/douluo-dalu-3-dragon-king-s-legend-chapter-");
+                            addTextAndTitleLNMTL(i, chapter, "https://lnmtl.com/chapter/douluo-dalu-3-dragon-king-s-legend-chapter-");
                     writeChapter(BOOK_NAME, chapter.getTextList(), chapter);
                     title += String.format("\t<li>\n\t<a href=\"%s#%d\">%s</a>\n</li>\n", fileName, i, chapter.getName());
                     chapters.add(chapter);
@@ -81,7 +71,7 @@ public class ScrapService {
             final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, chapterNumber);
             final String bookName = manga.getName();
             ChapterDto chapter =
-                new ChapterDto(String.format("%s/%s", DIRECTORY, bookWithoutSpecialChar), chapterNumber, bookName, fileName);
+                    new ChapterDto(String.format("%s/%s", DIRECTORY, bookWithoutSpecialChar), chapterNumber, bookName, fileName);
             chapter = addTextAndTitleLNMTL(chapterNumber, chapter, manga.getUrl());
             final File file = writeChapter(bookName, chapter.getTextList(), chapter);
 
@@ -96,23 +86,23 @@ public class ScrapService {
     private List<File> createOpfFile(final List<File> files, final ChapterDto chapter) {
         //@formatter:off
         final String head = "<?xml version='1.0' encoding='utf-8'?>\n" +
-            "<package xmlns=\"http://www.idpf.org/2007/opf\" unique-identifier=\"uuid_id\" version=\"2.0\">\n" +
-            "  <metadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:opf=\"http://www.idpf.org/2007/opf\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:calibre=\"http://calibre.kovidgoyal.net/2009/metadata\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n" +
-            "    <meta name=\"calibre:title_sort\" content=\"\"/>\n"+
-            "    <dc:language>en</dc:language>\n" +
-            "    <dc:creator opf:file-as=\"Vert\" opf:role=\"aut\">Vert</dc:creator>\n" +
-            "    <meta name=\"calibre:timestamp\" content=\" "+ format.format(new Date())+"\"/>\n" +
-            "    <dc:title>"+ chapter.getBookName() + " : "  +chapter.getChapterNumber() +"</dc:title>\n"+
-            "    <meta name=\"cover\" content=\"cover\"/>\n" +
-            "    <dc:date>"+ format.format(new Date()) + "</dc:date>\n" +
-            "    <dc:contributor opf:role=\"bkp\">snaquekiller</dc:contributor>\n" +
-            "    <dc:identifier id=\"uuid_id\" opf:scheme=\"uuid\">" +  serialVersionUID +"</dc:identifier>\n" +
-            "    <dc:identifier opf:scheme=\"calibre\">" +  serialVersionUID +"</dc:identifier>\n" +
-            "  </metadata>\n" +
-            "<manifest>";
+                "<package xmlns=\"http://www.idpf.org/2007/opf\" unique-identifier=\"uuid_id\" version=\"2.0\">\n" +
+                "  <metadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:opf=\"http://www.idpf.org/2007/opf\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:calibre=\"http://calibre.kovidgoyal.net/2009/metadata\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n" +
+                "    <meta name=\"calibre:title_sort\" content=\"\"/>\n" +
+                "    <dc:language>en</dc:language>\n" +
+                "    <dc:creator opf:file-as=\"Vert\" opf:role=\"aut\">Vert</dc:creator>\n" +
+                "    <meta name=\"calibre:timestamp\" content=\" " + this.format.format(new Date()) + "\"/>\n" +
+                "    <dc:title>" + chapter.getBookName() + " : " + chapter.getChapterNumber() + "</dc:title>\n" +
+                "    <meta name=\"cover\" content=\"cover\"/>\n" +
+                "    <dc:date>" + this.format.format(new Date()) + "</dc:date>\n" +
+                "    <dc:contributor opf:role=\"bkp\">snaquekiller</dc:contributor>\n" +
+                "    <dc:identifier id=\"uuid_id\" opf:scheme=\"uuid\">" + serialVersionUID + "</dc:identifier>\n" +
+                "    <dc:identifier opf:scheme=\"calibre\">" + serialVersionUID + "</dc:identifier>\n" +
+                "  </metadata>\n" +
+                "<manifest>";
 
         final String end = "  \n"
-            + "</package>\n";
+                + "</package>\n";
         //@formatter:on
 
         Writer writer = null;
@@ -125,7 +115,7 @@ public class ScrapService {
             String manifest = "<manifest>\n";
             for (final File file : files) {
                 manifest += String.format("<item id=\"%s\" href=\"%s\" media-type=\"application/xhtml+xml\">\n", file.getName(),
-                    file.getName());
+                        file.getName());
                 spine += String.format("<itemref idref=\"%s\"/>", file.getName());
             }
             manifest += "</manifest>\n";
@@ -148,37 +138,14 @@ public class ScrapService {
         return filess;
     }
 
-    public Connection addInfo(Connection connect) {
-        return connect.userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-            .referrer("http://www.google.com");
-    }
-
-    private ChapterDto addTextAndTitleLNMTL(final double i, final ChapterDto chapter, final String url) throws IOException {
-        final String format = String.format(url, i);
-        try {
-            Connection connect = Jsoup.connect(format);
-            final Document doc = addInfo(connect).get();
-            final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
-            final List<String> textList =
-                doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
-                    .collect(Collectors.toList());
-            chapter.setName(chapterTitle);
-            chapter.setTextList(textList);
-            return chapter;
-        } catch (final Exception e) {
-            LOGGER.error("can't scrap the url ={}", format, e);
-            throw e;
-        }
-    }
-
     private void createTableMatiere(final String titleBook, final String list) {
         final String title = titleBook.replace(" ", "_");
 
         final String head =
-            "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" + "  <head>\n" +
-                "    <title>" + titleBook + "</title>\n" +
-                "    <link href=\"../styles/stylesheet.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" + "  </head>\n" +
-                "  <body>\n" + "    <h1 class=\"center\" id=\"toc\">Table des Matières</h1>\n" + "    <ul>\n";
+                "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" + "  <head>\n" +
+                        "    <title>" + titleBook + "</title>\n" +
+                        "    <link href=\"../styles/stylesheet.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" + "  </head>\n" +
+                        "  <body>\n" + "    <h1 class=\"center\" id=\"toc\">Table des Matières</h1>\n" + "    <ul>\n";
 
         final String end = "    </ul>\n" + "  </body>\n" + "</html>";
 
@@ -202,11 +169,11 @@ public class ScrapService {
     private File writeChapter(final String titleBook, final List<String> textList, final ChapterDto chapter) {
         Writer writer = null;
         final String head =
-            "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" + "\t<head>\n" +
-                "\t<title>" + titleBook + "</title>\n" +
-                "\t<link href=\"../styles/stylesheet.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" + "\t</head>\n" +
-                " \t\t<body>\n" + "\t\t<h1 class=\"center\" id=\"" + chapter.getChapterNumber() + "\">" + chapter.getName() +
-                "</h1>\n";
+                "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" + "\t<head>\n" +
+                        "\t<title>" + titleBook + "</title>\n" +
+                        "\t<link href=\"../styles/stylesheet.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" + "\t</head>\n" +
+                        " \t\t<body>\n" + "\t\t<h1 class=\"center\" id=\"" + chapter.getChapterNumber() + "\">" + chapter.getName() +
+                        "</h1>\n";
 
         final String end = "  </body>\n" + "</html>";
         try {
@@ -249,11 +216,11 @@ public class ScrapService {
     private File createTOX(final String titleBook, final List<ChapterDto> chapters) {
         Writer writer = null;
         final String head = "<?xml version='1.0' encoding='utf-8'?>\n" + "<!DOCTYPE ncx PUBLIC \"-//NISO//DTD ncx 2005-1//EN\"" +
-            " \"http://www.daisy.org/z3986/2005/ncx-2005-1.dtd\"><ncx version=\"2005-1\" xmlns=\"http://www.daisy.org/z3986/2005/ncx/\">\n" +
-            "\t<head>\n" + "\t\t<meta content=\"urn:uuid:39100132-78e1-4817-a9d5-7185c795bfba\" name=\"dtb:uid\"/>\n" +
-            "\t\t<meta content=\"1\" name=\"dtb:depth\"/>\n" + "\t\t<meta content=\"0\" name=\"dtb:totalPageCount\"/>\n" +
-            "\t\t<meta content=\"0\" name=\"dtb:maxPageNumber\"/>\n" + "\t</head>\n" + "\t<docTitle>\n" + "\t\t<text>" +
-            titleBook + "</text>\n" + "\t</docTitle>\n\t<navMap>";
+                " \"http://www.daisy.org/z3986/2005/ncx-2005-1.dtd\"><ncx version=\"2005-1\" xmlns=\"http://www.daisy.org/z3986/2005/ncx/\">\n" +
+                "\t<head>\n" + "\t\t<meta content=\"urn:uuid:39100132-78e1-4817-a9d5-7185c795bfba\" name=\"dtb:uid\"/>\n" +
+                "\t\t<meta content=\"1\" name=\"dtb:depth\"/>\n" + "\t\t<meta content=\"0\" name=\"dtb:totalPageCount\"/>\n" +
+                "\t\t<meta content=\"0\" name=\"dtb:maxPageNumber\"/>\n" + "\t</head>\n" + "\t<docTitle>\n" + "\t\t<text>" +
+                titleBook + "</text>\n" + "\t</docTitle>\n\t<navMap>";
         try {
             final String name = "tox.ncx";
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), UTF_8));
@@ -261,8 +228,8 @@ public class ScrapService {
             for (int i = 0; i < chapters.size(); i++) {
                 final ChapterDto chapter = chapters.get(i);
                 writer.write(String.format(
-                    "<navPoint id=\"navPoint-%d\" playOrder=\"%d\">\n<navLabel>\n<text>%s</text>\n</navLabel>\n<content src=\"Text/%s\"/>\n</navPoint>",
-                    i, i, chapter.getName(), chapter.getFileName()));
+                        "<navPoint id=\"navPoint-%d\" playOrder=\"%d\">\n<navLabel>\n<text>%s</text>\n</navLabel>\n<content src=\"Text/%s\"/>\n</navPoint>",
+                        i, i, chapter.getName(), chapter.getFileName()));
             }
             writer.write("</navMap>\n" + "</ncx>");
             return new File(name);
