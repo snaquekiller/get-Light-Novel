@@ -1,14 +1,15 @@
 package getLn;
 
-import getLn.configuration.GetLnConfiguration;
-import getLn.service.ebook.EpubService;
+import java.io.IOException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.io.IOException;
+import getLn.configuration.GetLnConfiguration;
+import getLn.service.EbookService;
 
 /**
  * @author Nicolas
@@ -28,7 +29,7 @@ public class getLn {
      */
     public static void main(final String[] args) throws IOException {
         SpringApplication.run(getLn.class);
-        final EpubService epubService = new EpubService();
+        final EbookService epubService = new EbookService();
         epubService.main();
     }
 

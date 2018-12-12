@@ -1,11 +1,14 @@
 package getLn.service.scrap;
 
-import getLn.model.ChapterDto;
-import getLn.service.ebook.EpubService;
-import getln.data.entity.Chapter;
-import getln.data.entity.Manga;
-import getln.service.common.ChapterService;
-import getln.service.common.MangaService;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -16,13 +19,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import getLn.model.ChapterDto;
+import getLn.service.ebook.EpubService;
+import getln.data.entity.Chapter;
+import getln.data.entity.Manga;
+import getln.service.common.ChapterService;
+import getln.service.common.MangaService;
 
 /**
  * .
@@ -50,11 +52,12 @@ public class ScrapMngDoom {
      * @return
      * @throws IOException
      */
-    private ChapterDto addTextAndTitleMnDOOM(final int i, final ChapterDto chapter, final String url) throws IOException {
+    private ChapterDto addTextAndTitleMnDOOM(final int i, final ChapterDto chapter, final String url)
+            throws IOException {
         final String format = String.format(url, i);
         try {
             Connection connect = Jsoup.connect(format);
-            final Document doc = this.epubService.addInfo(connect).get();
+            final Document doc = addInfo(connect).get();
             Element manga_updates = doc.getElementsByClass("manga_updates").get(0);
             Elements allManga = manga_updates.getElementsByTag("dl");
             allManga.forEach(element -> {
@@ -66,7 +69,6 @@ public class ScrapMngDoom {
                 if (byUrl.size() > 0) {
                     // get the last chapter of this MANGA
                     Chapter chapter1 = this.chapterService.findLastChapter(byUrl.get(0).getId()).getContent().get(0);
-
 
                     // if we have it we have need to found the last chapter
                     element.getElementsByTag("dd").forEach(element1 -> {
@@ -94,11 +96,13 @@ public class ScrapMngDoom {
     }
 
     public Connection addInfo(Connection connect) {
-        return connect.userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+        return connect
+                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                 .referrer("http://www.google.com");
     }
 
-    private ChapterDto addTextAndTitleLNMTL(final double i, final ChapterDto chapter, final String url) throws IOException {
+    public ChapterDto addTextAndTitleLNMTL(final double i, final ChapterDto chapter, final String url)
+            throws IOException {
         final String format = String.format(url, i);
         try {
             Connection connect = Jsoup.connect(format);
@@ -123,7 +127,7 @@ public class ScrapMngDoom {
         String bookNameWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
         try {
             Connection connect = Jsoup.connect(format);
-            final Document doc = this.epubService.addInfo(connect).get();
+            final Document doc = addInfo(connect).get();
             Element manga_updates = doc.getElementsByClass("content-inner inner-page").get(0);
             Elements images = manga_updates.getElementsByClass("img-responsive");
             List<File> files = new ArrayList<>();
@@ -145,7 +149,7 @@ public class ScrapMngDoom {
             LOGGER.error("EROOR");
         }
 
-//        return chapter;
+        //        return chapter;
     }
 
 }
