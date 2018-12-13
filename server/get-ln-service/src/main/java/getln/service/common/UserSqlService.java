@@ -1,15 +1,17 @@
 package getln.service.common;
 
+import java.util.Objects;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
 import getln.data.entity.QUser;
 import getln.data.entity.User;
 import getln.data.service.UserPersistenceService;
-import org.springframework.stereotype.Service;
-
-import javax.inject.Inject;
-import java.util.Objects;
 
 @Service
-public class UserService {
+public class UserSqlService {
 
     @Inject
     private UserPersistenceService userPersistenceService;

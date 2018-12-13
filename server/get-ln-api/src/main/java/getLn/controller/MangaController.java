@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import getLn.model.request.MangaRequestDto;
 import getLn.model.request.UserRequestDto;
 import getln.data.entity.User;
-import getln.service.common.MangaService;
-import getln.service.common.UserService;
+import getln.service.common.MangaSqlService;
+import getln.service.common.UserSqlService;
 
 /**
  * .
@@ -21,10 +21,10 @@ import getln.service.common.UserService;
 public class MangaController {
 
     @Inject
-    private UserService userService;
+    private UserSqlService userService;
 
     @Inject
-    private MangaService mangaService;
+    private MangaSqlService mangaService;
 
     /**
      * List reviewers.
@@ -34,20 +34,21 @@ public class MangaController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public void addUser(@Validated @RequestBody(required = true) final UserRequestDto userRequestDto) {
         // @formatter:on
-        final User user = userService.createUser(userRequestDto.getEmail(), userRequestDto.getNom(), userRequestDto.getPrenom(),
-            userRequestDto.getPseudo());
+        final User user = userService
+                .createUser(userRequestDto.getEmail(), userRequestDto.getNom(), userRequestDto.getPrenom(),
+                        userRequestDto.getPseudo());
     }
 
     @RequestMapping(value = "/manga", method = RequestMethod.POST)
     public void addManga(@Validated @RequestBody(required = true) final MangaRequestDto mangaRequestDto) {
         mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(),
-            mangaRequestDto.getUrl(), mangaRequestDto.getType());
+                mangaRequestDto.getUrl(), mangaRequestDto.getType());
     }
 
     @RequestMapping(value = "/subscribe/{mangaId}", method = RequestMethod.POST)
     public void subScribe(@Validated @RequestBody(required = true) final MangaRequestDto mangaRequestDto) {
         mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(),
-            mangaRequestDto.getUrl(), mangaRequestDto.getType());
+                mangaRequestDto.getUrl(), mangaRequestDto.getType());
     }
 
     //    @RequestMapping(value = "/subscribe", method = RequestMethod.POST)

@@ -16,7 +16,7 @@ import getln.data.service.ChapterPersistenceService;
  * .
  */
 @Service
-public class ChapterService {
+public class ChapterSqlService {
 
     @Inject
     private ChapterPersistenceService chapterPersistenceService;

@@ -20,28 +20,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import getLn.model.ChapterDto;
-import getLn.service.ebook.EpubService;
 import getln.data.entity.Chapter;
 import getln.data.entity.Manga;
-import getln.service.common.ChapterService;
-import getln.service.common.MangaService;
+import getln.service.common.ChapterSqlService;
+import getln.service.common.MangaSqlService;
 
 /**
  * .
  */
 @Service
-public class ScrapMngDoom {
+public class ScrapMngDoomService extends ScrapService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScrapMngDoom.class);
-
-    @Inject
-    private EpubService epubService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScrapMngDoomService.class);
 
     @Inject
-    private MangaService mangaService;
+    private MangaSqlService mangaService;
 
     @Inject
-    private ChapterService chapterService;
+    private ChapterSqlService chapterService;
 
     /**
      * Get all manga from the news page
@@ -95,30 +91,6 @@ public class ScrapMngDoom {
         }
     }
 
-    public Connection addInfo(Connection connect) {
-        return connect
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("http://www.google.com");
-    }
-
-    public ChapterDto addTextAndTitleLNMTL(final double i, final ChapterDto chapter, final String url)
-            throws IOException {
-        final String format = String.format(url, i);
-        try {
-            Connection connect = Jsoup.connect(format);
-            final Document doc = addInfo(connect).get();
-            final String chapterTitle = doc.getElementsByClass("chapter-title").get(0).text();
-            final List<String> textList =
-                    doc.getElementById("chapter-container").getElementsByClass("translated").stream().map(Element::text)
-                            .collect(Collectors.toList());
-            chapter.setName(chapterTitle);
-            chapter.setTextList(textList);
-            return chapter;
-        } catch (final Exception e) {
-            LOGGER.error("can't scrap the url ={}", format, e);
-            throw e;
-        }
-    }
 
     public void chapter(String url, Manga manga, String chapterNum) {
         //        "http://www.mngdoom.com/Tower-of-God/387;

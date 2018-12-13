@@ -3,7 +3,6 @@ package getLn.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +18,8 @@ import getLn.model.ChapterDto;
 import getLn.service.ebook.EpubService;
 import getLn.service.ebook.MobiService;
 import getLn.service.ebook.ZipService;
-import getLn.service.scrap.ScrapMngDoom;
+import getLn.service.scrap.ScrapLnNovelService;
+import getLn.service.scrap.ScrapMngDoomService;
 import getln.data.entity.BOOK_FORMAT;
 import getln.data.entity.Chapter;
 import getln.data.entity.FileStorage;
@@ -27,8 +27,8 @@ import getln.data.entity.Manga;
 import getln.data.entity.MangaSubscription;
 import getln.data.service.ChapterPersistenceService;
 import getln.data.service.FilePersistenceService;
-import getln.service.common.ChapterService;
-import getln.service.common.MangaSubscriptionService;
+import getln.service.common.ChapterSqlService;
+import getln.service.common.MangaSubscriptionSqlService;
 
 import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
@@ -47,7 +47,7 @@ public class EbookService {
     private ZipService zipService;
 
     @Inject
-    private ChapterService chapterService;
+    private ChapterSqlService chapterService;
 
     @Inject
     private ChapterPersistenceService chapterPersistenceService;
@@ -56,13 +56,16 @@ public class EbookService {
     private FilePersistenceService filePersistenceService;
 
     @Inject
-    private MangaSubscriptionService mangaSubscriptionService;
+    private MangaSubscriptionSqlService mangaSubscriptionService;
 
     @Inject
     private MailService mailService;
 
     @Inject
-    private ScrapMngDoom scrapMngDoom;
+    private ScrapMngDoomService scrapMngDoom;
+
+    @Inject
+    private ScrapLnNovelService scrapLnNovelService;
 
     @Inject
     private MobiService mobiService;
@@ -80,9 +83,10 @@ public class EbookService {
                     ChapterDto chapter = new ChapterDto(String.format("%s", bookWithoutSpecialChar), i, BOOK_NAME,
                             fileName);
                     chapter =
-                            scrapMngDoom.addTextAndTitleLNMTL(i, chapter,
+                            scrapLnNovelService.addTextAndTitleLNMTL(i, chapter,
                                     "https://lnmtl.com/chapter/douluo-dalu-3-dragon-king-s-legend-chapter-");
-                    epubService.writeChapter(BOOK_NAME, chapter.getTextList(), chapter);
+                    List<File> files = epubService.writeChapter(BOOK_NAME, chapter);
+                    chapter.setFile(files);
                     title += String
                             .format("\t<li>\n\t<a href=\"%s#%d\">%s</a>\n</li>\n", fileName, i, chapter.getName());
                     chapters.add(chapter);
@@ -99,10 +103,9 @@ public class EbookService {
      * @param manga
      * @return
      */
-    @org.jetbrains.annotations.Nullable
     private Chapter getLastChapter(final Manga manga) {
         LOGGER.info("get the last chapter for manga={}", manga);
-        if (manga != null && manga.getId() != null) {
+        if ((manga != null) && (manga.getId() != null)) {
             final Page<Chapter> all = this.chapterService.findLastChapter(manga.getId());
             final List<Chapter> content = all.getContent();
             if (!content.isEmpty()) {
@@ -121,10 +124,9 @@ public class EbookService {
             ChapterDto chapter =
                     new ChapterDto(String.format("%s/%s", this.epubService.DIRECTORY, bookWithoutSpecialChar),
                             chapterNumber, bookName, fileName);
-            chapter = this.scrapMngDoom.addTextAndTitleLNMTL(chapterNumber, chapter, manga.getUrl());
-            final File file = this.epubService.writeChapter(bookName, chapter.getTextList(), chapter);
-
-            chapter.setFile(this.epubService.createOpfFile(Collections.singletonList(file), chapter));
+            chapter = this.scrapLnNovelService.addTextAndTitleLNMTL(chapterNumber, chapter, manga.getUrl());
+            List<File> files = epubService.writeChapter(bookName, chapter);
+            chapter.setFile(files);
             return chapter;
         } catch (final Exception e) {
             LOGGER.error("Chapter  " + chapterNumber + "not found ", e);
@@ -174,13 +176,13 @@ public class EbookService {
         final Iterable<MangaSubscription> all = this.mangaSubscriptionService.findByMangaId(manga.getId());
         all.forEach(mangaSubscription -> {
             File send = null;
-            if (mangaSubscription.getFormat().compareTo(BOOK_FORMAT.EPUB) == 0) {
+            if (0 == mangaSubscription.getFormat().compareTo(BOOK_FORMAT.EPUB)) {
                 //then send mail
                 send = epub;
-            } else if (mangaSubscription.getFormat().compareTo(BOOK_FORMAT.MOBI) == 0) {
+            } else if (0 == mangaSubscription.getFormat().compareTo(BOOK_FORMAT.MOBI)) {
                 send = mobi;
             }
-            if (path != null) {
+            if (null != path) {
                 this.mailService.sendMail(mangaSubscription.getUser().getEmail(), send.getPath(), send.getName());
             }
         });

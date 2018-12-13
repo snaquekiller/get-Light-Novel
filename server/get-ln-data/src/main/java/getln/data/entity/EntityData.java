@@ -8,8 +8,6 @@ import javax.inject.Qualifier;
 
 import org.springframework.context.annotation.ComponentScan;
 
-import getln.data.LnData;
-
 /**
  * .
  */
@@ -17,7 +15,7 @@ import getln.data.LnData;
 @Retention(RetentionPolicy.RUNTIME)
 @Qualifier
 @ComponentScan(
-        basePackageClasses = {LnData.class}
+        basePackageClasses = {EntityData.class}
 )
 public @interface EntityData {
 

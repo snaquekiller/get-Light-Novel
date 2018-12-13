@@ -8,10 +8,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +25,11 @@ import getLn.model.ChapterDto;
 public class EpubService {
 
     /**
+     * The serial version UID.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * The logger.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(EpubService.class);
@@ -38,15 +42,14 @@ public class EpubService {
 
     private final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
 
+
     /**
-     * The serial version UID.
+     * File usefull for Metadata of the chapter !!!
+     *
+     * @param files
+     * @param chapter
+     * @return
      */
-    private static final long serialVersionUID = 1L;
-
-    @Inject
-    private ZipService zipService;
-
-
     public List<File> createOpfFile(final List<File> files, final ChapterDto chapter) {
         //@formatter:off
         final String head = "<?xml version='1.0' encoding='utf-8'?>\n" +
@@ -103,37 +106,16 @@ public class EpubService {
         return filess;
     }
 
-    public void createTableMatiere(final String titleBook, final String list) {
-        final String title = titleBook.replace(" ", "_");
 
-        final String head =
-                "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
-                        + "  <head>\n" +
-                        "    <title>" + titleBook + "</title>\n" +
-                        "    <link href=\"../styles/stylesheet.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
-                        + "  </head>\n" +
-                        "  <body>\n" + "    <h1 class=\"center\" id=\"toc\">Table des Matières</h1>\n" + "    <ul>\n";
-
-        final String end = "    </ul>\n" + "  </body>\n" + "</html>";
-
-        Writer writer = null;
-        try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(title + "/toc.xhtml"), "utf-8"));
-            writer.write(head);
-            writer.write(list);
-            writer.write(end);
-        } catch (final IOException ex) {
-            // report
-            LOGGER.error("Can't create the file", ex);
-        } finally {
-            try {
-                writer.close();
-            } catch (final Exception ex) {/*ignore*/
-            }
-        }
-    }
-
-    public File writeChapter(final String titleBook, final List<String> textList, final ChapterDto chapter) {
+    /**
+     * Write the content of one Chapter
+     *
+     * @param titleBook
+     * @param textList
+     * @param chapter
+     * @return
+     */
+    public File writeContentChapter(final String titleBook, final List<String> textList, final ChapterDto chapter) {
         Writer writer = null;
         final String head =
                 "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
@@ -175,6 +157,43 @@ public class EpubService {
             }
         }
         return null;
+    }
+
+    public List<File> writeChapter(final String titleBook, final ChapterDto chapter) {
+        final File file = writeContentChapter(titleBook, chapter.getTextList(), chapter);
+
+        List<File> opfFile = createOpfFile(Collections.singletonList(file), chapter);
+        return opfFile;
+    }
+
+    public void createTableMatiere(final String titleBook, final String list) {
+        final String title = titleBook.replace(" ", "_");
+
+        final String head =
+                "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                        + "  <head>\n" +
+                        "    <title>" + titleBook + "</title>\n" +
+                        "    <link href=\"../styles/stylesheet.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                        + "  </head>\n" +
+                        "  <body>\n" + "    <h1 class=\"center\" id=\"toc\">Table des Matières</h1>\n" + "    <ul>\n";
+
+        final String end = "    </ul>\n" + "  </body>\n" + "</html>";
+
+        Writer writer = null;
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(title + "/toc.xhtml"), "utf-8"));
+            writer.write(head);
+            writer.write(list);
+            writer.write(end);
+        } catch (final IOException ex) {
+            // report
+            LOGGER.error("Can't create the file", ex);
+        } finally {
+            try {
+                writer.close();
+            } catch (final Exception ex) {/*ignore*/
+            }
+        }
     }
 
     /**

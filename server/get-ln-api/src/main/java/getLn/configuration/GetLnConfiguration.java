@@ -1,13 +1,14 @@
 package getLn.configuration;
 
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
 import getLn.GetLnJob;
 import getLn.controller.ApiControllerInterface;
 import getLn.service.ApiService;
 import getln.data.LnData;
-import getln.service.common.Service;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import getln.service.common.SqlService;
 
 //@formatter:off
 @Configuration
@@ -15,11 +16,11 @@ import org.springframework.context.annotation.Import;
 })
 @ComponentScan(basePackageClasses = {
         GetLnJob.class,
-        LnData.class,
-        ApiControllerInterface.class,
-        Service.class,
-        ApiService.class
+        ApiControllerInterface.class
 })
+@LnData
+@SqlService
+@ApiService
 //@formatter:on
 public class GetLnConfiguration {
 

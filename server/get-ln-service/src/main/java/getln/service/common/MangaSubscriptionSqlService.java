@@ -1,17 +1,18 @@
 package getln.service.common;
 
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
 import getln.data.entity.MangaSubscription;
 import getln.data.entity.QMangaSubscription;
 import getln.data.service.MangaSubscriptionPersistanceService;
-import org.springframework.stereotype.Service;
-
-import javax.inject.Inject;
 
 /**
  * .
  */
 @Service
-public class MangaSubscriptionService {
+public class MangaSubscriptionSqlService {
 
     @Inject
     private MangaSubscriptionPersistanceService mangaSubscriptionPersistanceService;

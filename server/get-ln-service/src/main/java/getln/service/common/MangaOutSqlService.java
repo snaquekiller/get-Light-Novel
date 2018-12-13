@@ -18,9 +18,9 @@ import getln.data.service.MangaOutPersistenceService;
  * .
  */
 @Service
-public class MangaOutService {
+public class MangaOutSqlService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MangaOutService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MangaOutSqlService.class);
 
     public static int MAX_TRY = 5;
 
@@ -38,15 +38,15 @@ public class MangaOutService {
         final BooleanExpression minutesAndHours;
         if (minuteOfHour < 15) {
             minutesAndHours = mangaOut.minutes.between(60 + less15, 60).and(mangaOut.hours.eq(hours - 1))
-                //hours
-                .or(mangaOut.minutes.between(0, minuteOfHour + 2).and(mangaOut.hours.eq(hours)));
+                    //hours
+                    .or(mangaOut.minutes.between(0, minuteOfHour + 2).and(mangaOut.hours.eq(hours)));
         } else {
             minutesAndHours = mangaOut.minutes.between(less15, minuteOfHour + 2)
-                //hours
-                .and(mangaOut.hours.eq(hours));
+                    //hours
+                    .and(mangaOut.hours.eq(hours));
         }
         final BooleanExpression between =
-            mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.minusMinutes(10).toDate());
+                mangaOut.updateDate.between(dateTime.minusMinutes(15).toDate(), dateTime.minusMinutes(10).toDate());
         //@formatter:off
         final BooleanExpression expression =
             //days
