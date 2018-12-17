@@ -16,3 +16,13 @@ front/public/*
 front/dist
 front/coverage
 data/
+
+.checkstyle
+.classpath
+.project
+.settings
+.sonar-ide.properties
+
+.idea/
+*.iml
+.DS_store
