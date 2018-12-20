@@ -151,33 +151,6 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-          <webResources>
-            <resource>
-              <directory>src/main/resources/spring</directory>
-              <targetPath>WEB-INF/classes/spring</targetPath>
-              <filtering>true</filtering>
-              <includes>
-                <include>**/*.properties</include>
-              </includes>
-            </resource>
-          </webResources>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <configuration>
-              <webappDirectory>target/${project.name}/deploy</webappDirectory>
-            </configuration>
-            <goals>
-              <goal>exploded</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <!--Generation des Predicates.-->
 
       <plugin>

@@ -2,7 +2,7 @@ server/manga/*
 dist/*
 build/*
 target/*
-
+*/target/*
 .idea
 .DS_STORE
 *.log

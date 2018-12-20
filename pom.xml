@@ -23,19 +23,18 @@
   </modules>
 
   <properties>
-    <java.version>1.8</java.version>
-    <spring-boot.version>2.1.1.RELEASE</spring-boot.version>
+    <java.version>11</java.version>
     <java-mailx.version>1.4.1</java-mailx.version>
     <jsoup.version>1.10.2</jsoup.version>
     <revisions>0.5.0</revisions>
-    <lombook.version>1.18.4</lombook.version>
+    <!--<lombook.version>1.18.4</lombook.version>-->
     <hikaricp.version>3.2.0</hikaricp.version>
   </properties>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.7.RELEASE</version>
+    <version>2.1.1.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
@@ -73,11 +72,6 @@
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
         <version>${jsoup.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>${lombook.version}</version>
       </dependency>
       <dependency>
         <groupId>org.mariadb.jdbc</groupId>
@@ -127,6 +121,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons</artifactId>
     </dependency>
   </dependencies>
 
