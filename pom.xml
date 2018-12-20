@@ -29,6 +29,7 @@
     <jsoup.version>1.10.2</jsoup.version>
     <revisions>0.5.0</revisions>
     <lombook.version>1.18.4</lombook.version>
+    <hikaricp.version>3.2.0</hikaricp.version>
   </properties>
 
   <parent>
@@ -83,6 +84,11 @@
         <artifactId>mariadb-java-client</artifactId>
         <version>2.2.4</version>
       </dependency>
+      <dependency>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>${hikaricp.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -113,6 +119,14 @@
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
   </dependencies>
 

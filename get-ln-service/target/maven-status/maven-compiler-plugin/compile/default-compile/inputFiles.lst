@@ -1,6 +1,6 @@
-/home/nicolas/perso/getLn/server/get-ln-service/src/main/java/getln/service/common/SqlService.java
-/home/nicolas/perso/getLn/server/get-ln-service/src/main/java/getln/service/common/MangaSubscriptionSqlService.java
-/home/nicolas/perso/getLn/server/get-ln-service/src/main/java/getln/service/common/MangaOutSqlService.java
-/home/nicolas/perso/getLn/server/get-ln-service/src/main/java/getln/service/common/UserSqlService.java
-/home/nicolas/perso/getLn/server/get-ln-service/src/main/java/getln/service/common/MangaSqlService.java
-/home/nicolas/perso/getLn/server/get-ln-service/src/main/java/getln/service/common/ChapterSqlService.java
+/home/nicolas/perso/getLn/get-ln-service/src/main/java/getln/service/common/MangaSqlService.java
+/home/nicolas/perso/getLn/get-ln-service/src/main/java/getln/service/common/MangaOutSqlService.java
+/home/nicolas/perso/getLn/get-ln-service/src/main/java/getln/service/common/UserSqlService.java
+/home/nicolas/perso/getLn/get-ln-service/src/main/java/getln/service/common/MangaSubscriptionSqlService.java
+/home/nicolas/perso/getLn/get-ln-service/src/main/java/getln/service/common/SqlService.java
+/home/nicolas/perso/getLn/get-ln-service/src/main/java/getln/service/common/ChapterSqlService.java
