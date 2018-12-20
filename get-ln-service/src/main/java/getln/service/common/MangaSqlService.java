@@ -1,6 +1,7 @@
 package getln.service.common;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -45,8 +46,8 @@ public class MangaSqlService {
      * @param id
      * @return
      */
-    public Manga findById(Long id) {
-        return this.mangaPersistenceService.findOne(id);
+    public Optional<Manga> findById(Long id) {
+        return this.mangaPersistenceService.findOne(QManga.manga.id.eq(id));
     }
 
     /**

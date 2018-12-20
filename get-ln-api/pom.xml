@@ -129,17 +129,6 @@
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <!-- Turn on filtering by default for application properties -->
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>**/*.properties</include>
-        </includes>
-      </resource>
-    </resources>
-
-
     <plugins>
 
       <plugin>
@@ -153,13 +142,6 @@
 
       <!--Generation des Predicates.-->
 
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>-XX:MaxMetaspaceSize=512m</argLine>
-        </configuration>
-        <version>2.18.1</version>
-      </plugin>
 
       <plugin>
         <groupId>org.springframework.boot</groupId>

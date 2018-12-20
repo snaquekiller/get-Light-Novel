@@ -1,5 +1,7 @@
 package getLn.controller;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import getLn.model.request.MangaRequestDto;
 import getLn.model.request.UserRequestDto;
 import getLn.service.EbookService;
+import getln.data.entity.BOOK_TYPE;
 import getln.data.entity.Manga;
 import getln.data.entity.User;
 import getln.service.common.MangaSqlService;
@@ -65,9 +68,13 @@ public class MangaController {
     @RequestMapping(value = "/test/manga", method = RequestMethod.GET)
     public void subScribe(
             @RequestParam(required = false, defaultValue = "1") final Long id) throws Exception {
-        Manga byId = mangaService.findById(id);
-        if (byId != null) {
-            ebookService.transformOneChapter(byId);
+        Optional<Manga> byId = mangaService.findById(id);
+        if (byId.isPresent()) {
+            ebookService.transformOneChapter(byId.get());
+        } else {
+            Manga dd = new Manga("solo-leveling", "Jang Sung-Lak", "dd", "http://www.mngdoom.com/solo-leveling",
+                    BOOK_TYPE.MANGA);
+            ebookService.transformOneChapter(dd);
         }
     }
 
