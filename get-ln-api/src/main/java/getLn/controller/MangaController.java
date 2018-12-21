@@ -1,5 +1,7 @@
 package getLn.controller;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -67,14 +69,16 @@ public class MangaController {
 
     @RequestMapping(value = "/test/manga", method = RequestMethod.GET)
     public void subScribe(
-            @RequestParam(required = false, defaultValue = "1") final Long id) throws Exception {
+            @RequestParam(required = false, defaultValue = "0") final Long id) throws Exception {
         Optional<Manga> byId = mangaService.findById(id);
         if (byId.isPresent()) {
-            ebookService.transformOneChapter(byId.get());
+            ebookService.transformOneChapter(byId.get(), Collections.emptyList());
         } else {
-            Manga dd = new Manga("solo-leveling", "Jang Sung-Lak", "dd", "http://www.mngdoom.com/solo-leveling",
-                    BOOK_TYPE.MANGA);
-            ebookService.transformOneChapter(dd);
+            Manga dd =
+                    mangaService
+                            .addManga("solo-leveling", "Jang Sung-Lak", "dd", "http://www.mngdoom.com/solo-leveling",
+                                    BOOK_TYPE.MANGA);
+            ebookService.transformOneChapter(dd, Arrays.asList("nic.guitton@gmail.com", "nicolas.guitton@kindle.com"));
         }
     }
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -94,7 +95,11 @@ public class ScrapMngDoomService extends ScrapService {
 
     public ChapterDto chapter(String url, Manga manga, double chapterNum, ChapterDto chapter) {
         //        "http://www.mngdoom.com/Tower-of-God/387;
-        final String format = String.format(url + "/all-pages");
+
+        String format = String.format("%s/%f/all-pages", url, chapterNum);
+        if (chapterNum % 1 == 0) {
+            format = String.format("%s/%d/all-pages", url, Double.valueOf(chapterNum).intValue());
+        }
         //        String mangaName = "towerOfGod";
         String bookNameWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
         try {
@@ -103,15 +108,15 @@ public class ScrapMngDoomService extends ScrapService {
             Element manga_updates = doc.getElementsByClass("content-inner inner-page").get(0);
             Elements images = manga_updates.getElementsByClass("img-responsive");
             List<File> files = new ArrayList<>();
-            int[] i = new int[1];
+            AtomicInteger i = new AtomicInteger(0);
             images.forEach(element -> {
                 String imageUrl = element.absUrl("src");
                 try {
-                    File file = new File(bookNameWithoutSpecialChar + "/image_" + chapterNum + "_" + i + ".jpg");
+                    File file = new File(
+                            bookNameWithoutSpecialChar + "/image_" + chapterNum + "_" + i.getAndIncrement() + ".jpg");
                     URL url1 = new URL(imageUrl);
                     FileUtils.copyURLToFile(url1, file);
                     files.add(file);
-                    i[0] = i[0]++;
                 } catch (IOException e1) {
                     LOGGER.error("can't get the Image from url ={}", imageUrl);
                 }

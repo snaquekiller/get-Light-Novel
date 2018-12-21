@@ -1,5 +1,7 @@
 package getLn.service.scrap;
 
+import java.util.Collections;
+
 import javax.inject.Inject;
 
 import org.joda.time.DateTime;
@@ -54,7 +56,7 @@ public class ScanService {
                     mangaOut.setNbTry(0);
                 }
                 //TODO need to check if the chapter is not already found
-                this.epubService.transformOneChapter(mangaOut.getManga());
+                this.epubService.transformOneChapter(mangaOut.getManga(), Collections.EMPTY_LIST);
                 mangaOut.setNbTry(0);
                 setStatus(mangaOut, Status.AVAILABLE);
             } catch (final Exception e) {

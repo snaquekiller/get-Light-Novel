@@ -104,10 +104,14 @@ public class EbookService {
     public ChapterDto scrapOne(final Manga manga, final double chapterNumber) {
         try {
             final String bookWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
-            final String fileName = String.format("%s_%d.xhtml", bookWithoutSpecialChar, chapterNumber);
+            String fileName = String.format("%s_%f.xhtml", bookWithoutSpecialChar, chapterNumber);
+            if (chapterNumber % 1 == 0) {
+                fileName = String
+                        .format("%s_%d.xhtml", bookWithoutSpecialChar, Double.valueOf(chapterNumber).intValue());
+            }
             final String bookName = manga.getName();
             ChapterDto chapter =
-                    new ChapterDto(String.format("%s/%s", this.epubService.DIRECTORY, bookWithoutSpecialChar),
+                    new ChapterDto(String.format("%s/%s", epubService.DIRECTORY, bookWithoutSpecialChar),
                             chapterNumber, bookName, fileName);
             if (manga.getType().equals(BOOK_TYPE.LIGHT_NOVEL)) {
                 chapter = this.scrapLnNovelService.addTextAndTitleLNMTL(chapterNumber, chapter, manga.getUrl());
@@ -124,7 +128,7 @@ public class EbookService {
         return null;
     }
 
-    public void transformOneChapter(final Manga manga) throws Exception {
+    public void transformOneChapter(final Manga manga, final List<String> email) throws Exception {
         final Chapter lastChapter = getLastChapter(manga);
         double chapterNumber = 1d;
         LOGGER.info("chaper = {}", lastChapter);
@@ -138,6 +142,7 @@ public class EbookService {
         }
         //        LOGGER.error("chapter ={}", chapterXhtml);
         final String name = chapterXhtml.getFileName().split("\\.")[0] + ".epub";
+        chapterXhtml.setFile(epubService.createOpfFile(chapterXhtml.getFile(), chapterXhtml));
 
         // create the zip
         final File epub = this.zipService.zipFile(chapterXhtml.getFilePath() + name, chapterXhtml.getFile());
@@ -176,6 +181,11 @@ public class EbookService {
             }
         });
 
+        if (null != path) {
+            email.forEach(dd -> {
+                this.mailService.sendMail(dd, mobi.getPath(), mobi.getName());
+            });
+        }
     }
 
     /**

@@ -11,3 +11,4 @@ spring:
 server:
   port: 9666
 
+postfix.url: localhost
