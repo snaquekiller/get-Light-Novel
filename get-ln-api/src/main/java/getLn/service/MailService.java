@@ -1,34 +1,35 @@
 package getLn.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
+import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.inject.Inject;
-import javax.mail.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.util.Properties;
+
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * .
  */
+@Slf4j
 @Service
 public class MailService {
 
     @Inject
     private Environment environment;
-
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
 
 
     /**
@@ -80,8 +81,8 @@ public class MailService {
             // Send message
             Transport.send(message);
             System.out.println("Sent message successfully....");
-        } catch (final MessagingException mex) {
-            LOGGER.error("Can't send message email ", mex);
+        } catch (MessagingException mex) {
+            log.error("Can't send message email ", mex);
         }
     }
 
@@ -93,7 +94,10 @@ public class MailService {
      * @return
      * @throws MessagingException
      */
-    private Multipart attachementFile(final String pathFile, final String fileName) throws MessagingException {
+    private Multipart attachementFile(final String pathFile, final String fileName)
+            throws MessagingException
+
+    {
         final Multipart multipart = new MimeMultipart();
 
         final MimeBodyPart messageBodyPart = new MimeBodyPart();

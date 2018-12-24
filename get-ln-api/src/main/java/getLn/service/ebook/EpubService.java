@@ -12,15 +12,18 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
 import getLn.model.ChapterDto;
+import getLn.service.FileCreationService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * .
  */
+@Slf4j
 @Service
 public class EpubService {
 
@@ -29,19 +32,14 @@ public class EpubService {
      */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(EpubService.class);
-
     public static final String UTF_8 = "utf-8";
-
-    public static final String DIRECTORY = "data";
 
     private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
     private final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
 
+    @Inject
+    private FileCreationService fileCreationService;
 
     /**
      * File usefull for Metadata of the chapter !!!
@@ -65,42 +63,43 @@ public class EpubService {
                 "    <dc:contributor opf:role=\"bkp\">snaquekiller</dc:contributor>\n" +
                 "    <dc:identifier id=\"uuid_id\" opf:scheme=\"uuid\">" + serialVersionUID + "</dc:identifier>\n" +
                 "    <dc:identifier opf:scheme=\"calibre\">" + serialVersionUID + "</dc:identifier>\n" +
-                "  </metadata>\n" +
-                "<manifest>";
+                "  </metadata>\n";
 
         final String end = "  \n"
                 + "</package>\n";
         //@formatter:on
 
         Writer writer = null;
+        final String name = "book.opf";
 
-        final String name = String.format("%s/book.opf", chapter.getFilePath());
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), "utf-8"));
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(fileCreationService.fileStream(chapter.getFilePath(), name), UTF_8));
             writer.write(head);
             String spine = "<spine toc=\"ncx\">\n";
-            String manifest = "<manifest>\n";
+            String manifest = "\t<manifest>\n";
             for (final File file : files) {
                 manifest += String
-                        .format("<item id=\"%s\" href=\"%s\" media-type=\"application/xhtml+xml\">\n", file.getName(),
-                                file.getName());
-                spine += String.format("<itemref idref=\"%s\"/>", file.getName());
+                        .format("<item id=\"%s\" href=\"%s\" media-type=%s>\n", file.getName(),
+                                file.getName(),
+                                file.getName().contains(".xml") ? "\"application/xhtml+xml\"" : "\"image/jpeg\"");
+                spine += String.format("\t\t<itemref idref=\"%s\"/>\n", file.getName());
             }
-            manifest += "</manifest>\n";
+            manifest += "\t</manifest>\n";
             spine += "</spine>\n";
             writer.write(manifest);
             writer.write(spine);
             writer.write(end);
         } catch (final IOException ex) {
             // report
-            LOGGER.error("Can't create the opf file={}", name, ex);
+            log.error("Can't create the opf file={}", name, ex);
         } finally {
             try {
                 writer.close();
             } catch (final Exception ex) {/*ignore*/
             }
         }
-        final File e = new File(name);
+        final File e = fileCreationService.createFile(chapter.getFilePath(), name);
         final List<File> filess = new ArrayList<>(files);
         filess.add(e);
         return filess;
@@ -146,14 +145,14 @@ public class EpubService {
             return file;
         } catch (final IOException ex) {
             // report
-            LOGGER.error("can't write", ex);
+            log.error("can't write", ex);
         } finally {
             try {
                 if (null != writer) {
                     writer.close();
                 }
             } catch (final Exception ex) {/*ignore*/
-                LOGGER.error("can't close" + ex);
+                log.error("can't close" + ex);
             }
         }
         return null;
@@ -166,8 +165,12 @@ public class EpubService {
         return opfFile;
     }
 
-    public void createTableMatiere(final String titleBook, final String list) {
+    public String getDirectoryName(final String titleBook) {
         final String title = titleBook.replace(" ", "_");
+        return title;
+    }
+
+    public void createTableMatiere(final String titleBook, final String list) {
 
         final String head =
                 "<?xml version='1.0' encoding='utf-8'?>\n" + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
@@ -181,13 +184,15 @@ public class EpubService {
 
         Writer writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(title + "/toc.xhtml"), "utf-8"));
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(fileCreationService.fileStream(getDirectoryName(titleBook), "toc.xhtml"),
+                            UTF_8));
             writer.write(head);
             writer.write(list);
             writer.write(end);
         } catch (final IOException ex) {
             // report
-            LOGGER.error("Can't create the file", ex);
+            log.error("Can't create the file", ex);
         } finally {
             try {
                 writer.close();
@@ -204,6 +209,7 @@ public class EpubService {
      */
     public File createTOX(final String titleBook, final List<ChapterDto> chapters) {
         Writer writer = null;
+        final String name = "tox.ncx";
         final String head =
                 "<?xml version='1.0' encoding='utf-8'?>\n" + "<!DOCTYPE ncx PUBLIC \"-//NISO//DTD ncx 2005-1//EN\"" +
                         " \"http://www.daisy.org/z3986/2005/ncx-2005-1.dtd\"><ncx version=\"2005-1\" xmlns=\"http://www.daisy.org/z3986/2005/ncx/\">\n"
@@ -216,8 +222,8 @@ public class EpubService {
                         + "\t\t<text>" +
                         titleBook + "</text>\n" + "\t</docTitle>\n\t<navMap>";
         try {
-            final String name = "tox.ncx";
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), UTF_8));
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(fileCreationService.fileStream(getDirectoryName(titleBook), name), UTF_8));
             writer.write(head);
             for (int i = 0; i < chapters.size(); i++) {
                 final ChapterDto chapter = chapters.get(i);
@@ -226,17 +232,17 @@ public class EpubService {
                         i, i, chapter.getName(), chapter.getFileName()));
             }
             writer.write("</navMap>\n" + "</ncx>");
-            return new File(name);
+            return fileCreationService.createFile(getDirectoryName(titleBook), name);
         } catch (final IOException ex) {
             // report
-            LOGGER.error("can't write" + ex);
+            log.error("can't write" + ex);
         } finally {
             try {
                 if (null != writer) {
                     writer.close();
                 }
             } catch (final Exception ex) {/*ignore*/
-                LOGGER.error("c'ant close" + ex);
+                log.error("c'ant close" + ex);
             }
         }
         return null;

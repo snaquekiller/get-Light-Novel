@@ -5,25 +5,26 @@
  */
 package getLn;
 
-import getLn.service.ebook.MobiService;
-import getLn.service.scrap.ScanService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-
-import javax.inject.Inject;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.inject.Inject;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import getLn.service.ebook.MobiService;
+import getLn.service.scrap.ScanService;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author Nicolas
  */
+@Slf4j
 @Service
 public class ScheduledGetLn {
 
-    private static final Logger log = LoggerFactory.getLogger(ScheduledGetLn.class);
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -43,7 +44,8 @@ public class ScheduledGetLn {
     public void testEpub() {
         log.info("The time is now {}", dateFormat.format(new Date()));
         this.mobiService
-                .epubToMbi(new File("testEpub/_Douluo_Dalu_3___Dragon_King_s_Legend_Douluo_Dalu_3___Dragon_King_s_Legend_1590.epub"));
+                .epubToMbi(new File(
+                        "testEpub/_Douluo_Dalu_3___Dragon_King_s_Legend_Douluo_Dalu_3___Dragon_King_s_Legend_1590.epub"));
     }
 
 }

@@ -9,8 +9,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +28,15 @@ import getln.data.service.ChapterPersistenceService;
 import getln.data.service.FilePersistenceService;
 import getln.service.common.ChapterSqlService;
 import getln.service.common.MangaSubscriptionSqlService;
+import lombok.extern.slf4j.Slf4j;
 
-import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 /**
  * .
  */
+@Slf4j
 @Service
 public class EbookService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(EbookService.class);
 
     @Inject
     private EpubService epubService;
@@ -111,7 +108,7 @@ public class EbookService {
             }
             final String bookName = manga.getName();
             ChapterDto chapter =
-                    new ChapterDto(String.format("%s/%s", epubService.DIRECTORY, bookWithoutSpecialChar),
+                    new ChapterDto(String.format("%s/%s", bookWithoutSpecialChar, chapterNumber),
                             chapterNumber, bookName, fileName);
             if (manga.getType().equals(BOOK_TYPE.LIGHT_NOVEL)) {
                 chapter = this.scrapLnNovelService.addTextAndTitleLNMTL(chapterNumber, chapter, manga.getUrl());
@@ -123,7 +120,7 @@ public class EbookService {
             return chapter;
 
         } catch (final Exception e) {
-            LOGGER.error("Chapter  " + chapterNumber + "not found ", e);
+            log.error("Chapter  " + chapterNumber + "not found ", e);
         }
         return null;
     }
@@ -131,7 +128,7 @@ public class EbookService {
     public void transformOneChapter(final Manga manga, final List<String> email) throws Exception {
         final Chapter lastChapter = getLastChapter(manga);
         double chapterNumber = 1d;
-        LOGGER.info("chaper = {}", lastChapter);
+        log.info("chaper = {}", lastChapter);
         if (lastChapter != null) {
             chapterNumber = lastChapter.getNum() + 1d;
         }
@@ -141,19 +138,20 @@ public class EbookService {
             throw new Exception("Can't scrap");
         }
         //        LOGGER.error("chapter ={}", chapterXhtml);
-        final String name = chapterXhtml.getFileName().split("\\.")[0] + ".epub";
+        final String name = String.format("%s.epub", chapterXhtml.getFileName().split("\\.")[0]);
         chapterXhtml.setFile(epubService.createOpfFile(chapterXhtml.getFile(), chapterXhtml));
 
         // create the zip
-        final File epub = this.zipService.zipFile(chapterXhtml.getFilePath() + name, chapterXhtml.getFile());
+        final File epub = zipService
+                .zipFile(chapterXhtml.getFilePath(), name, chapterXhtml.getFile());
         FileStorage personalEpub = new FileStorage(epub.getName(), BOOK_FORMAT.EPUB.name(), epub.getPath());
-        personalEpub = this.filePersistenceService.save(personalEpub);
+        personalEpub = filePersistenceService.save(personalEpub);
 
-        final File mobi = this.mobiService.epubToMbi(epub);
+        final File mobi = mobiService.epubToMbi(epub);
         FileStorage mobiPeronalFile = new FileStorage(mobi.getName(), BOOK_FORMAT.MOBI.name(), mobi.getPath());
-        mobiPeronalFile = this.filePersistenceService.save(mobiPeronalFile);
+        mobiPeronalFile = filePersistenceService.save(mobiPeronalFile);
 
-        chapterXhtml.getFile().forEach(File::deleteOnExit);
+        chapterXhtml.getFile().forEach(File::delete);
 
         // Create the File
         final Set<FileStorage> files = new HashSet<>();
@@ -176,12 +174,13 @@ public class EbookService {
             } else if (0 == mangaSubscription.getFormat().compareTo(BOOK_FORMAT.MOBI)) {
                 send = mobi;
             }
-            if (null != path) {
+            if ((null != send) && (send.getPath() != null)) {
                 this.mailService.sendMail(mangaSubscription.getUser().getEmail(), send.getPath(), send.getName());
             }
         });
 
-        if (null != path) {
+        //TODO delete this test file
+        if ((null != mobi) && (mobi.getPath() != null)) {
             email.forEach(dd -> {
                 this.mailService.sendMail(dd, mobi.getPath(), mobi.getName());
             });
@@ -193,12 +192,12 @@ public class EbookService {
      * @return
      */
     private Chapter getLastChapter(final Manga manga) {
-        LOGGER.info("get the last chapter for manga={}", manga);
+        log.info("get the last chapter for manga={}", manga);
         if ((manga != null) && (manga.getId() != null)) {
             final Page<Chapter> all = this.chapterService.findLastChapter(manga.getId());
             final List<Chapter> content = all.getContent();
             if (!content.isEmpty()) {
-                LOGGER.info("Found the last chapter for manga={} chapter={}", manga, content.get(0));
+                log.info("Found the last chapter for manga={} chapter={}", manga, content.get(0));
                 return content.get(0);
             }
         }

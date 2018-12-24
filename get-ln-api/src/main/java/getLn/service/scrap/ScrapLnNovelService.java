@@ -8,19 +8,18 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import getLn.model.ChapterDto;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * .
  */
+@Slf4j
 @Service
 public class ScrapLnNovelService extends ScrapService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScrapMngDoomService.class);
 
     public ChapterDto addTextAndTitleLNMTL(final double chapterNumber, final ChapterDto chapter, final String url)
             throws IOException {
@@ -36,7 +35,7 @@ public class ScrapLnNovelService extends ScrapService {
             chapter.setTextList(textList);
             return chapter;
         } catch (final Exception e) {
-            LOGGER.error("can't scrap the url ={}", format, e);
+            log.error("can't scrap the url ={}", format, e);
             throw e;
         }
     }

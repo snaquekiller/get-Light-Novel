@@ -8,65 +8,64 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
+
+import getLn.service.FileCreationService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * .
  */
+@Slf4j
 @Service
 public class ZipService {
 
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZipService.class);
+    @Inject
+    private FileCreationService fileCreationService;
 
-    public void addToZipFile(final String fileName, final ZipOutputStream zos) throws IOException {
-        LOGGER.debug(String.format("Writing '%s' to zip file", fileName));
 
-        final File file = new File(fileName);
-        final FileInputStream fis = new FileInputStream(file);
-        final ZipEntry zipEntry = new ZipEntry(fileName);
-        zos.putNextEntry(zipEntry);
+    public void addToZipFile(File file, final ZipOutputStream zos) {
+        log.debug(String.format("Writing '%s' to zip file", file.getName()));
 
-        final byte[] bytes = new byte[1024];
-        int length;
-        while ((length = fis.read(bytes)) >= 0) {
-            zos.write(bytes, 0, length);
+        try (FileInputStream fis = new FileInputStream(file)) {
+            final ZipEntry zipEntry = new ZipEntry(file.getName());
+            zos.putNextEntry(zipEntry);
+
+            final byte[] bytes = new byte[1024];
+            int length;
+            while ((length = fis.read(bytes)) >= 0) {
+                zos.write(bytes, 0, length);
+            }
+
+            zos.closeEntry();
+            fis.close();
+        } catch (final IOException e) {
+            log.error("Can't add the file={}", file.getName(), e);
         }
 
-        zos.closeEntry();
-        fis.close();
     }
 
     /**
      * Can put all file into one compress file. The extension will depend on the ZipName
      *
-     * @param zipName
+     * @param fileName
      * @param files
      * @return
      */
-    public File zipFile(final String zipName, final List<File> files) {
+    public File zipFile(String directory, String fileName, final List<File> files) {
 
         try {
-            final FileOutputStream fos = new FileOutputStream(zipName);
+            final FileOutputStream fos = fileCreationService.fileStream(directory, fileName);
             try (ZipOutputStream zos = new ZipOutputStream(fos)) {
-
-                files.forEach(file -> {
-                    try {
-                        addToZipFile(file.getAbsolutePath(), zos);
-                    } catch (final IOException e) {
-                        LOGGER.error("Can't add the file={} to the zipname={}", file.getName(), zipName, e);
-                    }
-                });
+                files.forEach(file -> addToZipFile(file, zos));
                 zos.close();
             }
             fos.close();
-            return new File(zipName);
+            return fileCreationService.createFile(directory, fileName);
         } catch (final IOException e) {
-            LOGGER.error("Can't create the zip={}", zipName, e);
+            log.error("Can't create the zip d={} name={}", directory, fileName, e);
         }
         return null;
     }

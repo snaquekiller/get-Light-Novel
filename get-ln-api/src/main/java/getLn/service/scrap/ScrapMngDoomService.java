@@ -15,24 +15,23 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import getLn.model.ChapterDto;
+import getLn.service.FileCreationService;
 import getln.data.entity.Chapter;
 import getln.data.entity.Manga;
-import getln.data.service.FilePersistenceService;
 import getln.service.common.ChapterSqlService;
 import getln.service.common.MangaSqlService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * .
  */
+@Slf4j
 @Service
 public class ScrapMngDoomService extends ScrapService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScrapMngDoomService.class);
 
     @Inject
     private MangaSqlService mangaService;
@@ -41,7 +40,7 @@ public class ScrapMngDoomService extends ScrapService {
     private ChapterSqlService chapterService;
 
     @Inject
-    private FilePersistenceService filePersistenceService;
+    private FileCreationService fileCreationService;
 
     /**
      * Get all manga from the news page
@@ -87,7 +86,7 @@ public class ScrapMngDoomService extends ScrapService {
                 }
             });
         } catch (final Exception e) {
-            LOGGER.error("can't scrap the url ={}", format, e);
+            log.error("can't scrap the url ={}", format, e);
             throw e;
         }
     }
@@ -100,8 +99,7 @@ public class ScrapMngDoomService extends ScrapService {
         if (chapterNum % 1 == 0) {
             format = String.format("%s/%d/all-pages", url, Double.valueOf(chapterNum).intValue());
         }
-        //        String mangaName = "towerOfGod";
-        String bookNameWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
+        String bookNameWithoutSpecialChar = chapter.getFilePath();
         try {
             Connection connect = Jsoup.connect(format);
             final Document doc = addInfo(connect).get();
@@ -109,16 +107,17 @@ public class ScrapMngDoomService extends ScrapService {
             Elements images = manga_updates.getElementsByClass("img-responsive");
             List<File> files = new ArrayList<>();
             AtomicInteger i = new AtomicInteger(0);
+
             images.forEach(element -> {
                 String imageUrl = element.absUrl("src");
                 try {
-                    File file = new File(
-                            bookNameWithoutSpecialChar + "/image_" + chapterNum + "_" + i.getAndIncrement() + ".jpg");
+                    File file = fileCreationService.createFile(bookNameWithoutSpecialChar,
+                            String.format("image_%s_%d.jpg", chapterNum, i.getAndIncrement()));
                     URL url1 = new URL(imageUrl);
                     FileUtils.copyURLToFile(url1, file);
                     files.add(file);
                 } catch (IOException e1) {
-                    LOGGER.error("can't get the Image from url ={}", imageUrl);
+                    log.error("can't get the Image from url ={}", imageUrl);
                 }
             });
 
@@ -126,7 +125,7 @@ public class ScrapMngDoomService extends ScrapService {
             return chapter;
 
         } catch (IOException e1) {
-            LOGGER.error("EROOR");
+            log.error("EROOR");
             return null;
         }
     }

@@ -5,8 +5,6 @@ import java.util.Collections;
 import javax.inject.Inject;
 
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,17 +14,18 @@ import getln.data.entity.MangaOut;
 import getln.data.entity.Status;
 import getln.data.service.MangaOutPersistenceService;
 import getln.service.common.MangaOutSqlService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * .
  */
+@Slf4j
 @Service
 public class ScanService {
 
     /**
      * The logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScanService.class);
 
     @Inject
     private MangaOutSqlService mangaOutService;
@@ -49,7 +48,7 @@ public class ScanService {
     public void scanAndSendNewManga() {
         this.mangaOutService.getNextManga().forEach(mangaOut -> {
             try {
-                LOGGER.info("Try to found a new manga for chapter={}", mangaOut);
+                log.info("Try to found a new manga for chapter={}", mangaOut);
                 setStatus(mangaOut, Status.IN_PROGRESS);
                 if ((mangaOut.getStatus() == Status.RE_TRY) &&
                         mangaOut.getUpdateDate().before(DateTime.now().minusHours(12).toDate())) {
@@ -60,7 +59,7 @@ public class ScanService {
                 mangaOut.setNbTry(0);
                 setStatus(mangaOut, Status.AVAILABLE);
             } catch (final Exception e) {
-                LOGGER.error("Can't found the manga={}", mangaOut, e);
+                log.error("Can't found the manga={}", mangaOut, e);
                 mangaOut.setNbTry(mangaOut.getNbTry() + 1);
                 setStatus(mangaOut, Status.RE_TRY);
             }
