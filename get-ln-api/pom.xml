@@ -69,6 +69,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
+      <version>2.0.1.RELEASE</version>
+    </dependency>
+
+    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
     </dependency>
@@ -87,10 +93,10 @@
     <!-- !MYSQL and connection-->
 
 
-    <dependency>
-      <groupId>javax.mail</groupId>
-      <artifactId>mail</artifactId>
-    </dependency>
+    <!--<dependency>-->
+    <!--<groupId>javax.mail</groupId>-->
+    <!--<artifactId>mail</artifactId>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>getLn</groupId>
       <artifactId>get-ln-data</artifactId>

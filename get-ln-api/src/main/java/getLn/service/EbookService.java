@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -135,7 +136,7 @@ public class EbookService {
         // we scrap one
         final ChapterDto chapterXhtml = scrapOne(manga, chapterNumber);
         if (chapterXhtml == null) {
-            throw new Exception("Can't scrap");
+            throw new Exception("Can't scrap or not Found");
         }
         //        LOGGER.error("chapter ={}", chapterXhtml);
         final String name = String.format("%s.epub", chapterXhtml.getFileName().split("\\.")[0]);
@@ -175,14 +176,22 @@ public class EbookService {
                 send = mobi;
             }
             if ((null != send) && (send.getPath() != null)) {
-                this.mailService.sendMail(mangaSubscription.getUser().getEmail(), send.getPath(), send.getName());
+                try {
+                    this.mailService.sendMail(mangaSubscription.getUser().getEmail(), send.getPath(), send.getName());
+                } catch (MessagingException e) {
+                    log.error("Cant send the email for the file ={} ", send.getName(), e);
+                }
             }
         });
 
         //TODO delete this test file
         if ((null != mobi) && (mobi.getPath() != null)) {
             email.forEach(dd -> {
-                this.mailService.sendMail(dd, mobi.getPath(), mobi.getName());
+                try {
+                    this.mailService.sendMail(dd, mobi.getPath(), mobi.getName());
+                } catch (MessagingException e) {
+                    log.error("Cant send the email for the file ={} ", mobi.getName(), e);
+                }
             });
         }
     }

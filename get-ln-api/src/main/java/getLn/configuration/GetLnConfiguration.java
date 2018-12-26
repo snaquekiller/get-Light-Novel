@@ -24,5 +24,5 @@ import getln.service.common.SqlService;
 @ApiService
 //@formatter:on
 public class GetLnConfiguration {
-
+    
 }

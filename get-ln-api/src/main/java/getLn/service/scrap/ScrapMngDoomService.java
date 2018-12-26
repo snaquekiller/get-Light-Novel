@@ -108,22 +108,25 @@ public class ScrapMngDoomService extends ScrapService {
             List<File> files = new ArrayList<>();
             AtomicInteger i = new AtomicInteger(0);
 
-            images.forEach(element -> {
-                String imageUrl = element.absUrl("src");
-                try {
-                    File file = fileCreationService.createFile(bookNameWithoutSpecialChar,
-                            String.format("image_%s_%d.jpg", chapterNum, i.getAndIncrement()));
-                    URL url1 = new URL(imageUrl);
-                    FileUtils.copyURLToFile(url1, file);
-                    files.add(file);
-                } catch (IOException e1) {
-                    log.error("can't get the Image from url ={}", imageUrl);
-                }
-            });
+            if (images.size() > 1) {
+                images.forEach(element -> {
+                    String imageUrl = element.absUrl("src");
+                    try {
+                        File file = fileCreationService.createFile(bookNameWithoutSpecialChar,
+                                String.format("image_%s_%d.jpg", chapterNum, i.getAndIncrement()));
+                        URL url1 = new URL(imageUrl);
+                        FileUtils.copyURLToFile(url1, file);
+                        files.add(file);
+                    } catch (IOException e1) {
+                        log.error("can't get the Image from url ={}", imageUrl);
+                    }
+                });
 
-            chapter.setFile(files);
-            return chapter;
-
+                chapter.setFile(files);
+                return chapter;
+            } else {
+                return null;
+            }
         } catch (IOException e1) {
             log.error("EROOR");
             return null;

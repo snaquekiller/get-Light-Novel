@@ -8,7 +8,19 @@ spring:
     password: pwd123
     type: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.mariadb.jdbc.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.connectiontimeout: 50000
+    properties.mail.smtp.timeout: 30000
+    properties.mail.smtp.writetimeout: 50000
+    password: haypjonwxdrilbwa
+    username: storytoreader@gmail.com
+#    test-connection: true
+#    properties:
 server:
   port: 9666
 
-postfix.url: localhost
+postfix.url:

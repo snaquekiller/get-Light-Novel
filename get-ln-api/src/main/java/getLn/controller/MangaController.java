@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import getLn.model.request.MangaRequestDto;
 import getLn.model.request.UserRequestDto;
 import getLn.service.EbookService;
+import getLn.service.MailService;
 import getln.data.entity.BOOK_TYPE;
 import getln.data.entity.Manga;
 import getln.data.entity.User;
@@ -36,6 +37,9 @@ public class MangaController {
 
     @Inject
     private EbookService ebookService;
+
+    @Inject
+    private MailService mailService;
 
     /**
      * List reviewers.
@@ -68,7 +72,7 @@ public class MangaController {
     //    }
 
     @RequestMapping(value = "/test/manga", method = RequestMethod.GET)
-    public void subScribe(
+    public void testManga(
             @RequestParam(required = false, defaultValue = "0") final Long id) throws Exception {
         Optional<Manga> byId = mangaService.findById(id);
         if (byId.isPresent()) {
@@ -80,6 +84,15 @@ public class MangaController {
                                     BOOK_TYPE.MANGA);
             ebookService.transformOneChapter(dd, Arrays.asList("nic.guitton@gmail.com", "nicolas.guitton@kindle.com"));
         }
+    }
+
+
+    @RequestMapping(value = "/test/mail", method = RequestMethod.GET)
+    public void mail(
+            @RequestParam(required = false, defaultValue = "0") final Long id) throws Exception {
+        mailService
+                .sendMail("nic.guitton@gmail.com", "data/solo_leveling/18.0/solo_leveling_18.mobi",
+                        "solo_leveling_18.mobi");
     }
 
 
