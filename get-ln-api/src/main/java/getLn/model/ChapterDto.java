@@ -3,8 +3,8 @@ package getLn.model;
 import java.io.File;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
+
+import getln.data.entity.Manga;
 
 /**
  * The chapter of a book
@@ -27,10 +27,6 @@ public class ChapterDto implements Serializable {
      */
     private double chapterNumber;
 
-    /**
-     * The bookName associate of the chapter
-     **/
-    private String bookName;
 
     private String fileName;
 
@@ -41,6 +37,8 @@ public class ChapterDto implements Serializable {
 
     private List<File> file;
 
+    private  Manga manga;
+
     /**
      * The text of the
      */
@@ -49,37 +47,22 @@ public class ChapterDto implements Serializable {
     public ChapterDto(final String filePath, final double chapterNumber, final String bookName, final String fileName) {
         this.filePath = filePath;
         this.chapterNumber = chapterNumber;
-        this.bookName = bookName;
         this.fileName = fileName;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
+    public ChapterDto(Manga manga, final double chapterNumber) {
+        String bookNameWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
+        this.filePath = String.format("%s/%s", bookNameWithoutSpecialChar, chapterNumber);
+        this.chapterNumber = chapterNumber;
+        String fileName = String.format("%s_%f.xhtml", bookNameWithoutSpecialChar, chapterNumber);
+        if (chapterNumber % 1 == 0) {
+            fileName = String
+                    .format("%s_%d.xhtml", bookNameWithoutSpecialChar, Double.valueOf(chapterNumber).intValue());
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        final ChapterDto that = (ChapterDto) o;
-
-        return Objects.equals(this.name, that.name) && Objects.equals(this.filePath, that.filePath) &&
-            Objects.equals(this.chapterNumber, that.chapterNumber) && Objects.equals(this.bookName, that.bookName) &&
-            Objects.equals(this.fileName, that.fileName) && Objects.equals(this.text, that.text);
+        this.fileName = fileName;
+        this.manga = manga;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, filePath, chapterNumber, bookName, fileName, text);
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name)
-            .add("filePath = " + filePath).add("chapterNumber = " + chapterNumber).add("bookName = " + bookName)
-            .add("fileName = " + fileName).add("file = " + file).add("text = " + text).toString();
-    }
 
     /**
      * Sets new file.

@@ -57,7 +57,7 @@ public class EpubService {
                 "    <dc:language>en</dc:language>\n" +
                 "    <dc:creator opf:file-as=\"Vert\" opf:role=\"aut\">Vert</dc:creator>\n" +
                 "    <meta name=\"calibre:timestamp\" content=\" " + this.format.format(new Date()) + "\"/>\n" +
-                "    <dc:title>" + chapter.getBookName() + " : " + chapter.getChapterNumber() + "</dc:title>\n" +
+                "    <dc:title>" + chapter.getManga().getName() + " : " + chapter.getChapterNumber() + "</dc:title>\n" +
                 "    <meta name=\"cover\" content=\"cover\"/>\n" +
                 "    <dc:date>" + this.format.format(new Date()) + "</dc:date>\n" +
                 "    <dc:contributor opf:role=\"bkp\">snaquekiller</dc:contributor>\n" +
@@ -152,7 +152,7 @@ public class EpubService {
                     writer.close();
                 }
             } catch (final Exception ex) {/*ignore*/
-                log.error("can't close" + ex);
+                log.error("can't close", ex);
             }
         }
         return null;
@@ -235,14 +235,14 @@ public class EpubService {
             return fileCreationService.createFile(getDirectoryName(titleBook), name);
         } catch (final IOException ex) {
             // report
-            log.error("can't write" + ex);
+            log.error("can't write", ex);
         } finally {
             try {
                 if (null != writer) {
                     writer.close();
                 }
             } catch (final Exception ex) {/*ignore*/
-                log.error("c'ant close" + ex);
+                log.error("can't close",  ex);
             }
         }
         return null;

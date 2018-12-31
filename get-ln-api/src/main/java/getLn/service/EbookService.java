@@ -101,22 +101,14 @@ public class EbookService {
 
     public ChapterDto scrapOne(final Manga manga, final double chapterNumber) {
         try {
-            final String bookWithoutSpecialChar = manga.getBookNameWithoutSpecialChar();
-            String fileName = String.format("%s_%f.xhtml", bookWithoutSpecialChar, chapterNumber);
-            if (chapterNumber % 1 == 0) {
-                fileName = String
-                        .format("%s_%d.xhtml", bookWithoutSpecialChar, Double.valueOf(chapterNumber).intValue());
-            }
             final String bookName = manga.getName();
-            ChapterDto chapter =
-                    new ChapterDto(String.format("%s/%s", bookWithoutSpecialChar, chapterNumber),
-                            chapterNumber, bookName, fileName);
+            ChapterDto chapter = new ChapterDto(manga, chapterNumber);
             if (manga.getType().equals(BOOK_TYPE.LIGHT_NOVEL)) {
                 chapter = this.scrapLnNovelService.addTextAndTitleLNMTL(chapterNumber, chapter, manga.getUrl());
                 List<File> files = epubService.writeChapter(bookName, chapter);
                 chapter.setFile(files);
             } else {
-                chapter = scrapMngDoom.chapter(manga.getUrl(), manga, chapterNumber, chapter);
+                chapter = scrapMngDoom.chapter(chapter);
             }
             return chapter;
 
@@ -129,7 +121,7 @@ public class EbookService {
     public void transformOneChapter(final Manga manga, final List<String> email) throws Exception {
         final Chapter lastChapter = getLastChapter(manga);
         double chapterNumber = 1d;
-        log.info("chaper = {}", lastChapter);
+        log.info("chapter = {}", lastChapter);
         if (lastChapter != null) {
             chapterNumber = lastChapter.getNum() + 1d;
         }
@@ -138,7 +130,16 @@ public class EbookService {
         if (chapterXhtml == null) {
             throw new Exception("Can't scrap or not Found");
         }
-        //        LOGGER.error("chapter ={}", chapterXhtml);
+        transformAndSend(email, chapterXhtml);
+    }
+
+    public void newsFromMngDoom(final List<String> email) throws IOException {
+        List<ChapterDto> chapterDtos = scrapMngDoom.scanLastScanOutPage();
+        chapterDtos.forEach(chapterDto -> transformAndSend(email, chapterDto));
+
+    }
+
+    private void transformAndSend(final List<String> email, final ChapterDto chapterXhtml) {
         final String name = String.format("%s.epub", chapterXhtml.getFileName().split("\\.")[0]);
         chapterXhtml.setFile(epubService.createOpfFile(chapterXhtml.getFile(), chapterXhtml));
 
@@ -159,14 +160,15 @@ public class EbookService {
         files.add(personalEpub);
         files.add(mobiPeronalFile);
 
-        final Chapter newChapter = new Chapter(manga);
-        newChapter.setNum(chapterNumber);
+        final Chapter newChapter = new Chapter(chapterXhtml.getManga());
+        newChapter.setNum(chapterXhtml.getChapterNumber());
         newChapter.setFiles(files);
         newChapter.setTitle(chapterXhtml.getName());
         this.chapterPersistenceService.save(newChapter);
 
         //need to send chapter to all user who subscribe
-        final Iterable<MangaSubscription> all = this.mangaSubscriptionService.findByMangaId(manga.getId());
+        final Iterable<MangaSubscription> all = this.mangaSubscriptionService
+                .findByMangaId(chapterXhtml.getManga().getId());
         all.forEach(mangaSubscription -> {
             File send = null;
             if (0 == mangaSubscription.getFormat().compareTo(BOOK_FORMAT.EPUB)) {

@@ -5,16 +5,16 @@
  */
 package getLn;
 
-import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import getLn.service.ebook.MobiService;
+import getLn.service.EbookService;
 import getLn.service.scrap.ScanService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,21 +31,22 @@ public class ScheduledGetLn {
     @Inject
     private ScanService scanService;
 
+
     @Inject
-    private MobiService mobiService;
+    private EbookService ebookService;
 
-    @Scheduled(cron = "${scheduled.getln.task}")
-    public void newMangaCron() {
+    @Scheduled(cron = "${cron.task.getln}")
+    public void newMangaln() {
+//                log.info("The time is now {}", dateFormat.format(new Date()));
+//        this.scanService.scanAndSendNewManga();
+    }
+
+    @Scheduled(cron = "${cron.task.newsMangaDoom}")
+    public void newMangaCron() throws IOException {
         //        log.info("The time is now {}", dateFormat.format(new Date()));
-        this.scanService.scanAndSendNewManga();
+        this.ebookService.newsFromMngDoom(Arrays.asList("nic.guitton@gmail.com", "nicolas.guitton@kindle.com"));
     }
 
-    //    @Scheduled(cron = "${scheduled.getln.task}")
-    public void testEpub() {
-        log.info("The time is now {}", dateFormat.format(new Date()));
-        this.mobiService
-                .epubToMbi(new File(
-                        "testEpub/_Douluo_Dalu_3___Dragon_King_s_Legend_Douluo_Dalu_3___Dragon_King_s_Legend_1590.epub"));
-    }
+
 
 }
