@@ -1,7 +1,0 @@
-coverage/**
-node_modules/**
-dist/**
-*.spec.js
-public
-src/index.html
-!.eslintrc.js
