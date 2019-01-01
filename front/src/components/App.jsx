@@ -16,15 +16,15 @@ export default class App extends React.Component {
   render() {
     return (
       <div style={{ textAlign: "center" }}>
-        <h1>Put your url here</h1>
+        <h1>Welcome to the Send To Reader</h1>
         <Form>
           <FormGroup controlId="formBasicEmail">
             <ControlLabel>Email address</ControlLabel>
             <FormControl type="url" placeholder="Enter your url" />
-            L'ets scrap this manga :)
+            <FormControl.Feedback />
           </FormGroup>
           <Button onClick={() => this.scrap()} type="button">
-            Submit
+            Scrap
           </Button>
         </Form>
       </div>
