@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import getLn.model.ChapterDto;
+import getLn.model.MangaDto;
 import getLn.service.FileCreationService;
 import getLn.service.exception.ChapterNotOutException;
 import getln.data.entity.Chapter;
@@ -146,6 +147,19 @@ public class ScrapMngDoomService extends ScrapService {
             log.error("Error during Creation of the file for chapter = {]", chapter, e1);
             return null;
         }
+    }
+
+    public MangaDto scrapManga(String url) throws IOException {
+        final Document doc = addInfo(Jsoup.connect(url)).get();
+        String mangaName = doc.getElementsByClass("widget-heading").get(0).text();
+        String image = doc.getElementsByClass("img-responsive mobile-img").get(0).absUrl("src");
+        String author = doc.getElementsByClass("dl-horizontal").get(0).getElementsByTag("dd").get(4).text();
+        List<String> chapterList = doc.getElementById("chapter_list").getElementsByTag("a").stream().map(element -> element.absUrl("href")).distinct().collect(
+                Collectors.toList());
+
+        MangaDto mangaDto = new MangaDto(chapterList, author, mangaName, image);
+
+        return mangaDto;
     }
 
 }
