@@ -7,6 +7,6 @@ const endpoints = {
 
 export default {
   scrapManga(url) {
-    return ConfigUriUtil.post(endpoints.scrapManga, { url: url });
+    return ConfigUriUtil.post(endpoints.scrapManga, { url });
   }
 };

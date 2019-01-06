@@ -80,7 +80,7 @@ public class ScrapMngDoomService extends ScrapService {
                             .map(element1 -> Double.parseDouble(element1.getElementsByTag("a").text().split("-")[1]))
                             .filter(aDouble -> aDouble > finalLastSaveChapterNum)
                             .collect(Collectors.toSet());
-                    if(!newChaptersNumber.isEmpty()) {
+                    if (!newChaptersNumber.isEmpty()) {
                         // we get all number we can of chapter
                         Double lastNewChapterNumber = newChaptersNumber.stream().max(Double::compareTo).get();
                         while (lastSaveChapterNum < lastNewChapterNumber) {
@@ -154,10 +154,11 @@ public class ScrapMngDoomService extends ScrapService {
         String mangaName = doc.getElementsByClass("widget-heading").get(0).text();
         String image = doc.getElementsByClass("img-responsive mobile-img").get(0).absUrl("src");
         String author = doc.getElementsByClass("dl-horizontal").get(0).getElementsByTag("dd").get(4).text();
+        String description = doc.getElementsByClass("note note-default").get(0).getElementsByTag("p").get(0).getElementsByTag("span").stream().map(Element::text).collect(Collectors.joining("\n"));
         List<String> chapterList = doc.getElementById("chapter_list").getElementsByTag("a").stream().map(element -> element.absUrl("href")).distinct().collect(
                 Collectors.toList());
 
-        MangaDto mangaDto = new MangaDto(chapterList, author, mangaName, image);
+        MangaDto mangaDto = new MangaDto(chapterList, author, mangaName, image, description);
 
         return mangaDto;
     }

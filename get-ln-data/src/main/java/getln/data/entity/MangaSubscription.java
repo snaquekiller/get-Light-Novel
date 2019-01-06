@@ -36,7 +36,7 @@ public class MangaSubscription extends AbstractDeletableJpaEntity<Long> {
      * The number of the chapter since you subscribe
      */
     @Column(name = "num_chapter")
-    private int numChapter;
+    private double numChapter;
 
     /**
      * The type of book you want receive epub or mobi
