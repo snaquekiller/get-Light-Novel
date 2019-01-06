@@ -3,11 +3,13 @@ package getLn.model.request;
 import java.io.Serializable;
 import java.util.StringJoiner;
 
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
 
 import getln.data.entity.BOOK_TYPE;
 
 @lombok.Data
+@ToString
 public class MangaRequestDto implements Serializable {
 
     /**
@@ -40,9 +42,4 @@ public class MangaRequestDto implements Serializable {
     @NotBlank
     private BOOK_TYPE type;
 
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]").add("name = " + name).add("author = " + author)
-            .add("comment = " + comment).add("url = " + url).add("type = " + type).toString();
-    }
 }

@@ -1,6 +1,7 @@
 package getln.service.common;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -34,5 +35,10 @@ public class UserSqlService {
             return this.userPersistenceService.save(user);
         }
         return null;
+    }
+
+    public Optional<User> findOne(Long id) {
+        Objects.requireNonNull(id);
+        return userPersistenceService.findById(id);
     }
 }

@@ -1,4 +1,4 @@
-CREATE TABLE manga
+CREATE TABLE LN.manga
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   name          VARCHAR(200),
@@ -11,7 +11,7 @@ CREATE TABLE manga
   deleted       TINYINT(1)                      DEFAULT 0
 );
 
-CREATE TABLE manga_out
+CREATE TABLE LN.manga_out
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   manga_id      BIGINT(20) UNSIGNED                 NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE manga_out
   deleted       TINYINT(1)                      DEFAULT 0
 );
 
-CREATE TABLE chapter
+CREATE TABLE LN.chapter
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY                 NOT NULL AUTO_INCREMENT,
   text          VARCHAR(10000),
@@ -41,7 +41,7 @@ CREATE TABLE chapter
 );
 
 
-CREATE TABLE file
+CREATE TABLE LN.file
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   name          VARCHAR(1000),
@@ -64,16 +64,16 @@ CREATE TABLE LN.user
   deleted       TINYINT(1)                      DEFAULT 0
 );
 
-CREATE TABLE chapter_files
+CREATE TABLE LN.chapter_files
 (
   chapter_id BIGINT(20) UNSIGNED,
   #   type       ENUM ('EPUB', 'MOBI')           NOT NULL,
   file_id    BIGINT(20) UNSIGNED PRIMARY KEY NOT NULL
 );
 CREATE UNIQUE INDEX chapter_files_file_id_uindex
-  ON chapter_files (file_id);
+  ON LN.chapter_files (file_id);
 
-CREATE TABLE manga_subscription
+CREATE TABLE LN.manga_subscription
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   user_id       BIGINT(20) UNSIGNED,
@@ -94,7 +94,7 @@ VALUES ('nic.guitton@gmail.com', 'snaquekiller', 'guitton', 'nicolas
 INSERT INTO LN.user (email, pseudo, nom, prenom, creation_date, update_date, deleted)
 VALUES ('nicolas.guitton@kindle.com', 'snaquekiller', 'guitton', 'nicolas
 ', '2018-02-07 17:14:44', '2018-02-07 17:14:44', 0);
-
+make
 INSERT INTO LN.manga_out (manga_id, hours, minutes, secondes, days, nb_try, status, creation_date, update_date, deleted)
 VALUES (2, 12, 15, 0, NULL, 0, 'AVAILABLE', '2018-02-08 11:20:13', '2018-02-08 11:20:13', 0);
 INSERT INTO LN.manga_out (manga_id, hours, minutes, secondes, days, nb_try, status, creation_date, update_date, deleted)

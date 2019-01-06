@@ -1,15 +1,19 @@
 package getLn.controller;
 
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
+import com.google.common.collect.Lists;
+import getLn.model.request.MangaSubscribeDto;
+import getln.data.entity.Manga;
+import getln.data.entity.MangaSubscription;
+import getln.service.common.MangaSubscriptionSqlService;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import getLn.model.MangaDto;
 import getLn.model.request.MangaRequestDto;
@@ -28,13 +32,16 @@ import getln.service.common.UserSqlService;
 public class MangaController {
 
     @Inject
-    private UserSqlService userService;
+    private UserSqlService userSqlService;
 
     @Inject
-    private MangaSqlService mangaService;
+    private MangaSqlService mangaSqlService;
 
     @Inject
     private ScrapMngDoomService scrapMngDoomService;
+
+    @Inject
+    private MangaSubscriptionSqlService mangaSubscriptionSqlService;
 
 
     /**
@@ -43,28 +50,42 @@ public class MangaController {
      * @return the reviewers response
      */
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public void addUser(@Validated @RequestBody(required = true) final UserRequestDto userRequestDto) {
+    public User addUser(@Validated @RequestBody(required = true) final UserRequestDto userRequestDto) {
         // @formatter:on
-        final User user = userService
+        final User user = userSqlService
                 .createUser(userRequestDto.getEmail(), userRequestDto.getNom(), userRequestDto.getPrenom(),
                         userRequestDto.getPseudo());
+        return user;
     }
 
     @RequestMapping(value = "/manga", method = RequestMethod.POST)
     public void addManga(@Validated @RequestBody(required = true) final MangaRequestDto mangaRequestDto) {
-        mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(),
+        mangaSqlService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(),
                 mangaRequestDto.getUrl(), mangaRequestDto.getType());
     }
 
     @RequestMapping(value = "/subscribe/{mangaId}", method = RequestMethod.POST)
-    public void subScribe(@Validated @RequestBody(required = true) final MangaRequestDto mangaRequestDto) {
-        mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(),
-                mangaRequestDto.getUrl(), mangaRequestDto.getType());
+    public void subScribe(@Validated @RequestBody(required = true) final MangaSubscribeDto mangaSubscribeDto,
+                          @PathVariable("mangaId") final Long mangaId) {
+        Optional<Manga> byId = mangaSqlService.findById(mangaId);
+        if(byId.isPresent()){
+            Optional<User> one = userSqlService.findOne(mangaSubscribeDto.getUserId());
+            if(one.isPresent()){
+                List<MangaSubscription> byMangaIdAndUserId = Lists.newArrayList(mangaSubscriptionSqlService.findByMangaIdAndUserId(byId.get().getId(), one.get().getId()));
+                    if(byMangaIdAndUserId.isEmpty()){
+                        mangaSubscriptionSqlService.add(mangaSubscribeDto.getBookFormat(), byId.get(), one.get(), Double.parseDouble(mangaSubscribeDto.getChapterNum()));
+                }else if(byMangaIdAndUserId.size() > 1){
+                    Optional<MangaSubscription> min = byMangaIdAndUserId.stream().min(Comparator.comparingDouble(MangaSubscription::getNumChapter));
+                    byMangaIdAndUserId.remove(min);
+                    mangaSubscriptionSqlService.delete(byMangaIdAndUserId);
+                }
+            }
+        }
     }
 
     //    @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
     //    public void addSubscribe(@Validated @RequestBody(required = true) final MangaSubscriptionRequestDto mangaRequestDto) {
-    //        mangaService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(), mangaRequestDto.getUrl(), mangaRequestDto.getType());
+    //        mangaSqlService.addManga(mangaRequestDto.getName(), mangaRequestDto.getAuthor(), mangaRequestDto.getComment(), mangaRequestDto.getUrl(), mangaRequestDto.getType());
     //    }
 
 
