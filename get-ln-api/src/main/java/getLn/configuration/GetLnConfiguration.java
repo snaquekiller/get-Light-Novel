@@ -17,12 +17,12 @@ import getln.service.common.SqlService;
 @ComponentScan(basePackageClasses = {
         GetLnJob.class,
         ApiControllerInterface.class,
-     SqlService.class
+        SqlService.class
 })
 @LnData
 @SqlService
 @ApiService
 //@formatter:on
 public class GetLnConfiguration {
-    
+
 }

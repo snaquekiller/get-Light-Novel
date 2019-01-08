@@ -8,20 +8,27 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import com.google.common.collect.Lists;
-import getLn.model.request.MangaSubscribeDto;
-import getln.data.entity.Manga;
-import getln.data.entity.MangaSubscription;
-import getln.service.common.MangaSubscriptionSqlService;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import getLn.model.MangaDto;
 import getLn.model.request.MangaRequestDto;
+import getLn.model.request.MangaSubscribeDto;
 import getLn.model.request.ScrapRequestDto;
 import getLn.model.request.UserRequestDto;
 import getLn.service.scrap.ScrapMngDoomService;
+import getln.data.entity.Manga;
+import getln.data.entity.MangaSubscription;
 import getln.data.entity.User;
 import getln.service.common.MangaSqlService;
+import getln.service.common.MangaSubscriptionSqlService;
 import getln.service.common.UserSqlService;
 
 /**
@@ -43,6 +50,9 @@ public class MangaController {
     @Inject
     private MangaSubscriptionSqlService mangaSubscriptionSqlService;
 
+    @Inject
+    private PasswordEncoder passwordEncoder;
+
 
     /**
      * List reviewers.
@@ -54,7 +64,21 @@ public class MangaController {
         // @formatter:on
         final User user = userSqlService
                 .createUser(userRequestDto.getEmail(), userRequestDto.getNom(), userRequestDto.getPrenom(),
-                        userRequestDto.getPseudo());
+                        userRequestDto.getPseudo(), passwordEncoder.encode(userRequestDto.getPassword()));
+        return user;
+    }
+
+    /**
+     * List reviewers.
+     *
+     * @return the reviewers response
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public User login(@Validated @RequestBody(required = true) final UserRequestDto userRequestDto) {
+        // @formatter:on
+        final User user = userSqlService
+                .createUser(userRequestDto.getEmail(), userRequestDto.getNom(), userRequestDto.getPrenom(),
+                        userRequestDto.getPseudo(), passwordEncoder.encode(userRequestDto.getPassword()));
         return user;
     }
 

@@ -1,7 +1,6 @@
 package getLn.model.request;
 
 import java.io.Serializable;
-import java.util.StringJoiner;
 
 import javax.validation.constraints.Size;
 
@@ -31,5 +30,12 @@ public class UserRequestDto implements Serializable {
     @NotBlank
     @Size(max = 200)
     private String pseudo;
+
+    /**
+     * The pseudo
+     */
+    @NotBlank
+    @Size(max = 50)
+    private String password;
 
 }

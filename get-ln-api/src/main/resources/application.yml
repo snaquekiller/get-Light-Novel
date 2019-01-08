@@ -1,6 +1,10 @@
 spring:
   application:
     name: Get light Novel
+  client:
+    id: "test"
+    #test2
+    secret: "$2a$10$1OindcsE8qZXrwndTBPM4.QMNxqy0bHzHaEAvBmBosdjCDqwr0MTC"
   datasource:
     url: jdbc:mariadb://localhost:3300/LN
     username: ligth

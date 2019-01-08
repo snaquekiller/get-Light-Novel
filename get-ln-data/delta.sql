@@ -1,4 +1,4 @@
-CREATE TABLE LN.manga
+CREATE TABLE IF NOT EXISTS LN.manga
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   name          VARCHAR(200),
@@ -11,7 +11,7 @@ CREATE TABLE LN.manga
   deleted       TINYINT(1)                      DEFAULT 0
 );
 
-CREATE TABLE LN.manga_out
+CREATE TABLE IF NOT EXISTS LN.manga_out
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   manga_id      BIGINT(20) UNSIGNED                 NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE LN.manga_out
   deleted       TINYINT(1)                      DEFAULT 0
 );
 
-CREATE TABLE LN.chapter
+CREATE TABLE IF NOT EXISTS LN.chapter
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY                 NOT NULL AUTO_INCREMENT,
   text          VARCHAR(10000),
@@ -41,7 +41,7 @@ CREATE TABLE LN.chapter
 );
 
 
-CREATE TABLE LN.file
+CREATE TABLE IF NOT EXISTS LN.file
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   name          VARCHAR(1000),
@@ -52,19 +52,20 @@ CREATE TABLE LN.file
   deleted       TINYINT(1)                      DEFAULT 0
 );
 
-CREATE TABLE LN.user
+CREATE TABLE IF NOT EXISTS LN.user
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   email         VARCHAR(200)                        NOT NULL UNIQUE,
   pseudo        VARCHAR(100),
   nom           VARCHAR(1000),
   prenom        VARCHAR(1000),
+  password      VARCHAR(1000),
   creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   update_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   deleted       TINYINT(1)                      DEFAULT 0
 );
 
-CREATE TABLE LN.chapter_files
+CREATE TABLE IF NOT EXISTS LN.chapter_files
 (
   chapter_id BIGINT(20) UNSIGNED,
   #   type       ENUM ('EPUB', 'MOBI')           NOT NULL,
@@ -73,7 +74,7 @@ CREATE TABLE LN.chapter_files
 CREATE UNIQUE INDEX chapter_files_file_id_uindex
   ON LN.chapter_files (file_id);
 
-CREATE TABLE LN.manga_subscription
+CREATE TABLE IF NOT EXISTS LN.manga_subscription
 (
   id            BIGINT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   user_id       BIGINT(20) UNSIGNED,

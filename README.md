@@ -8,3 +8,11 @@ https://www.ibm.com/developerworks/xml/tutorials/x-epubtut/index.html
 
 https://react-bootstrap.github.io/getting-started/introduction/
 https://v4-alpha.getbootstrap.com/components/forms/
+
+
+# Creation of password 
+Jshell idea: 
+```java
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+System.out.println(new BCryptPasswordEncoder().encode("test"));
+```

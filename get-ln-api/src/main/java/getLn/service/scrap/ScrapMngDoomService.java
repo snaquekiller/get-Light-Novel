@@ -154,7 +154,7 @@ public class ScrapMngDoomService extends ScrapService {
         String mangaName = doc.getElementsByClass("widget-heading").get(0).text();
         String image = doc.getElementsByClass("img-responsive mobile-img").get(0).absUrl("src");
         String author = doc.getElementsByClass("dl-horizontal").get(0).getElementsByTag("dd").get(4).text();
-        String description = doc.getElementsByClass("note note-default").get(0).getElementsByTag("p").get(0).getElementsByTag("span").stream().map(Element::text).collect(Collectors.joining("\n"));
+        String description = doc.getElementsByClass("note").get(0).getElementsByTag("p").get(0).getElementsByTag("span").stream().map(Element::text).collect(Collectors.joining("\n"));
         List<String> chapterList = doc.getElementById("chapter_list").getElementsByTag("a").stream().map(element -> element.absUrl("href")).distinct().collect(
                 Collectors.toList());
 
