@@ -6,7 +6,11 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import com.google.common.collect.Lists;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import getln.data.entity.BOOK_TYPE;
@@ -38,6 +42,17 @@ public class MangaSqlService {
             return this.mangaPersistenceService.save(manga);
         }
         return null;
+    }
+
+
+    public Page<Manga> listManga(int page, int limit, String sort, String order, String search) {
+        PageRequest pageRequest = PageRequest.of(page, limit, Direction.fromString(order), sort);
+        BooleanExpression expression = QManga.manga.deleted.isFalse();
+        if(search != null && !search.isEmpty()) {
+            expression = expression.and(QManga.manga.name.contains(search).or(QManga.manga.comment.contains(search)));
+        }
+        Page<Manga> all = this.mangaPersistenceService.findAll(expression, pageRequest);
+        return all;
     }
 
     /**

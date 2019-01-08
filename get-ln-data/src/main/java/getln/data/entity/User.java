@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import getln.data.commons.AbstractDeletableJpaEntity;
+import lombok.ToString;
 
 /**
  * .
@@ -19,6 +20,7 @@ import getln.data.commons.AbstractDeletableJpaEntity;
 @Entity
 @Table(name = "user", schema = "LN")
 @lombok.Data
+@ToString(exclude="password")
 public class User extends AbstractDeletableJpaEntity<Long> implements UserDetails {
 
     /**

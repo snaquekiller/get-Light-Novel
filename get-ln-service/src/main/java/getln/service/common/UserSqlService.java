@@ -47,15 +47,16 @@ public class UserSqlService implements org.springframework.security.core.userdet
         return userPersistenceService.findById(id);
     }
 
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        log.info("log with credential name: " + username);
+        Objects.requireNonNull(username);
+        return  userPersistenceService.findOne(QUser.user.email.eq(username)).orElseGet(null);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("log with credential name: " + username);
         Objects.requireNonNull(username);
-
-        User user = userPersistenceService.findOne(QUser.user.email.eq(username)).orElseGet(null);
-        log.error("COUCOUCOU = {}",user);
-
-        return user;
-
+        return findByUsername(username);
     }
 }
