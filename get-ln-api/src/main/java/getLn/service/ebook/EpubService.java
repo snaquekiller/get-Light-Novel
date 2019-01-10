@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -49,18 +50,20 @@ public class EpubService {
      * @return
      */
     public List<File> createOpfFile(final List<File> files, final ChapterDto chapter) {
+        final List<File> filess = new ArrayList<>(files);
+
         //@formatter:off
         final String head = "<?xml version='1.0' encoding='utf-8'?>\n" +
                 "<package xmlns=\"http://www.idpf.org/2007/opf\" unique-identifier=\"uuid_id\" version=\"2.0\">\n" +
                 "  <metadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:opf=\"http://www.idpf.org/2007/opf\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:calibre=\"http://calibre.kovidgoyal.net/2009/metadata\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n" +
                 "    <meta name=\"calibre:title_sort\" content=\"\"/>\n" +
                 "    <dc:language>en</dc:language>\n" +
-                "    <dc:creator opf:file-as=\"Vert\" opf:role=\"aut\">Vert</dc:creator>\n" +
+                "    <dc:creator opf:file-as=\"Story To reader\" opf:role=\"aut\">Story To reader</dc:creator>\n" +
                 "    <meta name=\"calibre:timestamp\" content=\" " + this.format.format(new Date()) + "\"/>\n" +
                 "    <dc:title>" + chapter.getManga().getName() + " : " + chapter.getChapterNumber() + "</dc:title>\n" +
                 "    <meta name=\"cover\" content=\"cover\"/>\n" +
                 "    <dc:date>" + this.format.format(new Date()) + "</dc:date>\n" +
-                "    <dc:contributor opf:role=\"bkp\">snaquekiller</dc:contributor>\n" +
+                "    <dc:contributor opf:role=\"bkp\">Snaquekiller</dc:contributor>\n" +
                 "    <dc:identifier id=\"uuid_id\" opf:scheme=\"uuid\">" + serialVersionUID + "</dc:identifier>\n" +
                 "    <dc:identifier opf:scheme=\"calibre\">" + serialVersionUID + "</dc:identifier>\n" +
                 "  </metadata>\n";
@@ -71,22 +74,21 @@ public class EpubService {
 
         Writer writer = null;
         final String name = "book.opf";
-
         try {
             writer = new BufferedWriter(
                     new OutputStreamWriter(fileCreationService.fileStream(chapter.getFilePath(), name), UTF_8));
             writer.write(head);
-            String spine = "<spine toc=\"ncx\">\n";
-            String manifest = "\t<manifest>\n";
+            String spine = "\t<spine toc=\"ncx\">\n\t\t<itemref idref=\"index\"/>\n";
+            String manifest = "\t<manifest>\n\t\t<item id=\"index\" href=\"index.html\" media-type=\"application/xhtml+xml\"/>\n";
             for (final File file : files) {
                 manifest += String
-                        .format("<item id=\"%s\" href=\"%s\" media-type=%s>\n", file.getName(),
+                        .format("\t\t<item id=\"%s\" href=\"%s\" media-type=%s>\n", file.getName(),
                                 file.getName(),
                                 file.getName().contains(".xml") ? "\"application/xhtml+xml\"" : "\"image/jpeg\"");
-                spine += String.format("\t\t<itemref idref=\"%s\"/>\n", file.getName());
+//                spine += String.format("\t\t<itemref idref=\"%s\"/>\n", file.getName());
             }
             manifest += "\t</manifest>\n";
-            spine += "</spine>\n";
+            spine += "\t</spine>\n";
             writer.write(manifest);
             writer.write(spine);
             writer.write(end);
@@ -99,12 +101,74 @@ public class EpubService {
             } catch (final Exception ex) {/*ignore*/
             }
         }
-        final File e = fileCreationService.createFile(chapter.getFilePath(), name);
-        final List<File> filess = new ArrayList<>(files);
-        filess.add(e);
+        final File opf = fileCreationService.createFile(chapter.getFilePath(), name);
+        filess.add(opf);
+        filess.add(createHtml(chapter.getName(), files,chapter.getFilePath()));
+
+        String directoryMetaPath = chapter.getFilePath() + "/META-INF";
+        try {
+            fileCreationService.createTemporaryDirectory(directoryMetaPath);
+            String containerXml = "<?xml version=\"1.0\"?>\n"
+                    + "<container version=\"1.0\" xmlns=\"urn:oasis:names:tc:opendocument:xmlns:container\">\n"
+                    + "    <rootfiles>\n"
+                    + "        <rootfile full-path=\"book.opf\" media-type=\"application/oebps-package+xml\" />\n"
+                    + "    </rootfiles>\n"
+                    + "</container>\n";
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(
+                            fileCreationService.fileStream(directoryMetaPath, "container.xml"),
+                            UTF_8));
+            writer.write(containerXml);
+
+        } catch (IOException e) {
+            log.error("Can't create this container.xml", e);
+        }finally {
+            try {
+                writer.close();
+                final File test = fileCreationService.createFile(directoryMetaPath, "container.xml");
+                filess.add(test);
+            } catch (final Exception ex) {/*ignore*/
+            }
+        }
+
         return filess;
     }
 
+
+
+    public File createHtml(String chapterTitle, List<File> images, String path){
+        String header = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+                + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                + "    <head>\n"
+                + "        <title>"+ chapterTitle+"</title>\n"
+                + "    </head>\n"
+                + "    <body>\n";
+
+                String body = images.stream().map(file -> "\t<img src=\"" + file.getName()+"\" media-type=\"image/jpeg\">\n").collect(
+                        Collectors.joining());
+            String end  = "    </body>\n"
+                + "</html>\n";
+
+        Writer writer = null;
+        try {
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(fileCreationService.fileStream(path, "index.html"), UTF_8));
+            writer.write(header);
+            writer.write(body);
+            writer.write(end);
+        } catch (final IOException ex) {
+            // report
+            log.error("Can't create the HTML path={}", path, ex);
+        } finally {
+            try {
+                writer.close();
+            } catch (final Exception ex) {/*ignore*/
+            }
+        }
+        File file = fileCreationService.createFile(path, "index.html");
+        return file;
+
+    }
 
     /**
      * Write the content of one Chapter
@@ -131,8 +195,7 @@ public class EpubService {
             final String name = String.format("%s/%s", chapter.getFilePath(), chapter.getFileName());
 
             final File file = new File(name);
-            final File directory = new File(String.format("%s", chapter.getFilePath()));
-            directory.mkdirs();
+            fileCreationService.createTemporaryDirectory(chapter.getFilePath());
 
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
             writer.write(head);
@@ -242,7 +305,7 @@ public class EpubService {
                     writer.close();
                 }
             } catch (final Exception ex) {/*ignore*/
-                log.error("can't close",  ex);
+                log.error("can't close", ex);
             }
         }
         return null;

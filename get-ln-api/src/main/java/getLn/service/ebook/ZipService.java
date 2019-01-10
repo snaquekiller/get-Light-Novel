@@ -26,11 +26,11 @@ public class ZipService {
     private FileCreationService fileCreationService;
 
 
-    public void addToZipFile(File file, final ZipOutputStream zos) {
+    public void addToZipFile(File file, final ZipOutputStream zos, String filePath) {
         log.debug(String.format("Writing '%s' to zip file", file.getName()));
 
         try (FileInputStream fis = new FileInputStream(file)) {
-            final ZipEntry zipEntry = new ZipEntry(file.getName());
+            final ZipEntry zipEntry = new ZipEntry(filePath);
             zos.putNextEntry(zipEntry);
 
             final byte[] bytes = new byte[1024];
@@ -59,7 +59,22 @@ public class ZipService {
         try {
             final FileOutputStream fos = fileCreationService.fileStream(directory, fileName);
             try (ZipOutputStream zos = new ZipOutputStream(fos)) {
-                files.forEach(file -> addToZipFile(file, zos));
+                files.forEach(file -> {
+                    String name = file.getName();
+                    if (!fileCreationService.isSameDirectory(directory, file)) {
+                        String directoryName = file.getParentFile().getPath().split(directory)[1];
+                        name = directoryName + "/" + name;
+
+                        try {
+                            zos.putNextEntry(new ZipEntry(directoryName.replaceFirst("/", "") + "/"));
+                            zos.closeEntry();
+                        } catch (IOException e) {
+                            log.error("Can't create the sub directory into the zip file = {}", directoryName, e);
+                        }
+                    }
+                    addToZipFile(file, zos, name);
+
+                });
                 zos.close();
             }
             fos.close();

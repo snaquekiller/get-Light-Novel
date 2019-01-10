@@ -139,7 +139,7 @@ public class EbookService {
 
     }
 
-    private void transformAndSend(final List<String> email, final ChapterDto chapterXhtml) {
+    public void transformAndSend(final List<String> email, final ChapterDto chapterXhtml) {
         final String name = String.format("%s.epub", chapterXhtml.getFileName().split("\\.")[0]);
         chapterXhtml.setFile(epubService.createOpfFile(chapterXhtml.getFile(), chapterXhtml));
 
@@ -190,6 +190,7 @@ public class EbookService {
         if ((null != mobi) && (mobi.getPath() != null)) {
             email.forEach(dd -> {
                 try {
+                    log.error("send mobi to email ={}", dd);
                     this.mailService.sendMail(dd, mobi.getPath(), mobi.getName());
                 } catch (MessagingException e) {
                     log.error("Cant send the email for the file ={} ", mobi.getName(), e);

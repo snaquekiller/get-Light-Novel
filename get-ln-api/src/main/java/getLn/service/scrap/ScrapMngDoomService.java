@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import getLn.model.ChapterDto;
 import getLn.model.MangaDto;
 import getLn.service.FileCreationService;
+import getLn.service.ImageService;
 import getLn.service.exception.ChapterNotOutException;
 import getln.data.entity.Chapter;
 import getln.data.entity.Manga;
@@ -46,6 +47,9 @@ public class ScrapMngDoomService extends ScrapService {
 
     @Inject
     private FileCreationService fileCreationService;
+
+    @Inject
+    private ImageService imageService;
 
     private final String MANGADOOM_URL = "http://www.mngdoom.com/";
 
@@ -132,9 +136,9 @@ public class ScrapMngDoomService extends ScrapService {
                                 String.format("image_%s_%d.jpg", chapterNum, page.getAndIncrement()));
                         URL url1 = new URL(imageUrl);
                         FileUtils.copyURLToFile(url1, file);
-                        files.add(file);
+                        files.addAll(imageService.splitImage(file));
                     } catch (IOException e1) {
-                        log.error("can't get the Image from url ={}", imageUrl);
+                        log.error("can't get the Image from url ={}", imageUrl, e1);
                     }
                 });
 

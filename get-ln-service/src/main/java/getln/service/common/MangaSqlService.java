@@ -41,7 +41,7 @@ public class MangaSqlService {
             final Manga manga = new Manga(name, author, comment, url, type);
             return this.mangaPersistenceService.save(manga);
         }
-        return null;
+        return mangaPersistenceService.findOne(QManga.manga.url.eq(url).or(QManga.manga.name.eq(name))).get();
     }
 
 
