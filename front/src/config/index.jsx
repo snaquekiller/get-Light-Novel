@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "querystring";
 
 export const configs = {
   dev: {
@@ -23,6 +24,16 @@ class ConfigUri {
       }
     };
   }
+  static getHeadersLogin() {
+    return {
+      mode: "no-cors",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Basic dGVzdDp0ZXN0Mg==",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    };
+  }
 
   static getEndpoint(endPoint) {
     return configs[env].domain + endPoint;
@@ -32,6 +43,9 @@ class ConfigUri {
   }
   static post(url, data) {
     return axios.post(url, data, this.getHeaders());
+  }
+  static login(url, data) {
+    return axios.post(url, qs.stringify(data), this.getHeadersLogin());
   }
 }
 export const ConfigUriUtil = ConfigUri;
