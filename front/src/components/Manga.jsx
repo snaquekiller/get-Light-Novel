@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import Panel from "react-bootstrap/lib/Panel";
 import Image from "react-bootstrap/lib/Image";
 import ListGroupItem from "react-bootstrap/lib/ListGroupItem";
@@ -42,14 +44,14 @@ export default class Manga extends React.Component {
     return (
       <MangaDiv>
         <Panel>
-          <Image src={this.state.manga.image} responsive />
-          <div className="mangaName">{this.state.manga.name} </div>
+          <Image src={this.props.manga.image} responsive />
+          <div className="mangaName">{this.props.manga.name} </div>
           <span className="title">Author:</span>
-          <span className="text"> {this.state.manga.author}</span>
+          <span className="text"> {this.props.manga.author}</span>
           <ListGroup>
-            {!this.state.manga.chapters
+            {!this.props.manga.chapters
               ? ""
-              : this.state.manga.chapters.map(url => {
+              : this.props.manga.chapters.map(url => {
                   let chapterNum = url.split("/");
                   chapterNum = chapterNum[chapterNum.length - 1];
                   return (
@@ -64,3 +66,11 @@ export default class Manga extends React.Component {
     );
   }
 }
+Manga.propTypes = {
+  manga: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    chapters: PropTypes.array
+  })
+};

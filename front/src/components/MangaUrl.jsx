@@ -7,6 +7,7 @@ import FormControl from "react-bootstrap/lib/FormControl";
 import ControlLabel from "react-bootstrap/lib/ControlLabel";
 import Panel from "react-bootstrap/lib/Panel";
 
+import Manga from "./Manga.jsx";
 import MangaService from "../service/MangaService.jsx";
 
 const PanelForm = styled.div`
@@ -14,7 +15,7 @@ const PanelForm = styled.div`
   margin-left: auto;
   margin-right: auto;
 `;
-export default class Manga extends React.Component {
+export default class MangaUrl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,25 +45,28 @@ export default class Manga extends React.Component {
 
   render() {
     return (
-      <PanelForm>
-        <Panel>
-          <Form>
-            <FormGroup controlId="formBasicEmail">
-              <ControlLabel>Url du manga address</ControlLabel>
-              <FormControl
-                type="url"
-                placeholder="Enter your url"
-                onChange={this.handleChange}
-                value={this.state.url}
-              />
-              <FormControl.Feedback />
-            </FormGroup>
-            <Button onClick={() => this.scrap()} type="button">
-              Scrap
-            </Button>
-          </Form>
-        </Panel>
-      </PanelForm>
+      <div>
+        <PanelForm>
+          <Panel>
+            <Form>
+              <FormGroup controlId="formBasicEmail">
+                <ControlLabel>Url du manga address</ControlLabel>
+                <FormControl
+                  type="url"
+                  placeholder="Enter your url"
+                  onChange={this.handleChange}
+                  value={this.state.url}
+                />
+                <FormControl.Feedback />
+              </FormGroup>
+              <Button onClick={() => this.scrap()} type="button">
+                Scrap
+              </Button>
+            </Form>
+          </Panel>
+        </PanelForm>
+        {this.state.manga && <Manga manga={this.state.manga} />}
+      </div>
     );
   }
 }

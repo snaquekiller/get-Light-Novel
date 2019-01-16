@@ -1,5 +1,6 @@
 import axios from "axios";
 import qs from "querystring";
+import Cookies from "js-cookie";
 
 export const configs = {
   dev: {
@@ -16,10 +17,12 @@ export const env = window.pageEnv || "dev";
 
 class ConfigUri {
   static getHeaders() {
+    const bearer = "Bearer " + Cookies.get("token");
     return {
       mode: "no-cors",
       headers: {
         Accept: "application/json",
+        Authorization: bearer,
         "Content-Type": "application/json"
       }
     };

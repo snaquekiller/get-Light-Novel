@@ -8,7 +8,6 @@ import Panel from "react-bootstrap/lib/Panel";
 import styled from "styled-components";
 import { Modal } from "react-overlays";
 
-import Manga from "./Manga.jsx";
 import MangaUrl from "./MangaUrl.jsx";
 import LoginForm from "./LoginForm.jsx";
 
@@ -86,8 +85,6 @@ export default class App extends React.Component {
 
         <LoginForm />
         <MangaUrl />
-
-        {this.state.manga && <Manga />}
       </div>
     );
   }
