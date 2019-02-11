@@ -42,7 +42,7 @@ class ConfigUri {
     return configs[env].domain + endPoint;
   }
   static get(url) {
-    return axios.get(url, { headers: this.getHeaders() });
+    return axios.get(url, this.getHeaders());
   }
   static post(url, data) {
     return axios.post(url, data, this.getHeaders());
